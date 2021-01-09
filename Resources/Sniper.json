@@ -1,0 +1,18 @@
+{
+  "transform": [
+    {
+      "x": 500,
+      "y": 500,
+      "width": 64,
+      "height": 64
+    }
+  ],
+  "sprite": [ "nolgan.png" ],
+  "character": [
+    {
+      "hp": 4,
+      "radius": 18
+    }
+  ],
+  "sniper": null
+}

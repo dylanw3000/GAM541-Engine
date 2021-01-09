@@ -1,0 +1,29 @@
+{
+  "background": null,
+  "objects": [
+    {
+      "name": "Player.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 450
+        }
+      ],
+      "character": [
+        {
+          "hp": 10
+        }
+      ]
+    },
+    {
+      "name": "Slime.json",
+      "transform": [
+        {
+          "x": 100,
+          "y": 100
+        }
+      ]
+    }
+  ],
+  "timescale": 1.0
+}

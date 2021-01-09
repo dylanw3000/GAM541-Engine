@@ -1,0 +1,82 @@
+{
+  "background": null,
+  "objects": [
+    {
+      "name": "Sniper.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 100
+        }
+      ],
+      "character": [
+        {
+          "hp": 2
+        }
+      ]
+    },
+    {
+      "name": "Sniper.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 700
+        }
+      ],
+      "character": [
+        {
+          "hp": 2
+        }
+      ]
+    },
+    {
+      "name": "Sniper.json",
+      "transform": [
+        {
+          "x": 100,
+          "y": 420
+        }
+      ],
+      "character": [
+        {
+          "hp": 2
+        }
+      ]
+    },
+    {
+      "name": "Sniper.json",
+      "transform": [
+        {
+          "x": 1100,
+          "y": 420
+        }
+      ],
+      "character": [
+        {
+          "hp": 2
+        }
+      ]
+    },
+    {
+      "name": "Enemy.json",
+      "transform": [
+        {
+          "x": 900,
+          "y": 420
+        }
+      ],
+      "updown": [ false, 4000 ]
+    },
+    {
+      "name": "Enemy.json",
+      "transform": [
+        {
+          "x": 300,
+          "y": 420
+        }
+      ],
+      "updown": [ false, 4000 ]
+    }
+  ],
+  "timescale": 1.0
+}

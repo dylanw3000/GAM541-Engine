@@ -1,0 +1,5 @@
+Transform
+20.0 20.0
+Sprite
+Angry.bmp
+Controller

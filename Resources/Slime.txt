@@ -1,0 +1,6 @@
+Transform
+200.0 200.0
+Sprite
+Happy.bmp
+Slime
+800 1200 150.0

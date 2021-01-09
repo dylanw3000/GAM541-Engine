@@ -1,0 +1,16 @@
+{
+  "transform": [
+    {
+      "x": 200,
+      "y": 400
+    }
+  ],
+  "sprite": [ "norgos.png" ],
+  "character": [
+    {
+      "hp": 5,
+      "radius": 36
+    }
+  ],
+  "updown": [ 0, 1000 ]
+}

@@ -1,0 +1,19 @@
+{
+  "transform": [
+    {
+      "x": 1000,
+      "y": 600,
+      "width": 128,
+      "height": 128,
+      "yoffset": 32
+    }
+  ],
+  "sprite": [ "sikey.png" ],
+  "character": [
+    {
+      "hp": 5,
+      "radius": 48
+    }
+  ],
+  "augmentor": null
+}

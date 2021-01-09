@@ -1,0 +1,23 @@
+{
+  "background": null,
+  "objects": [
+    {
+      "name": "Augmentor.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 400
+        }
+      ],
+      "character": [
+        {
+          "hp": 20
+        }
+      ]
+    }
+  ],
+  "test_variable_so_i_can_see_how_json_works": [
+    
+  ],
+  "timescale": 1.0
+}

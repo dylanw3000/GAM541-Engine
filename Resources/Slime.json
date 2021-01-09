@@ -1,0 +1,19 @@
+{
+  "transform": [
+    {
+      "x": 200,
+      "y": 200,
+      "width": 48,
+      "height": 48,
+      "xoffset": 4
+    }
+  ],
+  "sprite": [ "cupcake.png" ],
+  "character": [
+    {
+      "hp": 3,
+      "radius": 24
+    }
+  ],
+  "slime": [ 800, 1200, 150.0, 60.0 ]
+}
