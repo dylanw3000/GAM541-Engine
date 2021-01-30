@@ -8,7 +8,12 @@
       "xoffset": 4
     }
   ],
-  "sprite": [ "cupcake.png" ],
+  "sprite": [ 
+    {
+    "animated": false,
+    "imageName": "cupcake.png"
+    }  
+  ],
   "character": [
     {
       "hp": 3,

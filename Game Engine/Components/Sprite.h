@@ -13,9 +13,37 @@ Creation date: October 15, 2020
 
 #pragma once
 #include "Component.h"
+#include <vector>
 
 class GameObject;
 struct SDL_Surface;
+
+
+class SpriteAnimatorFrame
+{
+
+public:
+	SpriteAnimatorFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+public:
+	float mTextureOffsetX, mTextureOffsetY;
+	float mDuration;
+
+};
+
+class SpriteAnimator
+{
+public:
+	SpriteAnimator();
+	~SpriteAnimator();
+	void Update();
+	void AddFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	std::pair<float, float> GetTextureCoords();
+
+private:
+	std::vector<SpriteAnimatorFrame*> mFrames;
+	size_t mCurrentIndex;
+	float mTimer;
+};
 
 class Sprite : public Component {
 public:
@@ -29,9 +57,22 @@ public:
 public:
 	SDL_Surface* mpSurface;
 	unsigned int mTexture;
+	bool mIsAnimated;
+
+	unsigned int mRows;
+	unsigned int mColumns;
+	int mWidth;
+	int mHeight;
+
+	SpriteAnimator* mSpriteAnimator;
+
+
 
 
 private:
 private:
 
 };
+
+
+

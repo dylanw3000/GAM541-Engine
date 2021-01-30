@@ -49,7 +49,8 @@ SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath) {
 	*/
 }
 
-unsigned int ResourceManager::LoadTexture(const char* pFilePath) {
+
+unsigned int ResourceManager::LoadTexture(const char* pFilePath, int* width, int* height) {
 	GLuint textureID = mTextures[pFilePath];
 	if (textureID)
 		return textureID;
@@ -60,6 +61,13 @@ unsigned int ResourceManager::LoadTexture(const char* pFilePath) {
 	Gdiplus::Bitmap bmp(std::wstring(pathString.begin(), pathString.end()).c_str());
 	// Gdiplus::Bitmap bmp(L"..\\Resources\\Angry.png");
 	Gdiplus::Rect rect(0, 0, bmp.GetWidth(), bmp.GetHeight());
+
+	if (width != nullptr && height != nullptr)
+	{
+		*width = bmp.GetWidth();
+		*height = bmp.GetHeight();
+	}
+
 	Gdiplus::BitmapData data;
 	bmp.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, &data);
 	glGenTextures(1, &textureID);
@@ -72,7 +80,7 @@ unsigned int ResourceManager::LoadTexture(const char* pFilePath) {
 
 	bmp.UnlockBits(&data);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	mTextures[pFilePath] = textureID;
 

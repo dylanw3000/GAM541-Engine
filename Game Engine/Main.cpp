@@ -418,7 +418,7 @@ int main(int argc, char* args[])
 	GLuint vaoID;
 	glGenVertexArrays(1, &vaoID);
 	glBindVertexArray(vaoID);
-
+	
 
 	// 0 -> Positions
 	// 1 -> Colors
@@ -426,8 +426,9 @@ int main(int argc, char* args[])
 	GLuint bufferIDs[3];
 
 	glGenBuffers(3, bufferIDs);
-
+	
 	int vertexNum = 4;
+	
 	int coordsPerPosition = 3;
 	int coordsPerColor = 4;
 	int coordsPerTex = 2;
@@ -483,6 +484,7 @@ int main(int argc, char* args[])
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glBindVertexArray(0);
+	
 
 	// Block until all OpenGL executions are complete
 	glFinish();
@@ -490,7 +492,7 @@ int main(int argc, char* args[])
 	delete[] pPositions;
 	delete[] pColors;
 	delete[] pTex;
-
+	
 	/*
 	// Load Texture
 	GLuint textureID1;
@@ -799,7 +801,7 @@ int main(int argc, char* args[])
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Sprite* pS = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
 
-				// glBindVertexArray(vaoID);
+				//glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
@@ -817,10 +819,52 @@ int main(int argc, char* args[])
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, pS->mTexture);
 
+				if (pS->mIsAnimated)
+				{
 
-				glDrawArrays(GL_QUADS, 0, vertexNum);
+					GLfloat* pTex = new GLfloat[vertexNum * coordsPerTex];
 
-				// glBindVertexArray(0);
+					auto currentTextureOffset = pS->mSpriteAnimator->GetTextureCoords();
+
+					pTex[0] = 0.0f;			pTex[1] = 0.5f;
+					pTex[2] = 0.25;			pTex[3] = 0.5f;
+					pTex[4] = 0.25f;		pTex[5] = 0.0f;
+					pTex[6] = 0.0f;			pTex[7] = 0.0f;
+
+					pTex[0] = currentTextureOffset.first;
+					pTex[1] = currentTextureOffset.second + (1.0f / pS->mRows);
+					pTex[2] = currentTextureOffset.first + (1.0f / pS->mColumns);
+					pTex[3] = currentTextureOffset.second + (1.0f / pS->mRows);
+					pTex[4] = currentTextureOffset.first + (1.0f / pS->mColumns);
+					pTex[5] = currentTextureOffset.second;
+					pTex[6] = currentTextureOffset.first;
+					pTex[7] = currentTextureOffset.second;
+
+					
+					glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+					glBufferData(GL_ARRAY_BUFFER, vertexNum* texStride, pTex, GL_STATIC_DRAW);
+					glEnableVertexAttribArray(2);
+					glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+					
+
+					glDrawArrays(GL_QUADS, 0, vertexNum);
+
+					pTex[0] = 0.0f;			pTex[1] = 1.0f;
+					pTex[2] = 1.0f;			pTex[3] = 1.0f;
+					pTex[4] = 1.0f;			pTex[5] = 0.0f;
+					pTex[6] = 0.0f;			pTex[7] = 0.0f;
+					glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+					glBufferData(GL_ARRAY_BUFFER, vertexNum * texStride, pTex, GL_STATIC_DRAW);
+					glEnableVertexAttribArray(2);
+					glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+				}
+				else
+				{
+					
+					glDrawArrays(GL_QUADS, 0, vertexNum);
+				}
 			}
 
 

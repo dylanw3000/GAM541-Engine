@@ -7,7 +7,12 @@
       "height": 64
     }
   ],
-  "sprite": [ "nolgan.png" ],
+  "sprite": [ 
+    {
+      "animated": false,
+      "imageName": "nolgan.png"
+    } 
+  ],
   "character": [
     {
       "hp": 4,
