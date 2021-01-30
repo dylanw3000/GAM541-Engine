@@ -10,9 +10,25 @@
   "sprite": [ 
     {
       "animated": true,
-      "imageName": "Kakashi_Running.png",
-      "columns": 6,
-      "rows": 1
+      "idlingImageName": "Kakashi_Idling.png",
+      "idlingColumns": 4,
+      "idlingRows": 1,
+      "runningImageName": "Kakashi_Running.png",
+      "runningColumns": 6,
+      "runningRows": 1,
+      "jumpingImageName": "Kakashi_Jumping.png",
+      "jumpingColumns": 2,
+      "jumpingRows": 1,
+      "fallingImageName": "Kakashi_Falling.png",
+      "fallingColumns": 2,
+      "fallingRows": 1,
+      "dashingImageName": "Kakashi_Dashing.png",
+      "dashingColumns": 5,
+      "dashingRows": 2,
+      "attackingImageName": "Kakashi_Attacking.png",
+      "attackingColumns": 5,
+      "attackingRows": 1
+
     } 
   ],
   "character": [

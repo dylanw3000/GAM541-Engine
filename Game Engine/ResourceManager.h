@@ -26,7 +26,7 @@ public:
 	~ResourceManager();
 	
 	SDL_Surface* LoadSurface(const char* pFilePath);
-	unsigned int LoadTexture(const char* pFilePath, int* width = nullptr, int* height = nullptr);
+	unsigned int LoadTexture(const char* pFilePath);
 public:
 
 

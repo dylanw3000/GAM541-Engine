@@ -30,7 +30,7 @@ Sprite::~Sprite() {
 void Sprite::Update() {
 	//
 	if (mIsAnimated)
-		mSpriteAnimator->Update();
+		mpSpriteAnimator->Update();
 }
 
 void Sprite::Serialize(std::ifstream& InputStream) {
@@ -47,31 +47,173 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 	mIsAnimated = false;
 	if (input[0].HasMember("animated")) {
 		mIsAnimated = input[0]["animated"].GetBool();
-		mSpriteAnimator = new SpriteAnimator();
+		mpSpriteAnimator = new SpriteAnimator();
+		mpSpriteAnimator->mParentSprite = this;
 	}
 	
 	
 	if (mIsAnimated)
 	{
-		if (input[0].HasMember("columns")) {
-			mColumns = input[0]["columns"].GetInt();
-		}
-		if (input[0].HasMember("rows")) {
-			mRows = input[0]["rows"].GetInt();
+
+		if (input[0].HasMember("idlingImageName"))
+		{
+			std::string imageName = input[0]["idlingImageName"].GetString();
+			mpSpriteAnimator->mIdlingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("idlingColumns")) {
+				cols = input[0]["idlingColumns"].GetInt();
+				mpSpriteAnimator->mIdlingColumns = cols;
+			}
+			if (input[0].HasMember("idlingRows")) {
+				rows = input[0]["idlingRows"].GetInt();
+				mpSpriteAnimator->mIdlingRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
+				}
+			}
+			mpSpriteAnimator->StartIdling();
 		}
 
-		for (int i = 0; i < mColumns; i++)
+		if (input[0].HasMember("runningImageName"))
 		{
-			for (int j = 0; j < mRows; j++)
+			std::string imageName = input[0]["runningImageName"].GetString();
+			mpSpriteAnimator->mRunningTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("runningColumns")) {
+				cols = input[0]["runningColumns"].GetInt();
+				mpSpriteAnimator->mRunningColumns = cols;
+			}
+			if (input[0].HasMember("runningRows")) {
+				rows = input[0]["runningRows"].GetInt();
+				mpSpriteAnimator->mRunningRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
 			{
-				mSpriteAnimator->AddFrame(i * (1.0f/mColumns), j * (1.0f/mRows), 0.1f);
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddRunningFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
+				}
 			}
 		}
 
+		if (input[0].HasMember("jumpingImageName"))
+		{
+			std::string imageName = input[0]["jumpingImageName"].GetString();
+			mpSpriteAnimator->mJumpingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("jumpingColumns")) {
+				cols = input[0]["jumpingColumns"].GetInt();
+				mpSpriteAnimator->mJumpingColumns = cols;
+			}
+			if (input[0].HasMember("jumpingRows")) {
+				rows = input[0]["jumpingRows"].GetInt();
+				mpSpriteAnimator->mJumpingRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddJumpingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
+				}
+			}
+		}
+		if (input[0].HasMember("attackingImageName"))
+		{
+			std::string imageName = input[0]["attackingImageName"].GetString();
+			mpSpriteAnimator->mAttackingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("attackingColumns")) {
+				cols = input[0]["attackingColumns"].GetInt();
+				mpSpriteAnimator->mAttackingColumns = cols;
+			}
+			if (input[0].HasMember("attackingRows")) {
+				rows = input[0]["attackingRows"].GetInt();
+				mpSpriteAnimator->mAttackingRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddAttackingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
+				}
+			}
+		}
+
+		if (input[0].HasMember("dashingImageName"))
+		{
+			std::string imageName = input[0]["dashingImageName"].GetString();
+			mpSpriteAnimator->mDashingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("dashingColumns")) {
+				cols = input[0]["dashingColumns"].GetInt();
+				mpSpriteAnimator->mDashingColumns = cols;
+			}
+			if (input[0].HasMember("dashingRows")) {
+				rows = input[0]["dashingRows"].GetInt();
+				mpSpriteAnimator->mDashingRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddDashingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.05f);
+				}
+			}
+		}
+
+		if (input[0].HasMember("fallingImageName"))
+		{
+			std::string imageName = input[0]["fallingImageName"].GetString();
+			mpSpriteAnimator->mFallingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("fallingColumns")) {
+				cols = input[0]["fallingColumns"].GetInt();
+				mpSpriteAnimator->mFallingColumns = cols;
+			}
+			if (input[0].HasMember("fallingRows")) {
+				rows = input[0]["fallingRows"].GetInt();
+				mpSpriteAnimator->mFallingRows = rows;
+			}
+
+			for (int i = 0; i < cols; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					mpSpriteAnimator->AddFallingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
+				}
+			}
+		}
+		
+
+	}
+	else
+	{
+
+		std::string imageName = input[0]["imageName"].GetString();
+		mTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
 	}
 
-	std::string imageName = input[0]["imageName"].GetString();
-	mTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str(), &mWidth, &mHeight);
 	
 
 	// mpSurface = gpResourceManager->LoadSurface(("..\\Resources\\" + imageName).c_str());
@@ -98,11 +240,60 @@ SpriteAnimator::~SpriteAnimator()
 	for (auto pFrame : mFrames)
 		delete pFrame;
 	mFrames.clear();
+
+	for (auto pFrame : mIdlingFrames)
+		delete pFrame;
+	mIdlingFrames.clear();
+
+	for (auto pFrame : mRunningFrames)
+		delete pFrame;
+	mRunningFrames.clear();
+
+	for (auto pFrame : mJumpingFrames)
+		delete pFrame;
+	mJumpingFrames.clear();
+
+	for (auto pFrame : mAttackingFrames)
+		delete pFrame;
+	mAttackingFrames.clear();
+
+	for (auto pFrame : mDashingFrames)
+		delete pFrame;
+	mDashingFrames.clear();
+
+	for (auto pFrame : mFallingFrames)
+		delete pFrame;
+	mFallingFrames.clear();
 }
 
-void SpriteAnimator::AddFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+void SpriteAnimator::AddIdlingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
-	mFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mIdlingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddRunningFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mRunningFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddAttackingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mAttackingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddDashingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mDashingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddJumpingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mJumpingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddFallingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mFallingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
 }
 
 void SpriteAnimator::Update()
@@ -114,6 +305,80 @@ void SpriteAnimator::Update()
 		mTimer = mFrames[mCurrentIndex]->mDuration;
 	}
 }
+
+void SpriteAnimator::StartIdling()
+{
+	mCurrentIndex = 0;
+	mFrames = mIdlingFrames;
+	mIsIdling = true;
+	mIsRunning = mIsJumping = mIsAttacking = mIsDashing = mIsFalling = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mIdlingRows;
+	mParentSprite->mColumns = mIdlingColumns;
+	mParentSprite->mTexture = mIdlingTexture;
+}
+
+void SpriteAnimator::StartRunning()
+{
+	mCurrentIndex = 0;
+	mFrames = mRunningFrames;
+	mIsRunning = true;
+	mIsIdling = mIsJumping = mIsAttacking = mIsDashing = mIsFalling = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mRunningRows;
+	mParentSprite->mColumns = mRunningColumns;
+	mParentSprite->mTexture = mRunningTexture;
+}
+
+void SpriteAnimator::StartAttacking()
+{
+	mCurrentIndex = 0;
+	mFrames = mAttackingFrames;
+	mIsAttacking = true;
+	mIsIdling = mIsJumping = mIsRunning = mIsDashing = mIsFalling = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mAttackingRows;
+	mParentSprite->mColumns = mAttackingColumns;
+	mParentSprite->mTexture = mAttackingTexture;
+}
+
+void SpriteAnimator::StartDashing()
+{
+	mCurrentIndex = 0;
+	mFrames = mDashingFrames;
+	mIsDashing = true;
+	mIsIdling = mIsJumping = mIsAttacking = mIsRunning = mIsFalling = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mDashingRows;
+	mParentSprite->mColumns = mDashingColumns;
+	mParentSprite->mTexture = mDashingTexture;
+}
+
+void SpriteAnimator::StartJumping()
+{
+	mCurrentIndex = 0;
+	mFrames = mJumpingFrames;
+	mIsJumping = true;
+	mIsIdling = mIsRunning = mIsAttacking = mIsDashing = mIsFalling = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mJumpingRows;
+	mParentSprite->mColumns = mJumpingColumns;
+	mParentSprite->mTexture = mJumpingTexture;
+}
+
+void SpriteAnimator::StartFalling()
+{
+	mCurrentIndex = 0;
+	mFrames = mFallingFrames;
+	mIsFalling = true;
+	mIsIdling = mIsJumping = mIsAttacking = mIsDashing = mIsRunning = false;
+	mTimer = mFrames[mCurrentIndex]->mDuration;
+	mParentSprite->mRows = mFallingRows;
+	mParentSprite->mColumns = mFallingColumns;
+	mParentSprite->mTexture = mFallingTexture;
+}
+
+
 
 std::pair<float, float> SpriteAnimator::GetTextureCoords()
 {

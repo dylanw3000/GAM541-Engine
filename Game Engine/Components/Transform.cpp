@@ -12,6 +12,9 @@ Creation date: October 15, 2020
 - End Header --------------------------------------------------------*/
 
 #include "Transform.h"
+#include "Controller.h"
+#include "Sprite.h"
+#include "..\GameObject.h"
 #include "../FrameRateController.h"
 
 extern FrameRateController* gpFRC;
@@ -28,13 +31,58 @@ Transform::~Transform() {
 	//
 }
 
-void Transform::Sprite() {
-	//
-}
 
 void Transform::Update() {
 	mPositionX += mVelHoriz * gpFRC->GetDeltaTime();
 	mPositionY += mVelVert * gpFRC->GetDeltaTime();
+	
+	Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
+	Controller* pC = static_cast<Controller*>(mpOwner->GetComponent(TYPE_PLAYER_CONTROLLER));
+	
+	if (pS->mIsAnimated)
+	{
+		if (abs(mVelHoriz) > pC->mMaxSpeed)
+		{
+			// If not already dashing, and not attacking (attacking takes priority)
+			if (!pS->mpSpriteAnimator->mIsDashing && !pS->mpSpriteAnimator->mIsAttacking)
+				pS->mpSpriteAnimator->StartDashing();
+		}
+		else
+		{
+			pS->mpSpriteAnimator->mIsDashing = false;
+
+			if (mVelVert < -0.5)
+			{
+				//If not already jumping, and not attacking or dashing (attacking or dashing takes priority)
+				if (!pS->mpSpriteAnimator->mIsJumping && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+					pS->mpSpriteAnimator->StartJumping();
+			}
+			else if (mVelVert > 0.5)
+			{
+				//TODO: Start falling
+				//If not already falling, and not attacking or dashing (attacking or dashing takes priority)
+				if (!pS->mpSpriteAnimator->mIsFalling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+					pS->mpSpriteAnimator->StartFalling();
+
+			}
+			else if (abs(mVelHoriz) > 0)
+			{
+				//If not already running, and not attacking or dashing (attacking or dashing takes priority)
+				if (!pS->mpSpriteAnimator->mIsRunning && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+					pS->mpSpriteAnimator->StartRunning();
+			}
+			else
+			{
+				//If not already idling, and not attacking or dashing (attacking or dashing takes priority)
+				if (!pS->mpSpriteAnimator->mIsIdling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+					pS->mpSpriteAnimator->StartIdling();
+
+			}
+		}
+		
+	}
+	
+	
 }
 
 void Transform::Serialize(std::ifstream& InputStream) {

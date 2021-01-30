@@ -50,7 +50,7 @@ SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath) {
 }
 
 
-unsigned int ResourceManager::LoadTexture(const char* pFilePath, int* width, int* height) {
+unsigned int ResourceManager::LoadTexture(const char* pFilePath) {
 	GLuint textureID = mTextures[pFilePath];
 	if (textureID)
 		return textureID;
@@ -62,11 +62,6 @@ unsigned int ResourceManager::LoadTexture(const char* pFilePath, int* width, int
 	// Gdiplus::Bitmap bmp(L"..\\Resources\\Angry.png");
 	Gdiplus::Rect rect(0, 0, bmp.GetWidth(), bmp.GetHeight());
 
-	if (width != nullptr && height != nullptr)
-	{
-		*width = bmp.GetWidth();
-		*height = bmp.GetHeight();
-	}
 
 	Gdiplus::BitmapData data;
 	bmp.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, &data);

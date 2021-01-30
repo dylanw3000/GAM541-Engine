@@ -43,17 +43,18 @@ public:
 	void HandleEvent(Event* pEvent);
 
 public:
-
+	float mSwingAng;
+	int mMaxSpeed;
 
 
 private:
 private:
 	// float mVelHoriz, mVelVert;
-	int mAcceleration, mMaxSpeed;
+	int mAcceleration;
 	float mSlowMod, mExcessSlowMod;
 	int mDashTimer, mDashCooldown;
 
 	int mSwingTime, mSwingTimer, mSwingDelay;
-	float mSwingAng, mSwingWidth;
+	float mSwingWidth;
 	bool mSwinging, mCleaver;
 };

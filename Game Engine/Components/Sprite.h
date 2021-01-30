@@ -16,6 +16,7 @@ Creation date: October 15, 2020
 #include <vector>
 
 class GameObject;
+class Sprite;
 struct SDL_Surface;
 
 
@@ -36,13 +37,71 @@ public:
 	SpriteAnimator();
 	~SpriteAnimator();
 	void Update();
-	void AddFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+
+	void AddRunningFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddJumpingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddIdlingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddDashingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddAttackingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddFallingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+
+	void StartRunning();
+	void StartJumping();
+	void StartIdling();
+	void StartDashing();
+	void StartAttacking();
+	void StartFalling();
+
 	std::pair<float, float> GetTextureCoords();
+
+public:
+	Sprite* mParentSprite;
+
+	unsigned int mRunningRows;
+	unsigned int mRunningColumns;
+	unsigned int mRunningTexture;
+	bool mIsRunning;
+
+	unsigned int mJumpingRows;
+	unsigned int mJumpingColumns;
+	unsigned int mJumpingTexture;
+	bool mIsJumping;
+
+	unsigned int mIdlingRows;
+	unsigned int mIdlingColumns;
+	unsigned int mIdlingTexture;
+	bool mIsIdling;
+
+	unsigned int mDashingRows;
+	unsigned int mDashingColumns;
+	unsigned int mDashingTexture;
+	bool mIsDashing;
+
+	unsigned int mAttackingRows;
+	unsigned int mAttackingColumns;
+	unsigned int mAttackingTexture;
+	bool mIsAttacking;
+
+	unsigned int mFallingRows;
+	unsigned int mFallingColumns;
+	unsigned int mFallingTexture;
+	bool mIsFalling;
 
 private:
 	std::vector<SpriteAnimatorFrame*> mFrames;
 	size_t mCurrentIndex;
 	float mTimer;
+
+
+	std::vector<SpriteAnimatorFrame*> mRunningFrames;
+	std::vector<SpriteAnimatorFrame*> mJumpingFrames;
+	std::vector<SpriteAnimatorFrame*> mIdlingFrames;
+	std::vector<SpriteAnimatorFrame*> mDashingFrames;
+	std::vector<SpriteAnimatorFrame*> mAttackingFrames;
+	std::vector<SpriteAnimatorFrame*> mFallingFrames;
+
+
+
 };
 
 class Sprite : public Component {
@@ -64,7 +123,8 @@ public:
 	int mWidth;
 	int mHeight;
 
-	SpriteAnimator* mSpriteAnimator;
+
+	SpriteAnimator* mpSpriteAnimator;
 
 
 

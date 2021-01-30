@@ -23,7 +23,6 @@ public:
 	Transform();
 	~Transform();
 
-	void Sprite();
 	void Update();
 
 	void Serialize(std::ifstream& InputStream);

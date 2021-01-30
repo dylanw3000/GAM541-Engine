@@ -40,6 +40,7 @@ Creation date: October 5, 2020
 #include "GameObjectManager.h"
 
 #include "Components/Component.h"
+#include "Components/Controller.h"
 #include "Components/Transform.h"
 #include "Components/Sprite.h"
 #include "Components/Character.h"
@@ -49,6 +50,9 @@ Creation date: October 5, 2020
 #include "../glm/glm/gtc/matrix_transform.hpp"
 
 #pragma comment (lib, "Gdiplus.lib")
+
+# define PI           3.14159265358979323846  /* pi */
+
 
 // #pragma comment (lib, "opengl32.lib")
 // #pragma comment (lib, "glew32.lib")
@@ -800,13 +804,24 @@ int main(int argc, char* args[])
 			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Sprite* pS = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
+				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
 
 				//glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
 				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
-				model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking)
+				{
+					if (pC->mSwingAng < -PI/2 || pC->mSwingAng > PI/2)
+						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+					else
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				}
+				else if(pT->mVelHoriz > 0)
+					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				else
+					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -824,7 +839,7 @@ int main(int argc, char* args[])
 
 					GLfloat* pTex = new GLfloat[vertexNum * coordsPerTex];
 
-					auto currentTextureOffset = pS->mSpriteAnimator->GetTextureCoords();
+					auto currentTextureOffset = pS->mpSpriteAnimator->GetTextureCoords();
 
 					pTex[0] = 0.0f;			pTex[1] = 0.5f;
 					pTex[2] = 0.25;			pTex[3] = 0.5f;

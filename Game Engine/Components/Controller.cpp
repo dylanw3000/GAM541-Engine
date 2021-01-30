@@ -12,6 +12,7 @@ Creation date: October 15, 2020
 - End Header --------------------------------------------------------*/
 
 #include "Controller.h"
+#include "Sprite.h"
 #include "..\InputManager.h"
 #include "..\..\SDL2.0 Lib\include\SDL_scancode.h"
 #include "..\GameObject.h"
@@ -158,7 +159,13 @@ void Controller::Update() {
 	}
 
 	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
+	Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
 	if (mSwinging) {
+		if (pS->mIsAnimated)
+		{
+			if (!pS->mpSpriteAnimator->mIsAttacking)
+				pS->mpSpriteAnimator->StartAttacking();
+		}
 		mSwingAng = atan2(gpInputManager->mMouseY - pT->mPositionY, gpInputManager->mMouseX - pT->mPositionX);
 		// mSwingAng > 0.0 && mSwingAng < 1.0 ? pT->mSpriteOffsetY = -30 : pT->mSpriteOffsetY = 0;
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
@@ -171,6 +178,7 @@ void Controller::Update() {
 		}
 
 		if (mSwingTimer >= mSwingTime) {
+			pS->mpSpriteAnimator->mIsAttacking = false;
 			mSwinging = false;			
 			// pC->mHP -= 1;
 
