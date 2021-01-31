@@ -23,7 +23,6 @@ Creation date: October 5, 2020
 
 #include "stdio.h"
 
-#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -35,6 +34,7 @@ Creation date: October 5, 2020
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "Moderator.h"
+#include "LoadShaders.h"
 
 #include "GameObject.h"
 #include "GameObjectManager.h"
@@ -83,152 +83,6 @@ extern "C" FILE * __cdecl __iob_func(void)
 
 
 GLint gRenderID, gCircID, gRectID;
-
-void LoadShaders() {
-	gRenderID = glCreateProgram();
-
-	// Vertex Shader
-	{
-		
-		std::ifstream openFile("Transform.vert");
-		std::string vertexFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-
-		const char* vertexShaderCode = vertexFile.c_str();
-		
-
-		// const char* vertexShaderCode = "";
-
-		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLint status;
-
-		glShaderSource(vertexShaderID, 1, &vertexShaderCode, NULL);
-		glCompileShader(vertexShaderID);
-		glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gRenderID, vertexShaderID);
-		}
-	}
-	
-	// Fragment Shader
-	{
-		
-		std::ifstream openFile("Transform.frag");
-		std::string fragFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-		
-		const char* fragmentShaderCode = fragFile.c_str();
-		
-
-		// const char* fragmentShaderCode = "";
-
-		GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-		GLint status;
-
-		glShaderSource(fragmentShaderID, 1, &fragmentShaderCode, NULL);
-		glCompileShader(fragmentShaderID);
-		glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gRenderID, fragmentShaderID);
-		}
-	}
-
-	// Link the program
-	glLinkProgram(gRenderID);
-	glUseProgram(gRenderID);
-
-
-
-	gCircID = glCreateProgram();
-	// Vertex Shader
-	{
-		
-		std::ifstream openFile("Circ.vert");
-		std::string vertexFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-
-		const char* vertexShaderCode = vertexFile.c_str();
-		
-
-		// const char* vertexShaderCode = "";
-
-		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLint status;
-
-		glShaderSource(vertexShaderID, 1, &vertexShaderCode, NULL);
-		glCompileShader(vertexShaderID);
-		glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gCircID, vertexShaderID);
-		}
-	}
-
-	// Fragment Shader
-	{
-		
-		std::ifstream openFile("Circ.frag");
-		std::string fragFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-
-		const char* fragmentShaderCode = fragFile.c_str();
-
-		GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-		GLint status;
-
-		glShaderSource(fragmentShaderID, 1, &fragmentShaderCode, NULL);
-		glCompileShader(fragmentShaderID);
-		glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gCircID, fragmentShaderID);
-		}
-	}
-
-	glLinkProgram(gCircID);
-	
-	
-	gRectID = glCreateProgram();
-	// Vertex Shader
-	{
-		
-		std::ifstream openFile("Rect.vert");
-		std::string vertexFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-
-		const char* vertexShaderCode = vertexFile.c_str();
-
-		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLint status;
-
-		glShaderSource(vertexShaderID, 1, &vertexShaderCode, NULL);
-		glCompileShader(vertexShaderID);
-		glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gRectID, vertexShaderID);
-		}
-	}
-
-	// Fragment Shader
-	{
-		
-		std::ifstream openFile("Rect.frag");
-		std::string fragFile((std::istreambuf_iterator<char>(openFile)), std::istreambuf_iterator<char>());
-		openFile.close();
-
-		const char* fragmentShaderCode = fragFile.c_str();
-
-		GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-		GLint status;
-
-		glShaderSource(fragmentShaderID, 1, &fragmentShaderCode, NULL);
-		glCompileShader(fragmentShaderID);
-		glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &status);
-		if (status == GL_TRUE) {
-			glAttachShader(gRectID, fragmentShaderID);
-		}
-	}
-
-	glLinkProgram(gRectID);
-}
 
 
 static Uint8* audio_pos; // global pointer to the audio buffer to be played
@@ -291,86 +145,6 @@ int main(int argc, char* args[])
 		printf("Couldn't initialize SDL, error %i\n", error);
 		return 1;
 	}
-
-	// SDL_Init(SDL_INIT_AUDIO);
-	
-	// Audio
-	/*
-	{
-		SDL_AudioSpec want, have;
-		SDL_AudioDeviceID dev;
-
-		SDL_memset(&want, 0, sizeof(want));
-		want.freq = 48000;
-		want.format = AUDIO_F32;
-		want.channels = 2;
-		want.samples = 4096;
-		want.callback = my_audio_callback;
-
-		dev = SDL_OpenAudioDevice(NULL, 0, &want, &have, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
-		if (dev == 0) {
-			SDL_Log("Failed to open audio: %s", SDL_GetError());
-		}
-		else {
-			if (have.format != want.format) {
-				SDL_Log("We didn't get Float32 audio format.");
-			}
-			SDL_PauseAudioDevice(dev, 0);
-			SDL_Delay(5000);
-			SDL_CloseAudioDevice(dev);
-		}
-	}
-	*/
-	
-	/*
-	SDL_AudioSpec wavSpec;
-	Uint32 wavLength;
-	Uint8* wavBuffer;
-	SDL_LoadWAV("../Resources/Smooth.wav", &wavSpec, &wavBuffer, &wavLength);
-
-	SDL_AudioDeviceID deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 0);
-
-	// SDL_QueueAudio(deviceId, wavBuffer, wavLength);
-	SDL_OpenAudio(&wavSpec, NULL);
-	SDL_PauseAudioDevice(deviceId, 0);
-	*/
-
-	/*
-	{
-		// local variables
-		static Uint32 wav_length; // length of our sample
-		static Uint8* wav_buffer; // buffer containing our audio file
-		static SDL_AudioSpec wav_spec; // the specs of our piece of music
-
-
-		if (SDL_LoadWAV("../Resources/Smooth.wav", &wav_spec, &wav_buffer, &wav_length) == NULL) {
-			return 1;
-		}
-		
-
-		// set the callback function
-		wav_spec.callback = my_audio_callback;
-		wav_spec.userdata = NULL;
-		// set our global static variables
-		audio_pos = wav_buffer; // copy sound buffer
-		audio_len = wav_length; // copy file length
-
-		if (SDL_OpenAudio(&wav_spec, NULL) < 0) {
-			fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-			exit(-1);
-		}
-
-		SDL_PauseAudio(0);
-
-		while (audio_len > 0) {
-			SDL_Delay(100);
-		}
-
-		SDL_CloseAudio();
-		SDL_FreeWAV(wav_buffer);
-		
-	}
-	*/
 
 	// OpenGL 2.1
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -496,47 +270,6 @@ int main(int argc, char* args[])
 	delete[] pPositions;
 	delete[] pColors;
 	delete[] pTex;
-	
-	/*
-	// Load Texture
-	GLuint textureID1;
-	{
-		Gdiplus::Bitmap bmp(L"..\\Resources\\Angry.png");
-		Gdiplus::Rect rect(0, 0, bmp.GetWidth(), bmp.GetHeight());
-		Gdiplus::BitmapData data;
-		bmp.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, &data);
-		glGenTextures(1, &textureID1);
-
-		glBindTexture(GL_TEXTURE_2D, textureID1);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, data.Width, data.Height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data.Scan0);
-
-		bmp.UnlockBits(&data);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
-	GLuint textureID2;
-	{
-		Gdiplus::Bitmap bmp(L"..\\Resources\\Shocked.png");
-		Gdiplus::Rect rect(0, 0, bmp.GetWidth(), bmp.GetHeight());
-		Gdiplus::BitmapData data;
-		bmp.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, &data);
-		glGenTextures(1, &textureID2);
-
-		glBindTexture(GL_TEXTURE_2D, textureID2);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, data.Width, data.Height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data.Scan0);
-
-		bmp.UnlockBits(&data);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	*/
 
 	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");

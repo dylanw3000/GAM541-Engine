@@ -38,6 +38,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Moderator.cpp" />
+    <ClCompile Include="LoadShaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Moderator.h" />
+    <ClInclude Include="LoadShaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
@@ -84,6 +86,9 @@
   <ItemGroup>
     <Filter Include="Components">
       <UniqueIdentifier>{5ec2d55e-7aaa-4b30-9d53-0f4b47bb9aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6c23e716-2674-43f6-85a4-fd8c7662a806}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,5 +98,23 @@
     <None Include="Circ.vert" />
     <None Include="Rect.frag" />
     <None Include="Rect.vert" />
+    <None Include="Shaders\Circ.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Circ.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Transform.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Transform.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Rect.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Rect.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

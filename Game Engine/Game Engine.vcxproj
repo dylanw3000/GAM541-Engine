@@ -100,6 +100,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LoadShaders.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Moderator.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LoadShaders.h" />
     <ClInclude Include="Moderator.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="resource.h" />
@@ -134,6 +136,12 @@
     <None Include="Circ.vert" />
     <None Include="Rect.frag" />
     <None Include="Rect.vert" />
+    <None Include="Shaders\Circ.frag" />
+    <None Include="Shaders\Circ.vert" />
+    <None Include="Shaders\Rect.frag" />
+    <None Include="Shaders\Rect.vert" />
+    <None Include="Shaders\Transform.frag" />
+    <None Include="Shaders\Transform.vert" />
     <None Include="Transform.frag" />
     <None Include="Transform.vert" />
   </ItemGroup>
