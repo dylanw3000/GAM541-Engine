@@ -18,6 +18,7 @@ Creation date: October 15, 2020
 #include "..\GameObject.h"
 #include "Transform.h"
 #include "Character.h"
+#include "Body.h"
 #include "math.h"
 #include "..\FrameRateController.h"
 #include "../GameObjectManager.h"
@@ -81,6 +82,7 @@ void Controller::Update() {
 
 	mDashTimer += gpFRC->GetFrameTime();
 	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE) && mDashTimer >= mDashCooldown) {
+		/*
 		mDashTimer = 0;
 
 		if (h_mod == 0 && v_mod == 0) {
@@ -90,16 +92,62 @@ void Controller::Update() {
 			pT->mVelHoriz += 1000 * h_mod;
 			pT->mVelVert += 1000 * v_mod;
 		}
+		*/
+		pT->mVelVert = -600; // jumping
 	}
 
 	float dTime = gpFRC->GetDeltaTime();
 	
+
+
+	Body* pB = static_cast<Body*>(mpOwner->GetComponent(TYPE_BODY));
 	/*** Horiz ***/
 	pT->mVelHoriz += mAcceleration * h_mod * dTime;
 
+	for (auto pObject : gpGameObjectManager->mGameObjects) {
+		Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+		if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+
+		Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+		if (
+			pT->mPositionY > pTrans->mPositionY - pBody->mHeight
+			&& pT->mPositionY - pB->mHeight < pTrans->mPositionY
+			&& pT->mPositionX - pB->mWidth / 2 + (pT->mVelHoriz*dTime) < pTrans->mPositionX + pBody->mWidth / 2
+			&& pT->mPositionX + pB->mWidth / 2 + (pT->mVelHoriz * dTime) > pTrans->mPositionX - pBody->mWidth / 2
+		) {
+			pT->mVelHoriz = 0.0f;
+		}
+	}
+
 
 	/*** Vert ***/
-	pT->mVelVert += mAcceleration * v_mod * dTime;
+	// pT->mVelVert += mAcceleration * v_mod * dTime;
+	pT->mVelVert += 800 * dTime;  // gravity
+
+	for (auto pObject : gpGameObjectManager->mGameObjects) {
+		Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+		if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+
+		Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+		if (
+			pT->mPositionY + (pT->mVelVert*dTime) > pTrans->mPositionY - pBody->mHeight
+			&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) < pTrans->mPositionY
+			&& pT->mPositionX - pB->mWidth/2 < pTrans->mPositionX + pBody->mWidth/2
+			&& pT->mPositionX + pB->mWidth/2 > pTrans->mPositionX - pBody->mWidth/2
+		) {
+			/*		// attempt at pixel, perfect collision, needs adjustments
+			while (
+				pT->mPositionY + (pT->mVelVert >= 0 ? 1.f : -1.f) < pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert >= 0 ? 1.f : -1.f) > pTrans->mPositionY
+			) {
+				pT->mPositionY += (pT->mVelVert >= 0 ? 1.f : -1.f);
+			}
+			*/
+			pT->mVelVert = 0.0f;
+		}
+	}
 
 
 	/*** Slowing ***/
@@ -113,6 +161,7 @@ void Controller::Update() {
 		}
 	}
 
+	/*
 	if (pT->mVelVert != 0) {
 		if (fabsf(pT->mVelVert) - fabsf(mAcceleration * sinf(ang) * mSlowMod * dTime) <= 0) {
 			pT->mVelVert = 0;
@@ -121,17 +170,27 @@ void Controller::Update() {
 			pT->mVelVert -= mAcceleration * sinf(ang) * mSlowMod * dTime;
 		}
 	}
+	*/
 
-	float sqVel = (pT->mVelHoriz * pT->mVelHoriz + pT->mVelVert * pT->mVelVert) / (mMaxSpeed * mMaxSpeed);
+	// TODO: Strip out code from when game was top-down
+	// float sqVel = (pT->mVelHoriz * pT->mVelHoriz + pT->mVelVert * pT->mVelVert) / (mMaxSpeed * mMaxSpeed);
+	float sqVel = (pT->mVelHoriz * pT->mVelHoriz) / (mMaxSpeed * mMaxSpeed);
 	if (sqVel > 1.0f) {
 		// ang = atan2f(mVelVert, mVelHoriz);
-		if (sqrtf(pT->mVelHoriz * pT->mVelHoriz + pT->mVelVert * pT->mVelVert) - mAcceleration * mExcessSlowMod * dTime <= mMaxSpeed) {
+		if(fabsf(pT->mVelHoriz) - mAcceleration*mExcessSlowMod*dTime <= mMaxSpeed){
+		// if (sqrtf(pT->mVelHoriz * pT->mVelHoriz + pT->mVelVert * pT->mVelVert) - mAcceleration * mExcessSlowMod * dTime <= mMaxSpeed) {
+			/*
 			pT->mVelHoriz /= sqVel;
 			pT->mVelVert /= sqVel;
+			*/
+			pT->mVelHoriz /= sqVel;
 		}
 		else {
+			pT->mVelHoriz -= mAcceleration * mExcessSlowMod * dTime;
+			/*
 			pT->mVelHoriz -= mAcceleration * cosf(ang) * mExcessSlowMod * dTime;
 			pT->mVelVert -= mAcceleration * sinf(ang) * mExcessSlowMod * dTime;
+			*/
 		}
 	}
 

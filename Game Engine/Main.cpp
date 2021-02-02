@@ -285,6 +285,9 @@ int main(int argc, char* args[])
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
+	gpModerator->mStage = 1;
+	gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
+
 	// Game loop
 	while(true == appIsRunning)
 	{
@@ -333,7 +336,7 @@ int main(int argc, char* args[])
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		gpModerator->Update();
+		// gpModerator->Update();
 		if (gpModerator->mStage == 0) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
@@ -623,6 +626,8 @@ int main(int argc, char* args[])
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Character* pC = static_cast<Character*>(pGameObject->GetComponent(TYPE_CHARACTER));
 
+				if (!pC) { continue; }
+
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX, pT->mPositionY - pT->mHeight + pT->mSpriteOffsetY - 10.0f, 1.0f));
 				model = glm::rotate(model, 0.0f, glm::vec3(0, 0, 1));
@@ -724,6 +729,7 @@ int main(int argc, char* args[])
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {
 			Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
+			if (!pC) { continue; }
 			if (pC->mHP <= 0) {
 				// gpObjectFactory->LoadGameObject("../Resources/Slime.json");
 				gpGameObjectManager->DeleteObject(pC->mpOwner);

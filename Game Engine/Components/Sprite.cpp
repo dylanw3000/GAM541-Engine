@@ -21,6 +21,7 @@ extern FrameRateController* gpFRC;
 
 Sprite::Sprite() : Component(TYPE_SPRITE) {
 	mpSurface = nullptr;
+	mIsAnimated = false;
 }
 
 Sprite::~Sprite() {

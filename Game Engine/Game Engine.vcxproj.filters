@@ -39,6 +39,9 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Moderator.cpp" />
     <ClCompile Include="LoadShaders.cpp" />
+    <ClCompile Include="Components\Body.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -79,6 +82,9 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Moderator.h" />
     <ClInclude Include="LoadShaders.h" />
+    <ClInclude Include="Components\Body.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
