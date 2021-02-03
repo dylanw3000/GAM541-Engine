@@ -23,6 +23,7 @@ Creation date: October 15, 2020
 #include "Components/Slime.h"
 #include "Components/Augmentor.h"
 #include "Components/Sniper.h"
+#include "Components/Body.h"
 
 GameObject::GameObject() {
 	//
@@ -52,6 +53,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_CHARACTER:
 			pNewComponent = new Character();
+			break;
+		case TYPE_BODY:
+			pNewComponent = new Body();
 			break;
 		case TYPE_PLAYER_CONTROLLER:
 			pNewComponent = new Controller();

@@ -103,6 +103,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 		pNewComponent = pNewGO->AddComponent(TYPE_SNIPER);
 		pNewComponent->Serialize(document["sniper"].GetArray());
 	}
+	if (document.HasMember("body")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_BODY);
+		pNewComponent->Serialize(document["body"].GetArray());
+	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
 

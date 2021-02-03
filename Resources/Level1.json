@@ -16,11 +16,47 @@
       ]
     },
     {
-      "name": "Slime.json",
+      "name": "Wall.json",
       "transform": [
         {
-          "x": 100,
-          "y": 100
+          "x": 600,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "transform": [
+        {
+          "x": 680,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "transform": [
+        {
+          "x": 760,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "transform": [
+        {
+          "x": 790,
+          "y": 550
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "transform": [
+        {
+          "x": 790,
+          "y": 300
         }
       ]
     }
