@@ -19,6 +19,15 @@
       "name": "Wall.json",
       "transform": [
         {
+          "x": 550,
+          "y": 500
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "transform": [
+        {
           "x": 600,
           "y": 600
         }
