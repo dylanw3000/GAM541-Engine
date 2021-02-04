@@ -46,7 +46,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 	// mVelVert = 0.0f;
 
 	mAcceleration = 1600;
-	mMaxSpeed = 120;
+	mMaxSpeed = 160;
 
 	mSlowMod = 0.25;
 	mExcessSlowMod = 2.0f;
@@ -103,21 +103,38 @@ void Controller::Update() {
 	Body* pB = static_cast<Body*>(mpOwner->GetComponent(TYPE_BODY));
 	/*** Horiz ***/
 	pT->mVelHoriz += mAcceleration * h_mod * dTime;
+	{
+		bool collision = false;
+		float pos = 0.0;
 
-	for (auto pObject : gpGameObjectManager->mGameObjects) {
-		Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
-		if (!pBody || pBody->mpOwner == mpOwner) { continue; }
 
-		Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+		for (auto pObject : gpGameObjectManager->mGameObjects) {
+			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
 
-		if (
-			pT->mPositionY > pTrans->mPositionY - pBody->mHeight
-			&& pT->mPositionY - pB->mHeight < pTrans->mPositionY
-			&& pT->mPositionX - pB->mWidth / 2 + (pT->mVelHoriz*dTime) < pTrans->mPositionX + pBody->mWidth / 2
-			&& pT->mPositionX + pB->mWidth / 2 + (pT->mVelHoriz * dTime) > pTrans->mPositionX - pBody->mWidth / 2
-		) {
-			pT->mVelHoriz = 0.0f;
+			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+			if (
+				pT->mPositionY >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight <= pTrans->mPositionY
+				&& pT->mPositionX - pB->mWidth / 2 + (pT->mVelHoriz * dTime) <= pTrans->mPositionX + pBody->mWidth / 2
+				&& pT->mPositionX + pB->mWidth / 2 + (pT->mVelHoriz * dTime) >= pTrans->mPositionX - pBody->mWidth / 2
+				) {
+				
+				if (!collision) {
+					collision = true;
+					pos = pTrans->mPositionX + (pB->mWidth/2 + pBody->mWidth/2 + .001) * (pT->mVelHoriz >= 0 ? -1 : 1);
+				}
+				
+				// pT->mVelHoriz = 0.0f;
+			}
 		}
+
+		if (collision) {
+			pT->mVelHoriz = 0.0f;
+			pT->mPositionX = pos;
+		}
+
 	}
 
 
@@ -125,28 +142,35 @@ void Controller::Update() {
 	// pT->mVelVert += mAcceleration * v_mod * dTime;
 	pT->mVelVert += 800 * dTime;  // gravity
 
-	for (auto pObject : gpGameObjectManager->mGameObjects) {
-		Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
-		if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+	{
+		bool collision = false;
+		float pos = 0.0;
 
-		Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+		for (auto pObject : gpGameObjectManager->mGameObjects) {
+			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
 
-		if (
-			pT->mPositionY + (pT->mVelVert*dTime) > pTrans->mPositionY - pBody->mHeight
-			&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) < pTrans->mPositionY
-			&& pT->mPositionX - pB->mWidth/2 < pTrans->mPositionX + pBody->mWidth/2
-			&& pT->mPositionX + pB->mWidth/2 > pTrans->mPositionX - pBody->mWidth/2
-		) {
-			/*		// attempt at pixel, perfect collision, needs adjustments
-			while (
-				pT->mPositionY + (pT->mVelVert >= 0 ? 1.f : -1.f) < pTrans->mPositionY - pBody->mHeight
-				&& pT->mPositionY - pB->mHeight + (pT->mVelVert >= 0 ? 1.f : -1.f) > pTrans->mPositionY
+			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+			if (
+				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
+				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
+				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
 			) {
-				pT->mPositionY += (pT->mVelVert >= 0 ? 1.f : -1.f);
+				if (!collision) {
+					collision = true;
+					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight-.001 : pB->mHeight+.001);
+				}
+				// pT->mVelVert = 0.0f;
 			}
-			*/
-			pT->mVelVert = 0.0f;
 		}
+
+		if (collision) {
+			pT->mVelVert = 0.0f;
+			pT->mPositionY = pos;
+		}
+
 	}
 
 
