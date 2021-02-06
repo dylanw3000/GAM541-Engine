@@ -38,6 +38,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Moderator.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Moderator.h" />
+    <ClInclude Include="AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

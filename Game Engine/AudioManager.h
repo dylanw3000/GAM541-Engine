@@ -2,7 +2,7 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: ObjectFactory.h
+File Name: GameObjectManager.h
 Purpose: Handler of all object-type creations
 Language: C++, gpp
 Platform: gpp
@@ -13,21 +13,11 @@ Creation date: October 15, 2020
 
 #pragma once
 
-class GameObject;
+class AudioManager
+{
+public :
 
-class ObjectFactory {
-public:
-	ObjectFactory();
-	~ObjectFactory();
-	
-	void RegisterCreator(const char* type, bool a);
+	AudioManager();
+	~AudioManager();
 
-	GameObject* LoadGameObject(const char* pFileName);
-	GameObject* CreateGameObject();
-	void LoadLevel(const char* pFileName);
-public:
-
-
-private:
-private:
 };

@@ -22,6 +22,7 @@ Transform::Transform() : Component(TYPE_TRANSFORM) {
 	mSpriteOffsetX = mSpriteOffsetY = 0.0f;
 	mAngle = 0.0f;
 	mWidth = mHeight = 64.0f;
+
 }
 
 Transform::~Transform() {

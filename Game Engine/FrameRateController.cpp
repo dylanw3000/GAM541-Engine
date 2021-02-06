@@ -25,7 +25,10 @@ FrameRateController::FrameRateController(unsigned int MaxFrameRate) {
 	mTickEnd = 0;
 	mFrameTime = 0;
 	mDeltaTime = 0.0f;
+
 }
+
+
 
 FrameRateController::~FrameRateController() {
 	//
