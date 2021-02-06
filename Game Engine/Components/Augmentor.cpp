@@ -35,6 +35,7 @@ Augmentor::Augmentor() : Component(TYPE_AUGMENTOR) {
 
 Augmentor::~Augmentor() {
 	//
+	printf("a");
 }
 
 void Augmentor::Update() {

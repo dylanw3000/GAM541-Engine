@@ -48,6 +48,12 @@ Creation date: October 5, 2020
 #include "../glm/glm/glm.hpp"
 #include "../glm/glm/gtc/matrix_transform.hpp"
 
+#pragma region AudioStuff
+#include "AudioManager.h"
+AudioManager* gpAudioManager;
+#pragma endregion
+
+
 #pragma comment (lib, "Gdiplus.lib")
 
 // #pragma comment (lib, "opengl32.lib")
@@ -276,6 +282,8 @@ int main(int argc, char* args[])
 	gpCollisionManager = new CollisionManager();
 	gpEventManager = new EventManager();
 	gpModerator = new Moderator();
+
+	gpAudioManager = new AudioManager();
 
 	DEBUG = false;
 
@@ -550,7 +558,7 @@ int main(int argc, char* args[])
 	while(true == appIsRunning)
 	{
 		
-
+		gpAudioManager->system->update();
 		// Get the time at the start of the frame
 		gpFRC->FrameStart();
 

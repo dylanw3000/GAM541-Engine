@@ -60,7 +60,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\FMOD\lib\x86;..\SDL2.0 Lib\lib\x86;..\glew-2.2.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;opengl32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodstudio_vc.lib;fmod_vc.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;opengl32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,12 +81,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\FMOD\lib\x86;..\SDL2.0 Lib\lib\x86;..\glew-2.2.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;opengl32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodstudio_vc.lib;fmod_vc.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;opengl32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="common_platform.cpp" />
     <ClCompile Include="Components\Augmentor.cpp" />
     <ClCompile Include="Components\Character.cpp" />
     <ClCompile Include="Components\Component.cpp" />
@@ -109,6 +111,8 @@
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="common_platform.h" />
     <ClInclude Include="Components\Augmentor.h" />
     <ClInclude Include="Components\Character.h" />
     <ClInclude Include="Components\Component.h" />

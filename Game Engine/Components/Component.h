@@ -51,7 +51,7 @@ public:
 public:
 	GameObject* mpOwner;
 
-
+	
 private:
 private:
 	unsigned int mType;

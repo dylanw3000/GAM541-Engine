@@ -15,8 +15,6 @@ Creation date: October 15, 2020
 #include "..\ResourceManager.h"
 #include "SDL_surface.h"
 
-#include "fmod.hpp"
-
 extern ResourceManager* gpResourceManager;
 
 Sprite::Sprite() : Component(TYPE_SPRITE) {

@@ -39,6 +39,12 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Moderator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="common_platform.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -79,6 +85,12 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Moderator.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common_platform.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
@@ -86,6 +98,9 @@
   <ItemGroup>
     <Filter Include="Components">
       <UniqueIdentifier>{5ec2d55e-7aaa-4b30-9d53-0f4b47bb9aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{dee32184-cf2e-4376-a96d-a22aa40fb1a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
