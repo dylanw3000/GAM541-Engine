@@ -41,7 +41,7 @@ void Transform::Update() {
 	
 	if (pS->mIsAnimated)
 	{
-		if (abs(mVelHoriz) > pC->mMaxSpeed)
+		if (pS->mpSpriteAnimator->mCanDash && abs(mVelHoriz) > pC->mMaxSpeed)
 		{
 			// If not already dashing, and not attacking (attacking takes priority)
 			if (!pS->mpSpriteAnimator->mIsDashing && !pS->mpSpriteAnimator->mIsAttacking)
@@ -54,27 +54,27 @@ void Transform::Update() {
 			if (mVelVert < -0.5)
 			{
 				//If not already jumping, and not attacking or dashing (attacking or dashing takes priority)
-				if (!pS->mpSpriteAnimator->mIsJumping && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+				if (!pS->mpSpriteAnimator->mIsJumping && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing && pS->mpSpriteAnimator->mCanJump)
 					pS->mpSpriteAnimator->StartJumping();
 			}
 			else if (mVelVert > 0.5)
 			{
 				//TODO: Start falling
 				//If not already falling, and not attacking or dashing (attacking or dashing takes priority)
-				if (!pS->mpSpriteAnimator->mIsFalling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+				if (!pS->mpSpriteAnimator->mIsFalling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing && pS->mpSpriteAnimator->mCanFall)
 					pS->mpSpriteAnimator->StartFalling();
 
 			}
 			else if (abs(mVelHoriz) > 0)
 			{
 				//If not already running, and not attacking or dashing (attacking or dashing takes priority)
-				if (!pS->mpSpriteAnimator->mIsRunning && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+				if (!pS->mpSpriteAnimator->mIsRunning && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing && pS->mpSpriteAnimator->mCanRun)
 					pS->mpSpriteAnimator->StartRunning();
 			}
 			else
 			{
 				//If not already idling, and not attacking or dashing (attacking or dashing takes priority)
-				if (!pS->mpSpriteAnimator->mIsIdling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing)
+				if (!pS->mpSpriteAnimator->mIsIdling && !pS->mpSpriteAnimator->mIsAttacking && !pS->mpSpriteAnimator->mIsDashing && pS->mpSpriteAnimator->mCanIdle)
 					pS->mpSpriteAnimator->StartIdling();
 
 			}

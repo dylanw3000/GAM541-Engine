@@ -61,31 +61,37 @@ public:
 	unsigned int mRunningColumns;
 	unsigned int mRunningTexture;
 	bool mIsRunning;
+	bool mCanRun = false;
 
 	unsigned int mJumpingRows;
 	unsigned int mJumpingColumns;
 	unsigned int mJumpingTexture;
 	bool mIsJumping;
+	bool mCanJump = false;
 
 	unsigned int mIdlingRows;
 	unsigned int mIdlingColumns;
 	unsigned int mIdlingTexture;
 	bool mIsIdling;
+	bool mCanIdle = false;
 
 	unsigned int mDashingRows;
 	unsigned int mDashingColumns;
 	unsigned int mDashingTexture;
 	bool mIsDashing;
+	bool mCanDash = false;
 
 	unsigned int mAttackingRows;
 	unsigned int mAttackingColumns;
 	unsigned int mAttackingTexture;
 	bool mIsAttacking;
+	bool mCanAttack = false;
 
 	unsigned int mFallingRows;
 	unsigned int mFallingColumns;
 	unsigned int mFallingTexture;
 	bool mIsFalling;
+	bool mCanFall = false;
 
 private:
 	std::vector<SpriteAnimatorFrame*> mFrames;
@@ -117,6 +123,7 @@ public:
 	SDL_Surface* mpSurface;
 	unsigned int mTexture;
 	bool mIsAnimated;
+	
 
 	unsigned int mRows;
 	unsigned int mColumns;

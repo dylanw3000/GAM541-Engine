@@ -270,31 +270,37 @@ SpriteAnimator::~SpriteAnimator()
 void SpriteAnimator::AddIdlingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mIdlingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanIdle = true;
 }
 
 void SpriteAnimator::AddRunningFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mRunningFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanRun = true;
 }
 
 void SpriteAnimator::AddAttackingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mAttackingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanAttack = true;
 }
 
 void SpriteAnimator::AddDashingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mDashingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanDash = true;
 }
 
 void SpriteAnimator::AddJumpingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mJumpingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanJump = true;
 }
 
 void SpriteAnimator::AddFallingFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
 {
 	mFallingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+	mCanFall = true;
 }
 
 void SpriteAnimator::Update()

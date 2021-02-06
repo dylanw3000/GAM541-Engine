@@ -9,7 +9,10 @@
   ],
   "sprite": [
     {
-      "imageName": "wall.png"
+      "animated": true,
+      "idlingImageName": "Wall_Idling.png",
+      "idlingColumns": 4,
+      "idlingRows": 1
     }
   ],
   "body": [
