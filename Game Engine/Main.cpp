@@ -49,6 +49,8 @@ Creation date: October 5, 2020
 #include "../glm/glm/glm.hpp"
 #include "../glm/glm/gtc/matrix_transform.hpp"
 
+#include "AudioManager.h"
+
 #pragma comment (lib, "Gdiplus.lib")
 
 # define PI           3.14159265358979323846  /* pi */
@@ -69,6 +71,8 @@ ObjectFactory* gpObjectFactory;
 CollisionManager* gpCollisionManager;
 EventManager* gpEventManager;
 Moderator* gpModerator;
+
+AudioManager* gpAudioManager;
 
 bool DEBUG;
 
@@ -134,6 +138,8 @@ int main(int argc, char* args[])
 	gpCollisionManager = new CollisionManager();
 	gpEventManager = new EventManager();
 	gpModerator = new Moderator();
+
+	gpAudioManager = new AudioManager();
 
 	DEBUG = false;
 
@@ -291,7 +297,7 @@ int main(int argc, char* args[])
 	// Game loop
 	while(true == appIsRunning)
 	{
-		
+		gpAudioManager->system->update();
 
 		// Get the time at the start of the frame
 		gpFRC->FrameStart();

@@ -42,6 +42,9 @@
     <ClCompile Include="Components\Body.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="common_platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -85,6 +88,9 @@
     <ClInclude Include="Components\Body.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="common_platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
