@@ -53,6 +53,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 
 	mDashTimer = mDashCooldown = 2000;
 
+
 	mSwingTime = 800;
 	mSwingDelay = 400;
 	mSwingTimer = mSwingTime + mSwingDelay;
@@ -81,7 +82,7 @@ void Controller::Update() {
 	}
 
 	mDashTimer += gpFRC->GetFrameTime();
-	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE) && mDashTimer >= mDashCooldown) {
+	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) {
 		/*
 		mDashTimer = 0;
 
@@ -94,6 +95,23 @@ void Controller::Update() {
 		}
 		*/
 		pT->mVelVert = -600; // jumping
+	}
+
+	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyTriggered(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
+	{
+
+		mDashTimer = 0;
+		//if already triggered within the Limit
+		if (h_mod == 0 && v_mod == 0) {
+			pT->mVelHoriz += 1000;
+		}
+		else {
+			pT->mVelHoriz += 1000 * h_mod;
+			pT->mVelVert += 1000 * v_mod;
+		}
+		
+
+		
 	}
 
 	float dTime = gpFRC->GetDeltaTime();
@@ -195,6 +213,7 @@ void Controller::Update() {
 		}
 	}
 	*/
+	
 
 	// TODO: Strip out code from when game was top-down
 	// float sqVel = (pT->mVelHoriz * pT->mVelHoriz + pT->mVelVert * pT->mVelVert) / (mMaxSpeed * mMaxSpeed);
@@ -210,7 +229,7 @@ void Controller::Update() {
 			pT->mVelHoriz /= sqVel;
 		}
 		else {
-			pT->mVelHoriz -= mAcceleration * mExcessSlowMod * dTime;
+			pT->mVelHoriz -= mAcceleration * cosf(ang) * mExcessSlowMod * dTime;
 			/*
 			pT->mVelHoriz -= mAcceleration * cosf(ang) * mExcessSlowMod * dTime;
 			pT->mVelVert -= mAcceleration * sinf(ang) * mExcessSlowMod * dTime;
