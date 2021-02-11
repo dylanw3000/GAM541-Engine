@@ -767,7 +767,7 @@ int main(int argc, char* args[])
 	SDL_GL_DeleteContext(openGL_Context);
 
 	gpResourceManager->~ResourceManager();
-	gpGameObjectManager->~GameObjectManager();
+	
 
 
 	// Close and destroy the window
