@@ -66,6 +66,8 @@ Controller::~Controller() {
 	//
 }
 
+extern bool DEBUG;
+
 void Controller::Update() {
 
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
@@ -97,7 +99,7 @@ void Controller::Update() {
 		pT->mVelVert = -600; // jumping
 	}
 
-	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyTriggered(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
+	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyPressed(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
 	{
 
 		mDashTimer = 0;
@@ -343,6 +345,10 @@ void Controller::Update() {
 
 	/*** Milestone 3 ***/
 	pT->mAngle += (gpInputManager->IsKeyPressed(SDL_SCANCODE_E) - gpInputManager->IsKeyPressed(SDL_SCANCODE_Q)) * 2.0f * dTime;
+
+	if (DEBUG) {
+		pC->AddRectColor(pT->mPositionX, pT->mPositionY-20.f, -3.14159 / 2.0f, 48.f, 16.f, 1.f, .4, .8, .4, 0.5f, .2, .8, .2, 0.2f);
+	}
 }
 
 

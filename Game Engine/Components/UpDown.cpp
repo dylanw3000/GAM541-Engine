@@ -54,6 +54,10 @@ void UpDown::Update() {
 		Character* pChar = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
 		Transform* pTrans = static_cast<Transform*>(pGO->GetComponent(TYPE_TRANSFORM));
 
+		if (pChar == nullptr) {
+			continue;
+		}
+
 		float dist = powf(pTrans->mPositionY - pT->mPositionY, 2) + powf(pTrans->mPositionX - pT->mPositionX, 2);
 		if ( powf(pTrans->mPositionY - pT->mPositionY, 2) + powf(pTrans->mPositionX - pT->mPositionX, 2) <= powf(150.f + pChar->mRadius, 2) ) {
 			Event* shove = new Event(EventType::SHOVE);
