@@ -27,6 +27,7 @@ public:
 
 	void DeleteObject(GameObject* pGO);
 	bool mDestroy;
+	int mNextID;
 
 
 private:

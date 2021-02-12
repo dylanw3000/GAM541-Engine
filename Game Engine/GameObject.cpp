@@ -13,6 +13,7 @@ Creation date: October 15, 2020
 
 #include "GameObject.h"
 #include "EventManager.h"
+#include "GameObjectManager.h"
 
 #include "Components/Sprite.h"
 #include "Components/Transform.h"
@@ -25,8 +26,11 @@ Creation date: October 15, 2020
 #include "Components/Sniper.h"
 #include "Components/Body.h"
 
+extern GameObjectManager* gpGameObjectManager;
+
 GameObject::GameObject() {
 	//
+	mId = gpGameObjectManager->mNextID++;
 }
 
 GameObject::~GameObject() {

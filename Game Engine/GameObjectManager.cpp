@@ -18,6 +18,7 @@ Creation date: October 15, 2020
 
 GameObjectManager::GameObjectManager() {
 	mDestroy = false;
+	mNextID = 0;
 }
 
 GameObjectManager::~GameObjectManager() {
