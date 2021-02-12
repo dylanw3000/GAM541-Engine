@@ -769,7 +769,6 @@ int main(int argc, char* args[])
 	gpResourceManager->~ResourceManager();
 	
 
-
 	// Close and destroy the window
 	SDL_DestroyWindow(pWindow);
 
