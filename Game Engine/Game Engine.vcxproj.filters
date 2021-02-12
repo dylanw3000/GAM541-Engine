@@ -45,6 +45,22 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="common_platform.cpp" />
+    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocessor.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glad\src\glad.c" />
+    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\texture.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -91,6 +107,21 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="common_platform.h" />
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocessor.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\texture.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
@@ -126,6 +157,24 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\Rect.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
