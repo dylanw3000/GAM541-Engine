@@ -143,16 +143,14 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 
 		if (d.HasMember("transform")) {		// TODO "components": { "transform": [ 1, 2 ], "sprite": "Angry.bmp" }
 			Transform* pTransform = static_cast<Transform*>(pNewGO->GetComponent(TYPE_TRANSFORM));
-			if (pTransform != nullptr) {
-				pTransform->Serialize(d["transform"].GetArray());
-			}
+			assert(pTransform != nullptr);
+			pTransform->Serialize(d["transform"].GetArray());
 		}
 
 		if (d.HasMember("sprite")) {
 			Sprite* pSprite = static_cast<Sprite*>(pNewGO->GetComponent(TYPE_SPRITE));
-			if (pSprite != nullptr) {
-				pSprite->Serialize(d["sprite"].GetArray());
-			}
+			assert(pSprite != nullptr);
+			pSprite->Serialize(d["sprite"].GetArray());
 		}
 		
 		if (d.HasMember("character")) {
@@ -168,37 +166,32 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 
 		if (d.HasMember("controller")) {
 			Controller* pController = static_cast<Controller*>(pNewGO->GetComponent(TYPE_PLAYER_CONTROLLER));
-			if (pController != nullptr) {
-				pController->Serialize(d["controller"].GetArray());
-			}
+			assert(pController != nullptr);
+			pController->Serialize(d["controller"].GetArray());
 		}
 
 		if (d.HasMember("updown")) {
 			UpDown* pUpDown = static_cast<UpDown*>(pNewGO->GetComponent(TYPE_UP_DOWN));
-			if (pUpDown != nullptr) {
-				pUpDown->Serialize(d["updown"].GetArray());
-			}
+			assert(pUpDown != nullptr);
+			pUpDown->Serialize(d["updown"].GetArray());
 		}
 
 		if (d.HasMember("slime")) {
 			Slime* pSlime = static_cast<Slime*>(pNewGO->GetComponent(TYPE_SLIME));
-			if (pSlime != nullptr) {
-				pSlime->Serialize(d["slime"].GetArray());
-			}
+			assert(pSlime != nullptr);
+			pSlime->Serialize(d["slime"].GetArray());
 		}
 		
 		if (d.HasMember("augmentor")) {
 			Augmentor* pAugmentor = static_cast<Augmentor*>(pNewGO->GetComponent(TYPE_AUGMENTOR));
-			if (pAugmentor != nullptr) {
-				pAugmentor->Serialize(d["augmentor"].GetArray());
-			}
+			assert(pAugmentor != nullptr);
+			pAugmentor->Serialize(d["augmentor"].GetArray());
 		}
 		
 		if (d.HasMember("sniper")) {
 			Sniper* pSniper = static_cast<Sniper*>(pNewGO->GetComponent(TYPE_SNIPER));
-			if (pSniper != nullptr) {
-				pSniper->Serialize(d["sniper"].GetArray());
-			}
+			assert(pSniper != nullptr);
+			pSniper->Serialize(d["sniper"].GetArray());
 		}
 	}
 

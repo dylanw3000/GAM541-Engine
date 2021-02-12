@@ -17,6 +17,7 @@ Creation date: October 5, 2020
 #include <gl/GL.h>
 #include <gdiplus.h>
 #include <string>
+#include <assert.h>
 
 #pragma comment (lib, "Gdiplus.lib")
 
@@ -57,11 +58,11 @@ unsigned int ResourceManager::LoadTexture(const char* pFilePath) {
 
 	std::string pathString(pFilePath);
 	// const wchar_t* pathW = pathString.c_str();
+	assert(!pathString.empty());
 
 	Gdiplus::Bitmap bmp(std::wstring(pathString.begin(), pathString.end()).c_str());
 	// Gdiplus::Bitmap bmp(L"..\\Resources\\Angry.png");
 	Gdiplus::Rect rect(0, 0, bmp.GetWidth(), bmp.GetHeight());
-
 
 	Gdiplus::BitmapData data;
 	bmp.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, &data);

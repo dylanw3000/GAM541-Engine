@@ -14,6 +14,7 @@ Creation date: November 23, 2020
 #include "EventManager.h"
 #include "GameObjectManager.h"
 #include "GameObject.h"
+#include <assert.h>
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -45,6 +46,7 @@ void EventManager::BroadcastEvent(Event* pEvent) {
 
 void EventManager::BroadcastEventToSubscribers(Event* pEvent) {
 	std::list<GameObject*>& listOfSubscribers = mSubscriptions[pEvent->mType];
+	assert(!listOfSubscribers.empty()); 
 
 	for (auto pGO : listOfSubscribers)
 		pGO->HandleEvent(pEvent);
