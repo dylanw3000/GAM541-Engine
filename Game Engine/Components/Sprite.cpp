@@ -72,9 +72,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mIdlingRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
 				}
@@ -98,9 +98,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mRunningRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddRunningFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
 				}
@@ -123,9 +123,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mJumpingRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddJumpingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
 				}
@@ -147,9 +147,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mAttackingRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddAttackingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
 				}
@@ -172,9 +172,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mDashingRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddDashingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.05f);
 				}
@@ -197,9 +197,9 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				mpSpriteAnimator->mFallingRows = rows;
 			}
 
-			for (int i = 0; i < cols; i++)
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
+				for (int i = 0; i < cols; i++)
 				{
 					mpSpriteAnimator->AddFallingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.1f);
 				}

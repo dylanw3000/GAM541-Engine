@@ -10,8 +10,10 @@
   ],
   "sprite": [ 
     {
-    "animated": false,
-    "imageName": "cupcake.png"
+      "animated": true,
+      "idlingImageName": "Slime_Idling.png",
+      "idlingColumns": 8,
+      "idlingRows": 2
     }  
   ],
   "character": [
