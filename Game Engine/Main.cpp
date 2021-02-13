@@ -83,6 +83,7 @@ extern "C" FILE * __cdecl __iob_func(void)
 	return _iob;
 }
 
+
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 
 
