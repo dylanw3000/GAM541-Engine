@@ -347,7 +347,7 @@ void Controller::Update() {
 	pT->mAngle += (gpInputManager->IsKeyPressed(SDL_SCANCODE_E) - gpInputManager->IsKeyPressed(SDL_SCANCODE_Q)) * 2.0f * dTime;
 
 	if (DEBUG) {
-		pC->AddRectColor(pT->mPositionX, pT->mPositionY-20.f, -3.14159 / 2.0f, 48.f, 16.f, 1.f, .4, .8, .4, 0.5f, .2, .8, .2, 0.2f);
+		pC->AddRectColor(pT->mPositionX, pT->mPositionY-24.f, -3.14159 / 2.0f, 48.f, 16.f, 1.f, .4, .8, .4, 0.5f, .2, .8, .2, 0.2f);
 	}
 }
 
