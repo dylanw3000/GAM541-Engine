@@ -45,5 +45,14 @@
       "width": 16
     }
   ],
+
+  "audioClip": [
+    {
+      "name": "Jump",
+      "volume": 0.1    }
+  ],
+
   "controller": null
+
+
 }

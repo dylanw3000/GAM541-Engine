@@ -30,6 +30,7 @@ Creation date: October 15, 2020
 #include "Components/Slime.h"
 #include "Components/Augmentor.h"
 #include "Components/Sniper.h"
+#include "Components/AudioClip.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -106,6 +107,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 	if (document.HasMember("body")) {
 		pNewComponent = pNewGO->AddComponent(TYPE_BODY);
 		pNewComponent->Serialize(document["body"].GetArray());
+	}
+	if (document.HasMember("audioClip")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_AUDIOCLIP);
+		pNewComponent->Serialize(document["audioClip"].GetArray());
 	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
@@ -192,6 +197,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			Sniper* pSniper = static_cast<Sniper*>(pNewGO->GetComponent(TYPE_SNIPER));
 			assert(pSniper != nullptr);
 			pSniper->Serialize(d["sniper"].GetArray());
+		}
+
+		if (d.HasMember("audioClip")) {
+			AudioClip* pAudioClip = static_cast<AudioClip*>(pNewGO->GetComponent(TYPE_AUDIOCLIP));
+			assert(pAudioClip != nullptr);
+			pAudioClip->Serialize(d["audioClip"].GetArray());
 		}
 	}
 

@@ -24,6 +24,7 @@ Creation date: October 15, 2020
 #include "../GameObjectManager.h"
 #include "../EventManager.h"
 #include "../CollisionManager.h"
+#include "AudioClip.h"
 
 extern FrameRateController* gpFRC;
 extern InputManager* gpInputManager;
@@ -86,6 +87,8 @@ void Controller::Update() {
 
 	mDashTimer += gpFRC->GetFrameTime();
 	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) {
+		AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+		pAC->PlayOneShot();
 		/*
 		mDashTimer = 0;
 

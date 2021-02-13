@@ -33,7 +33,5 @@ AudioManager::~AudioManager()
 
 void AudioManager::Update()
 {
-
-
     system->update();
 }

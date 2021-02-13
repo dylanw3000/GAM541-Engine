@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "../AudioManager.h"
 
 class AudioClip : public Component {
 public:
@@ -11,9 +12,14 @@ public:
 	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);
 	void Update();
 
+	void PlayOneShot();
+
 public:
-	std::string bankName;
-	std::string eventName;
+	
+	float mVolume = 1.0f;
+
+	FMOD::Studio::EventDescription* mEventDescription = NULL;
+	FMOD::Studio::EventInstance* mEventInstance = NULL;
 
 private:
 private:
