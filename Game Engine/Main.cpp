@@ -90,6 +90,7 @@ extern "C" FILE * __cdecl __iob_func(void)
 GLint gRenderID, gCircID, gRectID;
 
 
+
 static Uint8* audio_pos; // global pointer to the audio buffer to be played
 static Uint32 audio_len; // remaining length of the sample we have to play
 
