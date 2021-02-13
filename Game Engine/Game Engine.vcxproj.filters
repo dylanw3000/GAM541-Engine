@@ -46,6 +46,7 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="common_platform.cpp" />
     <ClCompile Include="..\glad\src\glad.c" />
+    <ClCompile Include="Components\AudioClip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\AudioClip.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

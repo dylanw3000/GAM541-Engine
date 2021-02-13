@@ -90,6 +90,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="common_platform.cpp" />
+    <ClCompile Include="Components\AudioClip.cpp" />
     <ClCompile Include="Components\Augmentor.cpp" />
     <ClCompile Include="Components\Body.cpp" />
     <ClCompile Include="Components\Character.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="common_platform.h" />
+    <ClInclude Include="Components\AudioClip.h" />
     <ClInclude Include="Components\Augmentor.h" />
     <ClInclude Include="Components\Body.h" />
     <ClInclude Include="Components\Character.h" />
