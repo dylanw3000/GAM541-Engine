@@ -138,18 +138,6 @@
     <None Include="Shaders\Rect.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.frag">
       <Filter>Shaders</Filter>
     </None>

@@ -26,6 +26,7 @@ AudioManager::AudioManager()
     ERRCHECK(eventDescription->createInstance(&eventInstance));
 
     eventInstance->start();
+    eventInstance->setVolume(0.1f);
 }
 AudioManager::~AudioManager()
 {}
