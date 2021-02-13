@@ -20,10 +20,12 @@ Build the solution and run the Local Windows Debugger in `Release` mode.
 
 # Controls
 WASD or Arrow Keys - Move
-Space - Dash in your currently-input direction, 0.5s cooldown
+Space - Jump
+Ctrl - Dash in your currently-input direction, 0.5s cooldown
 Left Mouse - Slash.  Hold down for continual slashing.
 Right Mouse - Cheater's Cleaver.  Sets HP to max and deals massive damage.
 F - Toggle Debug
+Right Arrow - Move to Next Level
 
 # Events
 Direct - When the player is hit by the sniper or augmentor, they are directly contacted and moved to x position 30.

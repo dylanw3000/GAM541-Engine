@@ -59,6 +59,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 	mSwingTimer = mSwingTime + mSwingDelay;
 	mSwingAng = 0.0f;
 	mSwingWidth = 0.9f;
+	mSwingLen = 220.f;
 	mSwinging = mCleaver = false;
 }
 
@@ -121,6 +122,42 @@ void Controller::Update() {
 
 
 	Body* pB = static_cast<Body*>(mpOwner->GetComponent(TYPE_BODY));
+	/*** Vert ***/
+	// pT->mVelVert += mAcceleration * v_mod * dTime;
+	pT->mVelVert += 800 * dTime;  // gravity
+
+	{
+		bool collision = false;
+		float pos = 0.0;
+
+		for (auto pObject : gpGameObjectManager->mGameObjects) {
+			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+
+			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+			if (
+				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
+				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
+				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
+				) {
+				if (!collision) {
+					collision = true;
+					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
+				}
+				// pT->mVelVert = 0.0f;
+			}
+		}
+
+		if (collision) {
+			pT->mVelVert = 0.0f;
+			pT->mPositionY = pos;
+		}
+
+	}
+
+
 	/*** Horiz ***/
 	pT->mVelHoriz += mAcceleration * h_mod * dTime;
 	{
@@ -153,42 +190,6 @@ void Controller::Update() {
 		if (collision) {
 			pT->mVelHoriz = 0.0f;
 			pT->mPositionX = pos;
-		}
-
-	}
-
-
-	/*** Vert ***/
-	// pT->mVelVert += mAcceleration * v_mod * dTime;
-	pT->mVelVert += 800 * dTime;  // gravity
-
-	{
-		bool collision = false;
-		float pos = 0.0;
-
-		for (auto pObject : gpGameObjectManager->mGameObjects) {
-			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
-			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
-
-			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
-
-			if (
-				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
-				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
-				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
-				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
-			) {
-				if (!collision) {
-					collision = true;
-					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight-.001 : pB->mHeight+.001);
-				}
-				// pT->mVelVert = 0.0f;
-			}
-		}
-
-		if (collision) {
-			pT->mVelVert = 0.0f;
-			pT->mPositionY = pos;
 		}
 
 	}
@@ -274,10 +275,10 @@ void Controller::Update() {
 		// mSwingAng > 0.0 && mSwingAng < 1.0 ? pT->mSpriteOffsetY = -30 : pT->mSpriteOffsetY = 0;
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
 		if (!mCleaver) {
-			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, 120, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, mSwingLen, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
 		}
 		else {
-			pC->AddTelegraphColor(pT->mPositionX - 100*cosf(mSwingAng), pT->mPositionY - 100*sinf(mSwingAng), mSwingAng, mSwingWidth * 0.6, 120, 500, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+			pC->AddTelegraphColor(pT->mPositionX - 100*cosf(mSwingAng), pT->mPositionY - 100*sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
 			pC->mHP = pC->mHPMax;
 		}
 
@@ -292,12 +293,12 @@ void Controller::Update() {
 					continue;
 
 				if (!mCleaver) {
-					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, 120)) {
+					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, mSwingLen)) {
 						pChar->mHP -= 1.0f;
 					}
 				}
 				else {
-					if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.6, 120, 500)) {
+					if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700)) {
 						pChar->mHP -= 10.0f;
 					}
 					
