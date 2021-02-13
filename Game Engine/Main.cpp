@@ -280,6 +280,7 @@ int main(int argc, char* args[])
 	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
+	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/madness.png");
 
 	/****************/
 	// float transformationMatrix[16];
@@ -342,6 +343,26 @@ int main(int argc, char* args[])
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		{
+			glUseProgram(gRenderID);
+
+			glm::mat4 model(1.0f);
+			model = glm::translate(model, glm::vec3(0, 0, 1.f));
+			model = glm::scale(model, glm::vec3(2.f, 2.f, 0.0f));
+
+			int transformationHandle = 4;
+			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+			val = glGetUniformLocation(gRenderID, "uTextureBool");
+			glUniform1f(val, textureRender);
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, backgroundImg);
+
+
+			glDrawArrays(GL_QUADS, 0, vertexNum);
+		}
+
 		// gpModerator->Update();
 		if (gpModerator->mStage == 0) {
 			glUseProgram(gRenderID);
@@ -353,8 +374,6 @@ int main(int argc, char* args[])
 				// glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
-				// model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
-				// model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
 				model = glm::scale(model, glm::vec3(2.f, 2.f, 0.0f));
 
 				// model = projectionMatrix * model;
@@ -713,17 +732,9 @@ int main(int argc, char* args[])
 		
 		
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT)) {	// prev level
-			/*
 			gpGameObjectManager->~GameObjectManager();
-			gpEventManager->Reset();
-			gpCollisionManager->Reset();
-
-			(levelNo == 0 ? levelNo = 4 : levelNo--);
-			gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(levelNo) + ".json").c_str());
-			*/
-
-			gpModerator->mStage = 0;
-			gpGameObjectManager->~GameObjectManager();
+			gpModerator->mStage = 1;
+			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
 		}
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F)) {

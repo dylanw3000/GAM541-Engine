@@ -112,6 +112,9 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.h" />
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.h" />
+    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\texture.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="common.h" />
