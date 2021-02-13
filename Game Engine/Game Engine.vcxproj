@@ -85,11 +85,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.cpp" />
-    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocessor.cpp" />
-    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.cpp" />
-    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.cpp" />
-    <ClCompile Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\texture.cpp" />
     <ClCompile Include="..\glad\src\glad.c" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -117,11 +112,6 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.h" />
-    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocessor.h" />
-    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.h" />
-    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.h" />
-    <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\texture.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="common.h" />
@@ -151,12 +141,6 @@
     <ResourceCompile Include="Game Engine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.frag" />
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\particle.vert" />
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.frag" />
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\postprocess.vert" />
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.frag" />
-    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.vert" />
     <None Include="Circ.frag" />
     <None Include="Circ.vert" />
     <None Include="Rect.frag" />
