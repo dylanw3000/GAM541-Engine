@@ -365,7 +365,7 @@ int main(int argc, char* args[])
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
 
-		// gpModerator->Update();
+		gpModerator->Update();
 		if (gpModerator->mStage == 0) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);

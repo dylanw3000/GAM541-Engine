@@ -121,6 +121,42 @@ void Controller::Update() {
 
 
 	Body* pB = static_cast<Body*>(mpOwner->GetComponent(TYPE_BODY));
+	/*** Vert ***/
+	// pT->mVelVert += mAcceleration * v_mod * dTime;
+	pT->mVelVert += 800 * dTime;  // gravity
+
+	{
+		bool collision = false;
+		float pos = 0.0;
+
+		for (auto pObject : gpGameObjectManager->mGameObjects) {
+			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
+			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+
+			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
+
+			if (
+				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
+				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
+				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
+				) {
+				if (!collision) {
+					collision = true;
+					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
+				}
+				// pT->mVelVert = 0.0f;
+			}
+		}
+
+		if (collision) {
+			pT->mVelVert = 0.0f;
+			pT->mPositionY = pos;
+		}
+
+	}
+
+
 	/*** Horiz ***/
 	pT->mVelHoriz += mAcceleration * h_mod * dTime;
 	{
@@ -153,42 +189,6 @@ void Controller::Update() {
 		if (collision) {
 			pT->mVelHoriz = 0.0f;
 			pT->mPositionX = pos;
-		}
-
-	}
-
-
-	/*** Vert ***/
-	// pT->mVelVert += mAcceleration * v_mod * dTime;
-	pT->mVelVert += 800 * dTime;  // gravity
-
-	{
-		bool collision = false;
-		float pos = 0.0;
-
-		for (auto pObject : gpGameObjectManager->mGameObjects) {
-			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
-			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
-
-			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
-
-			if (
-				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
-				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
-				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
-				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
-			) {
-				if (!collision) {
-					collision = true;
-					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight-.001 : pB->mHeight+.001);
-				}
-				// pT->mVelVert = 0.0f;
-			}
-		}
-
-		if (collision) {
-			pT->mVelVert = 0.0f;
-			pT->mPositionY = pos;
 		}
 
 	}
