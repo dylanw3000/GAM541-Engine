@@ -141,6 +141,8 @@
     <ResourceCompile Include="Game Engine.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.frag" />
+    <None Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\text.vert" />
     <None Include="Circ.frag" />
     <None Include="Circ.vert" />
     <None Include="Rect.frag" />
