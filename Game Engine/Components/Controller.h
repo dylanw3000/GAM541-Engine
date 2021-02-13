@@ -55,6 +55,6 @@ private:
 	int mDashTimer, mDashCooldown;
 
 	int mSwingTime, mSwingTimer, mSwingDelay;
-	float mSwingWidth;
+	float mSwingWidth, mSwingLen;
 	bool mSwinging, mCleaver;
 };

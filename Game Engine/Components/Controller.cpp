@@ -59,6 +59,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 	mSwingTimer = mSwingTime + mSwingDelay;
 	mSwingAng = 0.0f;
 	mSwingWidth = 0.9f;
+	mSwingLen = 220.f;
 	mSwinging = mCleaver = false;
 }
 
@@ -274,10 +275,10 @@ void Controller::Update() {
 		// mSwingAng > 0.0 && mSwingAng < 1.0 ? pT->mSpriteOffsetY = -30 : pT->mSpriteOffsetY = 0;
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
 		if (!mCleaver) {
-			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, 120, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, mSwingLen, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
 		}
 		else {
-			pC->AddTelegraphColor(pT->mPositionX - 100*cosf(mSwingAng), pT->mPositionY - 100*sinf(mSwingAng), mSwingAng, mSwingWidth * 0.6, 120, 500, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+			pC->AddTelegraphColor(pT->mPositionX - 100*cosf(mSwingAng), pT->mPositionY - 100*sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
 			pC->mHP = pC->mHPMax;
 		}
 
@@ -292,12 +293,12 @@ void Controller::Update() {
 					continue;
 
 				if (!mCleaver) {
-					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, 120)) {
+					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, mSwingLen)) {
 						pChar->mHP -= 1.0f;
 					}
 				}
 				else {
-					if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.6, 120, 500)) {
+					if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700)) {
 						pChar->mHP -= 10.0f;
 					}
 					
