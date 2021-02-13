@@ -25,6 +25,7 @@ Creation date: October 15, 2020
 #include "Components/Augmentor.h"
 #include "Components/Sniper.h"
 #include "Components/Body.h"
+#include "Components/AudioClip.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -75,6 +76,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_SNIPER:
 			pNewComponent = new Sniper();
+			break;
+		case TYPE_AUDIOCLIP:
+			pNewComponent = new AudioClip();
 			break;
 		default:
 			pNewComponent = nullptr;

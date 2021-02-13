@@ -11,6 +11,8 @@ public :
 	AudioManager();
 	~AudioManager();
 
+	void Update();
+
 public : 
 	FMOD_RESULT result;
 	FMOD::Studio::System* system = NULL;

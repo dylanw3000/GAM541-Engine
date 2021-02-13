@@ -30,3 +30,10 @@ AudioManager::AudioManager()
 }
 AudioManager::~AudioManager()
 {}
+
+void AudioManager::Update()
+{
+
+
+    system->update();
+}
