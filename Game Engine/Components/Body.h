@@ -16,7 +16,7 @@ public:
 
 public:
 	float mWidth, mHeight;
-	bool mWall, mBounce;
+	bool mWall, mBounce, mSemisolid;
 
 
 

@@ -145,7 +145,11 @@ void Controller::Update() {
 				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
 				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
 				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
-				) {
+			) {
+				if (pBody->mSemisolid && (pT->mVelVert <= 0 || pT->mPositionY > pTrans->mPositionY-pBody->mHeight)) {
+					continue;
+				}
+
 				if (!collision) {
 					collision = true;
 					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
@@ -195,7 +199,8 @@ void Controller::Update() {
 				&& pT->mPositionY - pB->mHeight <= pTrans->mPositionY
 				&& pT->mPositionX - pB->mWidth / 2 + (pT->mVelHoriz * dTime) <= pTrans->mPositionX + pBody->mWidth / 2
 				&& pT->mPositionX + pB->mWidth / 2 + (pT->mVelHoriz * dTime) >= pTrans->mPositionX - pBody->mWidth / 2
-				) {
+			) {
+				if (pBody->mSemisolid) { continue; }
 				
 				if (!collision) {
 					collision = true;

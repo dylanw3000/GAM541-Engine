@@ -44,6 +44,7 @@ Creation date: October 5, 2020
 #include "Components/Transform.h"
 #include "Components/Sprite.h"
 #include "Components/Character.h"
+#include "Components/Body.h"
 
 #include <gdiplus.h>
 #include "../glm/glm/glm.hpp"
@@ -569,11 +570,12 @@ int main(int argc, char* args[])
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Sprite* pS = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
 				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
+				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
 
 				//glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
+				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pB != nullptr && pB->mWall ? -.95 : (pT->mPositionY - screenSize[1] / 2) / screenSize[1])));
 				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
 				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking)
 				{

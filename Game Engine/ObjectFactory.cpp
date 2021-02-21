@@ -31,6 +31,7 @@ Creation date: October 15, 2020
 #include "Components/Augmentor.h"
 #include "Components/Sniper.h"
 #include "Components/AudioClip.h"
+#include "Components/Body.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -149,12 +150,14 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 		if (d.HasMember("transform")) {		// TODO "components": { "transform": [ 1, 2 ], "sprite": "Angry.bmp" }
 			Transform* pTransform = static_cast<Transform*>(pNewGO->GetComponent(TYPE_TRANSFORM));
 			assert(pTransform != nullptr);
+			if(pTransform == nullptr){ pTransform = static_cast<Transform*>(pNewGO->AddComponent(TYPE_TRANSFORM)); }
 			pTransform->Serialize(d["transform"].GetArray());
 		}
 
 		if (d.HasMember("sprite")) {
 			Sprite* pSprite = static_cast<Sprite*>(pNewGO->GetComponent(TYPE_SPRITE));
 			assert(pSprite != nullptr);
+			if (pSprite == nullptr) { pSprite = static_cast<Sprite*>(pNewGO->AddComponent(TYPE_SPRITE)); }
 			pSprite->Serialize(d["sprite"].GetArray());
 		}
 		
@@ -204,6 +207,15 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			assert(pAudioClip != nullptr);
 			pAudioClip->Serialize(d["audioClip"].GetArray());
 		}
+
+		
+		if (d.HasMember("body")) {
+			Body* pBody = static_cast<Body*>(pNewGO->GetComponent(TYPE_BODY));
+			assert(pBody != nullptr);
+			if (pBody == nullptr) { pBody = static_cast<Body*>(pNewGO->AddComponent(TYPE_BODY)); }
+			pBody->Serialize(d["body"].GetArray());
+		}
+		
 	}
 
 	/*
