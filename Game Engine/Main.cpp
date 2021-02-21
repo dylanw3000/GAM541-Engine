@@ -345,6 +345,7 @@ int main(int argc, char* args[])
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendEquation(GL_ADD);
 
 		{
 			glUseProgram(gRenderID);
@@ -435,6 +436,91 @@ int main(int argc, char* args[])
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
 		else {
+
+			// Render terrain
+			glUseProgram(gRenderID);
+			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
+				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
+				Sprite* pS = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
+				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
+				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
+
+				if (pB == nullptr || !pB->mWall) { continue; }
+
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, -.95));
+				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
+				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking)
+				{
+					if (pC->mSwingAng < -PI / 2 || pC->mSwingAng > PI / 2)
+						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+					else
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				}
+				else if (pT->mVelHoriz > 0)
+					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				else
+					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				val = glGetUniformLocation(gRenderID, "uTextureBool");
+				glUniform1f(val, textureRender);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, pS->mTexture);
+
+				if (pS->mIsAnimated)
+				{
+
+					GLfloat* pTex = new GLfloat[vertexNum * coordsPerTex];
+
+					auto currentTextureOffset = pS->mpSpriteAnimator->GetTextureCoords();
+
+					pTex[0] = 0.0f;			pTex[1] = 0.5f;
+					pTex[2] = 0.25;			pTex[3] = 0.5f;
+					pTex[4] = 0.25f;		pTex[5] = 0.0f;
+					pTex[6] = 0.0f;			pTex[7] = 0.0f;
+
+					pTex[0] = currentTextureOffset.first;
+					pTex[1] = currentTextureOffset.second + (1.0f / pS->mRows);
+					pTex[2] = currentTextureOffset.first + (1.0f / pS->mColumns);
+					pTex[3] = currentTextureOffset.second + (1.0f / pS->mRows);
+					pTex[4] = currentTextureOffset.first + (1.0f / pS->mColumns);
+					pTex[5] = currentTextureOffset.second;
+					pTex[6] = currentTextureOffset.first;
+					pTex[7] = currentTextureOffset.second;
+
+
+					glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+					glBufferData(GL_ARRAY_BUFFER, vertexNum * texStride, pTex, GL_STATIC_DRAW);
+					glEnableVertexAttribArray(2);
+					glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+					glDrawArrays(GL_QUADS, 0, vertexNum);
+
+					pTex[0] = 0.0f;			pTex[1] = 1.0f;
+					pTex[2] = 1.0f;			pTex[3] = 1.0f;
+					pTex[4] = 1.0f;			pTex[5] = 0.0f;
+					pTex[6] = 0.0f;			pTex[7] = 0.0f;
+					glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+					glBufferData(GL_ARRAY_BUFFER, vertexNum * texStride, pTex, GL_STATIC_DRAW);
+					glEnableVertexAttribArray(2);
+					glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+				}
+				else
+				{
+
+					glDrawArrays(GL_QUADS, 0, vertexNum);
+				}
+			}
+
 			// Render Shadows (which indicate collision areas)
 			
 
@@ -559,9 +645,11 @@ int main(int argc, char* args[])
 
 
 			// Render units
+			/*
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBlendEquation(GL_FUNC_ADD);
+			*/
 
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
@@ -572,10 +660,11 @@ int main(int argc, char* args[])
 				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
 				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
 
+				if (pB != nullptr && pB->mWall) { continue; }
 				//glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pB != nullptr && pB->mWall ? -.95 : (pT->mPositionY - screenSize[1] / 2) / screenSize[1])));
+				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
 				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
 				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking)
 				{
