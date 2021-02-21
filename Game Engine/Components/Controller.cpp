@@ -16,7 +16,6 @@ Creation date: October 15, 2020
 #include "..\InputManager.h"
 #include "..\..\SDL2.0 Lib\include\SDL_scancode.h"
 #include "..\GameObject.h"
-#include "Transform.h"
 #include "Character.h"
 #include "Body.h"
 #include "math.h"
@@ -87,8 +86,6 @@ void Controller::Update() {
 
 	mDashTimer += gpFRC->GetFrameTime();
 	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) {
-		AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
-		pAC->PlayOneShot();
 		/*
 		mDashTimer = 0;
 
@@ -100,12 +97,12 @@ void Controller::Update() {
 			pT->mVelVert += 1000 * v_mod;
 		}
 		*/
-		if(mIsGrounded)
-			pT->mVelVert = -600; // jumping
+		if (mIsGrounded)
+			Jump(pT);
 		else if (mJumpsLeft > 0)
 		{
 			mJumpsLeft--;
-			pT->mVelVert = -600; // jumping
+			Jump(pT);
 		}
 
 	}
@@ -388,6 +385,13 @@ void Controller::Update() {
 	}
 }
 
+void Controller::Jump(Transform* pT)
+{
+	AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+	pAC->PlayOneShot();
+	pT->mVelVert = -600; // jumping
+}
+
 
 void Controller::HandleEvent(Event* pEvent) {
 	if (pEvent->mType == EventType::COLLIDE) {
@@ -439,3 +443,6 @@ void Controller::Serialize(rapidjson::GenericArray<false, rapidjson::Value> inpu
 		mJumpsLeft = mJumps;
 	}
 }
+
+
+

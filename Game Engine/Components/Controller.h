@@ -15,6 +15,7 @@ Creation date: October 15, 2020
 
 #include "Component.h"
 #include "../EventManager.h"
+#include "Transform.h"
 
 class GameObject;
 // #include "..\GameObject.h"
@@ -41,6 +42,7 @@ public:
 	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);
 
 	void HandleEvent(Event* pEvent);
+	void Jump(Transform* pT);
 
 public:
 	float mSwingAng;
