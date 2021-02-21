@@ -149,15 +149,15 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 
 		if (d.HasMember("transform")) {		// TODO "components": { "transform": [ 1, 2 ], "sprite": "Angry.bmp" }
 			Transform* pTransform = static_cast<Transform*>(pNewGO->GetComponent(TYPE_TRANSFORM));
-			assert(pTransform != nullptr);
 			if(pTransform == nullptr){ pTransform = static_cast<Transform*>(pNewGO->AddComponent(TYPE_TRANSFORM)); }
+			assert(pTransform != nullptr);
 			pTransform->Serialize(d["transform"].GetArray());
 		}
 
 		if (d.HasMember("sprite")) {
 			Sprite* pSprite = static_cast<Sprite*>(pNewGO->GetComponent(TYPE_SPRITE));
-			assert(pSprite != nullptr);
 			if (pSprite == nullptr) { pSprite = static_cast<Sprite*>(pNewGO->AddComponent(TYPE_SPRITE)); }
+			assert(pSprite != nullptr);
 			pSprite->Serialize(d["sprite"].GetArray());
 		}
 		
@@ -211,8 +211,8 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 		
 		if (d.HasMember("body")) {
 			Body* pBody = static_cast<Body*>(pNewGO->GetComponent(TYPE_BODY));
-			assert(pBody != nullptr);
 			if (pBody == nullptr) { pBody = static_cast<Body*>(pNewGO->AddComponent(TYPE_BODY)); }
+			assert(pBody != nullptr);
 			pBody->Serialize(d["body"].GetArray());
 		}
 		
