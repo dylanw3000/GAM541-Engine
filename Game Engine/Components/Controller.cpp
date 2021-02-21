@@ -100,7 +100,14 @@ void Controller::Update() {
 			pT->mVelVert += 1000 * v_mod;
 		}
 		*/
-		pT->mVelVert = -600; // jumping
+		if(mIsGrounded)
+			pT->mVelVert = -600; // jumping
+		else if (mJumpsLeft > 0)
+		{
+			mJumpsLeft--;
+			pT->mVelVert = -600; // jumping
+		}
+
 	}
 
 	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyPressed(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
@@ -152,6 +159,9 @@ void Controller::Update() {
 
 				if (!collision) {
 					collision = true;
+
+					mIsGrounded = true;
+					mJumpsLeft = mJumps;
 					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
 				}
 				else {
@@ -177,6 +187,8 @@ void Controller::Update() {
 				pT->mVelVert = 0.f;
 			}
 		}
+		else
+			mIsGrounded = false;
 
 	}
 
@@ -381,7 +393,7 @@ void Controller::HandleEvent(Event* pEvent) {
 	if (pEvent->mType == EventType::COLLIDE) {
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 		if (pCollideEvent->mChars[1] == mpOwner->GetComponent(TYPE_CHARACTER)) {
-			Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
+ 			Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
 			if (pT != nullptr) {
 				// pT->mPositionX = 30.0f;
 			}
@@ -418,4 +430,12 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 	}
 	
+}
+
+
+void Controller::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
+	if (input[0].HasMember("jumps")) {
+		mJumps = input[0]["jumps"].GetFloat();
+		mJumpsLeft = mJumps;
+	}
 }

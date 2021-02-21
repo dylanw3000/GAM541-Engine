@@ -52,7 +52,11 @@
       "volume": 0.1    }
   ],
 
-  "controller": null
+  "controller": [
+    {
+      "jumps": 1
+        }
+  ]
 
 
 }

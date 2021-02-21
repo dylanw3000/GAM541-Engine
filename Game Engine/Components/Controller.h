@@ -38,7 +38,7 @@ public:
 	void Update();
 
 	void Serialize(std::ifstream& InputStream) { }
-	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>) { }
+	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);
 
 	void HandleEvent(Event* pEvent);
 
@@ -57,4 +57,6 @@ private:
 	int mSwingTime, mSwingTimer, mSwingDelay;
 	float mSwingWidth, mSwingLen;
 	bool mSwinging, mCleaver;
+	bool mIsGrounded;
+	int mJumpsLeft, mJumps;
 };
