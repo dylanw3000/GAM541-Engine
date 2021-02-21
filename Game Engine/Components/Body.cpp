@@ -25,6 +25,7 @@ extern bool DEBUG;
 
 Body::Body() : Component(TYPE_BODY) {
 	mWidth = mHeight = 20.0f;
+	mWall = false;
 }
 
 Body::~Body() {
@@ -42,6 +43,14 @@ void Body::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 
 	if (input[0].HasMember("width")) {
 		mWidth = input[0]["width"].GetFloat();
+	}
+
+	if (input[0].HasMember("wall")) {
+		mWall = input[0]["wall"].GetBool();
+	}
+
+	if (input[0].HasMember("bounce")) {
+		mBounce = input[0]["bounce"].GetBool();
 	}
 }
 

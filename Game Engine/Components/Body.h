@@ -16,6 +16,7 @@ public:
 
 public:
 	float mWidth, mHeight;
+	bool mWall, mBounce;
 
 
 

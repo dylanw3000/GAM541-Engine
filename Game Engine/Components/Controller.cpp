@@ -125,17 +125,18 @@ void Controller::Update() {
 
 
 	Body* pB = static_cast<Body*>(mpOwner->GetComponent(TYPE_BODY));
+
 	/*** Vert ***/
-	// pT->mVelVert += mAcceleration * v_mod * dTime;
 	pT->mVelVert += 800 * dTime;  // gravity
 
 	{
 		bool collision = false;
+		bool bounce = false;
 		float pos = 0.0;
 
 		for (auto pObject : gpGameObjectManager->mGameObjects) {
 			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
-			if (!pBody || pBody->mpOwner == mpOwner) { continue; }
+			if (!pBody || pBody->mpOwner == mpOwner || !pBody->mWall) { continue; }
 
 			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
 
@@ -149,13 +150,28 @@ void Controller::Update() {
 					collision = true;
 					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
 				}
-				// pT->mVelVert = 0.0f;
+				else {
+					if (pos > pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001)) {
+						//
+					}
+				}
+
+				/***** Add wall-specific collisions here *****/
+				if (pBody->mBounce) {
+					bounce = true;
+				}
 			}
 		}
 
 		if (collision) {
-			pT->mVelVert = 0.0f;
 			pT->mPositionY = pos;
+
+			if (bounce) {
+				pT->mVelVert = 600.f * (pT->mVelVert > 0.f ? -1.f : 0.f);
+			}
+			else {
+				pT->mVelVert = 0.f;
+			}
 		}
 
 	}

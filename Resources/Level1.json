@@ -16,7 +16,25 @@
       ]
     },
     {
-      "name": "Wall.json",
+      "name": "Trampoline.json",
+      "transform": [
+        {
+          "x": 200,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Trampoline.json",
+      "transform": [
+        {
+          "x": 200,
+          "y": 350
+        }
+      ]
+    },
+    {
+      "name": "Trampoline.json",
       "transform": [
         {
           "x": 280,
@@ -28,10 +46,10 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "animated": true,
-            "idlingImageName": "Demon Wall.png",
-            "idlingColumns": 4,
-            "idlingRows": 1
+          "animated": true,
+          "idlingImageName": "Demon Wall.png",
+          "idlingColumns": 4,
+          "idlingRows": 1
         }
       ],
       "transform": [
@@ -45,10 +63,10 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "animated": true,
-            "idlingImageName": "Makeup Lady.png",
-            "idlingColumns": 4,
-            "idlingRows": 1
+          "animated": true,
+          "idlingImageName": "Makeup Lady.png",
+          "idlingColumns": 4,
+          "idlingRows": 1
         }
       ],
       "transform": [
@@ -62,7 +80,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "imageName": "Purple Shark Aquarium.png"
+          "imageName": "Purple Shark Aquarium.png"
         }
       ],
       "transform": [
@@ -74,11 +92,6 @@
     },
     {
       "name": "Wall.json",
-      "sprite": [
-        {
-            "imageName": "Pasteli.png"
-        }
-      ],
       "transform": [
         {
           "x": 600,
@@ -90,7 +103,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "imageName": "Purge Player.png"
+          "imageName": "Purge Player.png"
         }
       ],
       "transform": [
@@ -104,7 +117,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "imageName": "Hispanic Mario.png"
+          "imageName": "Hispanic Mario.png"
         }
       ],
       "transform": [
@@ -118,7 +131,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "imageName": "Buffman Liff U Up.png"
+          "imageName": "Buffman Liff U Up.png"
         }
       ],
       "transform": [
@@ -132,10 +145,10 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "animated": true,
-            "idlingImageName": "Demon Wall.png",
-            "idlingColumns": 4,
-            "idlingRows": 1
+          "animated": true,
+          "idlingImageName": "Demon Wall.png",
+          "idlingColumns": 4,
+          "idlingRows": 1
         }
       ],
       "transform": [
@@ -167,10 +180,10 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "animated": true,
-            "idlingImageName": "Makeup Lady.png",
-            "idlingColumns": 4,
-            "idlingRows": 1
+          "animated": true,
+          "idlingImageName": "Makeup Lady.png",
+          "idlingColumns": 4,
+          "idlingRows": 1
         }
       ],
       "transform": [
@@ -184,7 +197,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-            "imageName": "Buffman Liff U Up.png"
+          "imageName": "Buffman Liff U Up.png"
         }
       ],
       "transform": [
@@ -195,15 +208,7 @@
       ]
     },
     {
-      "name": "Wall.json",
-      "sprite": [
-        {
-            "animated": true,
-            "idlingImageName": "Demon Wall.png",
-            "idlingColumns": 4,
-            "idlingRows": 1
-        }
-      ],
+      "name": "Trampoline.json",
       "transform": [
         {
           "x": 540,

@@ -9,17 +9,15 @@
   ],
   "sprite": [
     {
-      "animated": true,
-      "idlingImageName": "Wall_Idling.png",
-      "idlingColumns": 4,
-      "idlingRows": 1
+      "imageName": "Pasteli.png"
     }
   ],
   "body": [
     {
       "width": 64,
       "height": 64,
-      "wall": true
+      "wall": true,
+      "bounce": true
     }
   ]
 }
