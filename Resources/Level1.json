@@ -37,10 +37,8 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "animated": true,
-          "idlingImageName": "Demon Wall.png",
-          "idlingColumns": 4,
-          "idlingRows": 1
+          "animated": false,
+          "imageName": "Bricks.png"
         }
       ],
       "transform": [
@@ -54,15 +52,13 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "animated": true,
-          "idlingImageName": "Makeup Lady.png",
-          "idlingColumns": 4,
-          "idlingRows": 1
+          "animated": false,
+          "imageName": "Bricks.png"
         }
       ],
       "transform": [
         {
-          "x": 440,
+          "x": 424,
           "y": 600
         }
       ]
@@ -71,21 +67,13 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "imageName": "Purple Shark Aquarium.png"
+          "animated": false,
+          "imageName": "Bricks.png"
         }
       ],
       "transform": [
         {
-          "x": 520,
-          "y": 600
-        }
-      ]
-    },
-    {
-      "name": "Wall.json",
-      "transform": [
-        {
-          "x": 600,
+          "x": 488,
           "y": 600
         }
       ]
@@ -94,26 +82,43 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "imageName": "Purge Player.png"
+          "animated": false,
+          "imageName": "Bricks.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 552,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "Bricks.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 616,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "Bricks.png"
         }
       ],
       "transform": [
         {
           "x": 680,
-          "y": 600
-        }
-      ]
-    },
-    {
-      "name": "Wall.json",
-      "sprite": [
-        {
-          "imageName": "Hispanic Mario.png"
-        }
-      ],
-      "transform": [
-        {
-          "x": 760,
           "y": 600
         }
       ]
