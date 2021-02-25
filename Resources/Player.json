@@ -10,7 +10,7 @@
   "sprite": [ 
     {
       "animated": true,
-      "idlingImageName": "Kakashi_Idling.png",
+      "idlingImageName": "Cloak_Dude_Idle.png",
       "idlingColumns": 4,
       "idlingRows": 1,
       "runningImageName": "stickman_running.png",
@@ -25,8 +25,8 @@
       "dashingImageName": "Kakashi_Dashing.png",
       "dashingColumns": 5,
       "dashingRows": 2,
-      "attackingImageName": "Kakashi_Attacking.png",
-      "attackingColumns": 5,
+      "attackingImageName": "Cloak_Dude_Attack.png",
+      "attackingColumns": 4,
       "attackingRows": 1
 
     } 
