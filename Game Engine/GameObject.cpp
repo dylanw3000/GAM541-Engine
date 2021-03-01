@@ -26,6 +26,7 @@ Creation date: October 15, 2020
 #include "Components/Sniper.h"
 #include "Components/Body.h"
 #include "Components/AudioClip.h"
+#include "Components/Runner.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -79,6 +80,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_AUDIOCLIP:
 			pNewComponent = new AudioClip();
+			break;
+		case TYPE_RUNNER:
+			pNewComponent = new Runner();
 			break;
 		default:
 			pNewComponent = nullptr;

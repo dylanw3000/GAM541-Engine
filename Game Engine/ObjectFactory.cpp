@@ -32,6 +32,7 @@ Creation date: October 15, 2020
 #include "Components/Sniper.h"
 #include "Components/AudioClip.h"
 #include "Components/Body.h"
+#include "Components/Runner.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -112,6 +113,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 	if (document.HasMember("audioClip")) {
 		pNewComponent = pNewGO->AddComponent(TYPE_AUDIOCLIP);
 		pNewComponent->Serialize(document["audioClip"].GetArray());
+	}
+	if (document.HasMember("runner")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_RUNNER);
+		pNewComponent->Serialize(document["runner"].GetArray());
 	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
@@ -214,6 +219,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			if (pBody == nullptr) { pBody = static_cast<Body*>(pNewGO->AddComponent(TYPE_BODY)); }
 			assert(pBody != nullptr);
 			pBody->Serialize(d["body"].GetArray());
+		}
+
+		if (d.HasMember("runner")) {
+			Runner* pRunner = static_cast<Runner*>(pNewGO->GetComponent(TYPE_RUNNER));
+			if (pRunner == nullptr) { pRunner = static_cast<Runner*>(pNewGO->AddComponent(TYPE_RUNNER)); }
+			pRunner->Serialize(d["runner"].GetArray());
 		}
 		
 	}

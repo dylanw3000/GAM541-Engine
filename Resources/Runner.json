@@ -1,0 +1,26 @@
+{
+  "transform": [
+    {
+      "x": 100,
+      "y": 500,
+      "width": 32,
+      "height": 64
+    }
+  ],
+  "sprite": [
+    {
+      "imageName": "goya.png"
+    }
+  ],
+  "body": [
+    {
+      "height": 48,
+      "width": 24
+    }
+  ],
+  "runner": [
+    {
+      "null": false
+    }
+  ]
+}

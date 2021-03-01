@@ -38,6 +38,7 @@ public:
 public:
 	std::vector<Component*> mComponents;
 	int mId;
+	bool mDestroy;
 
 
 private:

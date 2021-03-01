@@ -96,6 +96,7 @@
     <ClCompile Include="Components\Character.cpp" />
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\Controller.cpp" />
+    <ClCompile Include="Components\Runner.cpp" />
     <ClCompile Include="Components\Slime.cpp" />
     <ClCompile Include="Components\Sniper.cpp" />
     <ClCompile Include="Components\Sprite.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Components\Character.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\Controller.h" />
+    <ClInclude Include="Components\Runner.h" />
     <ClInclude Include="Components\Slime.h" />
     <ClInclude Include="Components\Sniper.h" />
     <ClInclude Include="Components\Sprite.h" />

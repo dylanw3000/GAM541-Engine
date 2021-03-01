@@ -119,5 +119,9 @@ void Transform::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 		mSpriteOffsetY = input[0]["yoffset"].GetFloat();
 	}
 
+	if (input[0].HasMember("velhoriz")) {
+		mVelHoriz = input[0]["velhoriz"].GetFloat();
+	}
+
 	// mPositionX = mPositionY = 5.0f;
 }

@@ -76,6 +76,7 @@ Moderator* gpModerator;
 AudioManager* gpAudioManager;
 
 bool DEBUG;
+int gameType = 1;
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -290,7 +291,6 @@ int main(int argc, char* args[])
 	float angle = 0.5f;
 	int val;
 	glm::mat4 projectionMatrix = glm::ortho(0.f, (float)screenSize[0], (float)screenSize[1], 0.f);
-	float textureRender = 1.0f;
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -335,6 +335,12 @@ int main(int argc, char* args[])
 		for (auto pGameObject : gpGameObjectManager->mGameObjects)
 			pGameObject->Update();
 
+		for (auto pGameObject : gpGameObjectManager->mGameObjects) {
+			if (pGameObject->mDestroy) {
+				gpGameObjectManager->DeleteObject(pGameObject);
+			}
+		}
+
 		glBindVertexArray(vaoID);
 
 		/*******************************/
@@ -347,7 +353,7 @@ int main(int argc, char* args[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBlendEquation(GL_ADD);
 
-		{
+		if (gameType == 1){
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -356,9 +362,6 @@ int main(int argc, char* args[])
 
 			int transformationHandle = 4;
 			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
-
-			val = glGetUniformLocation(gRenderID, "uTextureBool");
-			glUniform1f(val, textureRender);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, backgroundImg);
@@ -385,9 +388,6 @@ int main(int argc, char* args[])
 				int transformationHandle = 4;
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
-				val = glGetUniformLocation(gRenderID, "uTextureBool");
-				glUniform1f(val, textureRender);
-
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, menuScreen);
 
@@ -407,9 +407,6 @@ int main(int argc, char* args[])
 			int transformationHandle = 4;
 			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
-			val = glGetUniformLocation(gRenderID, "uTextureBool");
-			glUniform1f(val, textureRender);
-
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, deadScreen);
 
@@ -425,9 +422,6 @@ int main(int argc, char* args[])
 
 			int transformationHandle = 4;
 			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
-
-			val = glGetUniformLocation(gRenderID, "uTextureBool");
-			glUniform1f(val, textureRender);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, endScreen);
@@ -466,9 +460,6 @@ int main(int argc, char* args[])
 
 				int transformationHandle = 4;
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
-
-				val = glGetUniformLocation(gRenderID, "uTextureBool");
-				glUniform1f(val, textureRender);
 
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, pS->mTexture);
@@ -683,9 +674,6 @@ int main(int argc, char* args[])
 				int transformationHandle = 4;
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
-				val = glGetUniformLocation(gRenderID, "uTextureBool");
-				glUniform1f(val, textureRender);
-
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, pS->mTexture);
 
@@ -832,10 +820,11 @@ int main(int argc, char* args[])
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F)) {
 			DEBUG = !DEBUG;
 		}
-		
-		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) {	// milestone 3 render swap
-			textureRender *= -1;
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_2)) {
+			gameType = 2;
+			gpGameObjectManager->~GameObjectManager();
+			gpObjectFactory->LoadGameObject("../Resources/Runner.json");
 		}
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {

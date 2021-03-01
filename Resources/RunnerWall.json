@@ -1,0 +1,16 @@
+{
+  "transform": [
+    {
+      "x": 1200,
+      "y": 64,
+      "width": 64,
+      "height": 64,
+      "velhoriz": -200
+    }
+  ],
+  "sprite": [
+    {
+      "imageName": "../Resources/runner_wall.png"
+    }
+  ]
+}

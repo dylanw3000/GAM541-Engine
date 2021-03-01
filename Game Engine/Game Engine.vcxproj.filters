@@ -47,6 +47,9 @@
     <ClCompile Include="common_platform.cpp" />
     <ClCompile Include="..\glad\src\glad.c" />
     <ClCompile Include="Components\AudioClip.cpp" />
+    <ClCompile Include="Components\Runner.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -103,6 +106,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\AudioClip.h" />
+    <ClInclude Include="Components\Runner.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
