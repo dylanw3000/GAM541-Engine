@@ -16,7 +16,16 @@ public:
 
 public:
 	float mTimer;
+	float mWallTime, mWallDelay;
+	float mObstacleTime, mObstacleDelay;
+	float mMissileTime, mMissileDelay;
+
+	bool mMissileActive;
+	float mMissileLaunchTime, mMissileLaunchDelay;
+
 	float mGravity, mAcc;
+
+	bool mFail;
 
 
 private:

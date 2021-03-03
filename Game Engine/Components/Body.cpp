@@ -12,6 +12,7 @@ Creation date: November 8, 2020
 - End Header --------------------------------------------------------*/
 
 #include "Body.h"
+#include "Character.h"
 #include "Transform.h"
 #include "../GameObject.h"
 #include "../EventManager.h"
@@ -34,7 +35,13 @@ Body::~Body() {
 }
 
 void Body::Update() {
-	//
+	if (DEBUG) {
+		Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
+		Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
+		if (pC != nullptr && pT != nullptr) {
+			pC->AddRect(pT->mPositionX, pT->mPositionY, -M_PI / 2, mHeight, mWidth, 0);
+		}
+	}
 }
 
 void Body::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {

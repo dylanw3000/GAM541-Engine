@@ -2,9 +2,9 @@
   "transform": [
     {
       "x": 100,
-      "y": 500,
-      "width": 32,
-      "height": 64
+      "y": 700,
+      "width": 64,
+      "height": 96
     }
   ],
   "sprite": [
@@ -14,8 +14,15 @@
   ],
   "body": [
     {
-      "height": 48,
-      "width": 24
+      "height": 64,
+      "width": 48
+    }
+  ],
+  "character": [
+    {
+      "radius": 16,
+      "shadow":  -16,
+      "friendly": true
     }
   ],
   "runner": [

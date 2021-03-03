@@ -780,8 +780,7 @@ int main(int argc, char* args[])
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN)) {	// restart level
 			gpGameObjectManager->~GameObjectManager();
-			// gpEventManager->Reset();
-			// gpCollisionManager->Reset();
+			gameType = 1;
 
 			gpModerator->mStage = 1;
 			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
