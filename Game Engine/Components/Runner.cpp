@@ -27,6 +27,7 @@ Runner::Runner() : Component(TYPE_RUNNER) {
 	mTimer = 0;
 	mGravity = 1600.f;
 	mAcc = 2400.f;
+	mVelMax = 3000.f;
 
 	mWallTime = mWallDelay = 0.2;
 	mObstacleTime = mObstacleDelay = 1.6;
@@ -34,6 +35,7 @@ Runner::Runner() : Component(TYPE_RUNNER) {
 
 	mMissileActive = false;
 	mMissileLaunchTime = mMissileLaunchDelay = 2.f;
+	mMissileY = mMissileTracking = 200.f;
 
 	mFail = false;
 
@@ -123,17 +125,26 @@ void Runner::Update() {
 			mMissileTime += mMissileDelay;
 			mMissileActive = true;
 			mMissileLaunchTime = 0.f;
+			mMissileY = pT->mPositionY;
 		}
 
 		if (mMissileActive) {
 			mMissileLaunchTime += delta;
-			pC->AddRect(1200.f, pT->mPositionY - pB->mHeight / 2.f, M_PI, 1200.f, 32.f, mMissileLaunchTime / mMissileLaunchDelay);
+			
+			if (fabsf(mMissileY - pT->mPositionY) < mMissileTracking * delta) {
+				mMissileY = pT->mPositionY;
+			}
+			else {
+				mMissileY += delta * mMissileTracking * (mMissileY > pT->mPositionY ? -1.f : 1.f);
+			}
+			
+			pC->AddRect(1200.f, mMissileY - pB->mHeight / 2.f, M_PI, 1200.f, 32.f, mMissileLaunchTime / mMissileLaunchDelay);
 
 			if (mMissileLaunchTime >= mMissileLaunchDelay) {
 				mMissileActive = false;
 				GameObject* pMissile = gpObjectFactory->LoadGameObject("../Resources/RunnerMissile.json");
 				Transform* pTrans = static_cast<Transform*>(pMissile->GetComponent(TYPE_TRANSFORM));
-				pTrans->mPositionY = pT->mPositionY - pB->mHeight / 2.f + 8.f;
+				pTrans->mPositionY = mMissileY - pB->mHeight / 2.f + 8.f;
 			}
 		}
 
@@ -142,7 +153,17 @@ void Runner::Update() {
 			pT->mVelVert -= mAcc * delta;
 		}
 		else {
-			pT->mVelVert += mGravity * delta;
+			if (pT->mVelVert >= mVelMax) {
+				pT->mVelVert = mVelMax;
+			}
+			else {
+				if (gpInputManager->IsKeyPressed(SDL_SCANCODE_S)) {
+					pT->mVelVert += mGravity * delta * 8.f;
+				}
+				else {
+					pT->mVelVert += mGravity * delta;
+				}
+			}
 		}
 
 		if (pT->mVelVert < 0.f) {
