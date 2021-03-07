@@ -51,6 +51,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="StealthModerator.cpp" />
+    <ClCompile Include="Components\LeftRight.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -111,6 +114,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StealthModerator.h" />
+    <ClInclude Include="Components\LeftRight.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

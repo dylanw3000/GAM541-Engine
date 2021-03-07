@@ -19,6 +19,31 @@
 
     },
     {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 150,
+          "y": 400
+        }
+      ]
+    },
+
+    {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 1050,
+          "y": 400
+        }
+      ],
+      "leftright":[
+        {
+          "startAction": 2
+        }
+      ]
+    },
+
+    {
       "name": "Wall.json",
       "sprite": [
         {

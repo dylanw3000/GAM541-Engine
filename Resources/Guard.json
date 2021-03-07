@@ -1,0 +1,40 @@
+{
+  "transform": [
+    {
+      "x": 200,
+      "y": 200,
+      "width": 32,
+      "height": 48,
+      "xoffset": 4
+    }
+  ],
+  "sprite": [ 
+    {
+      "animated": true,
+      "idlingImageName": "Guard_Idling.png",
+      "idlingColumns": 1,
+      "idlingRows": 1,
+      "runningImageName": "Guard_Running.png",
+      "runningColumns": 4,
+      "runningRows": 1
+    }  
+  ],
+  "character": [
+    {
+      "hp": 3,
+      "radius": 24
+    }
+  ],
+  "leftright":
+  [
+    {
+      "startAction": 0,
+      "moveDuration": 4000, 
+      "waitDuration": 2000,
+      "speed": 50,
+      "visionWidth": 0.5,
+      "visionAngleMod": 0.0,
+      "visionLength": 150.0
+    }
+  ]
+}

@@ -838,6 +838,7 @@ int main(int argc, char* args[])
 			gameType = 3;
 			gpGameObjectManager->~GameObjectManager();
 			gpObjectFactory->LoadLevel("../Resources/StealthLevel1.json");
+			gpStealthModerator->mStage = 1;
 		}
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {

@@ -34,10 +34,10 @@ void StealthModerator::Update() {
 	bool playerAlive = false;
 	for (auto pGO : gpGameObjectManager->mGameObjects) {
 		Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
-		if (pC == nullptr) { continue; }
-		if (pC->mFriendly == false) {
+		if (pC == nullptr) continue; 
+		if (pC->mFriendly == false) 
+		{
 			clearLevel = false;
-			break;
 		}
 		else {
 			playerAlive = true;
