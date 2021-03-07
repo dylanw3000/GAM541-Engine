@@ -112,6 +112,7 @@
     <ClCompile Include="Moderator.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="StealthModerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\OpenGL Tutorial\GLFWOpenGL\shader.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="StealthModerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

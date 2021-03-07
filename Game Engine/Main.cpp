@@ -34,6 +34,7 @@ Creation date: October 5, 2020
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "Moderator.h"
+#include "StealthModerator.h"
 #include "LoadShaders.h"
 
 #include "GameObject.h"
@@ -72,6 +73,7 @@ ObjectFactory* gpObjectFactory;
 CollisionManager* gpCollisionManager;
 EventManager* gpEventManager;
 Moderator* gpModerator;
+StealthModerator* gpStealthModerator;
 
 AudioManager* gpAudioManager;
 
@@ -142,6 +144,7 @@ int main(int argc, char* args[])
 	gpCollisionManager = new CollisionManager();
 	gpEventManager = new EventManager();
 	gpModerator = new Moderator();
+	gpStealthModerator = new StealthModerator();
 
 	gpAudioManager = new AudioManager();
 
@@ -296,6 +299,7 @@ int main(int argc, char* args[])
 	glDepthFunc(GL_LEQUAL);
 
 	gpModerator->mStage = 1;
+	gpStealthModerator->mStage = 1;
 	gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
 
 	// Game loop
@@ -370,8 +374,11 @@ int main(int argc, char* args[])
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
 
-		gpModerator->Update();
-		if (gpModerator->mStage == 0) {
+		if (gameType == 1 || gameType == 2)
+			gpModerator->Update();
+		else
+			gpStealthModerator->Update();
+		if ((gameType != 3 && gpModerator->mStage == 0) || (gameType == 3 && gpStealthModerator->mStage == 0)) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
 
@@ -397,7 +404,7 @@ int main(int argc, char* args[])
 				// glBindVertexArray(0);
 			//}
 		}
-		else if (gpModerator->mStage == 666) {
+		else if ((gameType != 3 && gpModerator->mStage == 666) || (gameType == 3 && gpStealthModerator->mStage == 666)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -413,7 +420,7 @@ int main(int argc, char* args[])
 
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
-		else if (gpModerator->mStage == 99) {
+		else if ((gameType != 3 && gpModerator->mStage == 99) || (gameType == 3 && gpStealthModerator->mStage == 99)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -824,6 +831,13 @@ int main(int argc, char* args[])
 			gameType = 2;
 			gpGameObjectManager->~GameObjectManager();
 			gpObjectFactory->LoadGameObject("../Resources/Runner.json");
+		}
+
+		//Start Playing Stealth Prototype
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_3)) {
+			gameType = 3;
+			gpGameObjectManager->~GameObjectManager();
+			gpObjectFactory->LoadLevel("../Resources/StealthLevel1.json");
 		}
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {

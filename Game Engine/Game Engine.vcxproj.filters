@@ -50,6 +50,7 @@
     <ClCompile Include="Components\Runner.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="StealthModerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Components\Runner.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="StealthModerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
