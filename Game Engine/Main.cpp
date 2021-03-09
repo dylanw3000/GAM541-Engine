@@ -740,7 +740,7 @@ int main(int argc, char* args[])
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Character* pC = static_cast<Character*>(pGameObject->GetComponent(TYPE_CHARACTER));
 
-				if (!pC) { continue; }
+				if (!pC || gameType == 2) { continue; }
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX, pT->mPositionY - pT->mHeight + pT->mSpriteOffsetY - 10.0f, 1.0f));

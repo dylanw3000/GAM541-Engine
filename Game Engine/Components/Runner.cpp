@@ -35,7 +35,7 @@ Runner::Runner() : Component(TYPE_RUNNER) {
 
 	mMissileActive = false;
 	mMissileLaunchTime = mMissileLaunchDelay = 2.f;
-	mMissileY = mMissileTracking = 200.f;
+	mMissileY = mMissileTracking = 100.f;
 
 	mFail = false;
 
@@ -97,7 +97,12 @@ void Runner::Update() {
 				&& pT->mPositionY - pB->mHeight < pTrans->mPositionY
 				&& pT->mPositionY > pTrans->mPositionY - pBody->mHeight
 			) {
-				mFail = true;
+				if (pBody->mFriendly) {
+					pGO->mDestroy = true;
+				}
+				else {
+					mFail = true;
+				}
 			}
 		}
 
@@ -113,11 +118,73 @@ void Runner::Update() {
 		}
 
 		if (mTimer > mObstacleTime) {
+			if (mObstacleTime == 5.f * mObstacleDelay) {
+				mObstacleTime += 5.f;
+
+				GameObject* pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerObstacle.json");
+				Body* pBody = static_cast<Body*>(pWall->GetComponent(TYPE_BODY));
+				Transform* pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionY = 532.f;
+				pTrans->mPositionX = 1700.f;
+				pTrans->mHeight = 500.f;
+				pTrans->mWidth = 16.f;
+				pBody->mHeight = 450.f;
+				pBody->mWidth = 3.f;
+
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerObstacle.json");
+				pBody = static_cast<Body*>(pWall->GetComponent(TYPE_BODY));
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionY = 738.f;
+				pTrans->mPositionX = 1975.f;
+				pTrans->mHeight = 500.f;
+				pTrans->mWidth = 16.f;
+				pBody->mHeight = 450.f;
+				pBody->mWidth = 3.f;
+
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerObstacle.json");
+				pBody = static_cast<Body*>(pWall->GetComponent(TYPE_BODY));
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionY = 532.f;
+				pTrans->mPositionX = 2250.f;
+				pTrans->mHeight = 500.f;
+				pTrans->mWidth = 16.f;
+				pBody->mHeight = 450.f;
+				pBody->mWidth = 3.f;
+
+				/*******/
+
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 1925.f;
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 1975.f;
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 2025.f;
+			}
 			mObstacleTime += mObstacleDelay;
 
 			GameObject* pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerObstacle.json");
 			Transform* pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
 			pTrans->mPositionY = rand() % 414 + 320;
+
+			{
+				float h = rand() % 640 + 112;
+
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 1425.f;
+				pTrans->mPositionY = h;
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 1475.f;
+				pTrans->mPositionY = h;
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerCoin.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionX = 1525.f;
+				pTrans->mPositionY = h;
+			}
 		}
 
 		/*** Missiles ***/
@@ -138,7 +205,8 @@ void Runner::Update() {
 				mMissileY += delta * mMissileTracking * (mMissileY > pT->mPositionY ? -1.f : 1.f);
 			}
 			
-			pC->AddRect(1200.f, mMissileY - pB->mHeight / 2.f, M_PI, 1200.f, 32.f, mMissileLaunchTime / mMissileLaunchDelay);
+			// pC->AddRect(1200.f, mMissileY - pB->mHeight / 2.f, M_PI, 1200.f, 32.f, mMissileLaunchTime / mMissileLaunchDelay);
+			pC->AddTelegraph(1200.f + 64.f, mMissileY - pB->mHeight / 2.f, M_PI, M_PI / 16.f, 72.f, 256.f, mMissileLaunchTime / mMissileLaunchDelay);
 
 			if (mMissileLaunchTime >= mMissileLaunchDelay) {
 				mMissileActive = false;

@@ -28,6 +28,8 @@ Body::Body() : Component(TYPE_BODY) {
 	mWidth = mHeight = 20.0f;
 	mWall = false;
 	mSemisolid = false;
+	mBounce = false;
+	mFriendly = false;
 }
 
 Body::~Body() {
@@ -63,6 +65,10 @@ void Body::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 
 	if (input[0].HasMember("semi")) {
 		mSemisolid = input[0]["semi"].GetBool();
+	}
+
+	if (input[0].HasMember("friendly")) {
+		mFriendly = input[0]["friendly"].GetBool();
 	}
 }
 

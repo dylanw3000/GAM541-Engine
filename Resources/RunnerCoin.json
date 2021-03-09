@@ -1,0 +1,29 @@
+{
+  "transform": [
+    {
+      "x": 1200,
+      "y": 128,
+      "yoffset": -16,
+      "width": 32,
+      "height": 32,
+      "velhoriz": -300
+    }
+  ],
+  "body": [
+    {
+      "width": 32,
+      "height": 48,
+      "friendly": true
+    }
+  ],
+  "character": [
+    {
+      "radius": 0
+    }
+  ],
+  "sprite": [
+    {
+      "imageName": "../Resources/cupcake.png"
+    }
+  ]
+}
