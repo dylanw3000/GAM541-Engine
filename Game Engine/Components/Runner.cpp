@@ -135,7 +135,7 @@ void Runner::Update() {
 				pBody = static_cast<Body*>(pWall->GetComponent(TYPE_BODY));
 				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
 				pTrans->mPositionY = 738.f;
-				pTrans->mPositionX = 1975.f;
+				pTrans->mPositionX = 2000.f;
 				pTrans->mHeight = 500.f;
 				pTrans->mWidth = 16.f;
 				pBody->mHeight = 450.f;
@@ -145,7 +145,7 @@ void Runner::Update() {
 				pBody = static_cast<Body*>(pWall->GetComponent(TYPE_BODY));
 				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
 				pTrans->mPositionY = 532.f;
-				pTrans->mPositionX = 2250.f;
+				pTrans->mPositionX = 2300.f;
 				pTrans->mHeight = 500.f;
 				pTrans->mWidth = 16.f;
 				pBody->mHeight = 450.f;
