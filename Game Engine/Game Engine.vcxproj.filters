@@ -55,6 +55,10 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="StealthModerator.cpp" />
+    <ClCompile Include="Components\LeftRight.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -112,6 +116,10 @@
     </ClInclude>
     <ClInclude Include="Components\AudioClip.h" />
     <ClInclude Include="Components\Runner.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StealthModerator.h" />
+    <ClInclude Include="Components\LeftRight.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h" />

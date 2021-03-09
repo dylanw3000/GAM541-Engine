@@ -27,6 +27,7 @@ Creation date: October 15, 2020
 #include "Components/Body.h"
 #include "Components/AudioClip.h"
 #include "Components/Runner.h"
+#include "Components/LeftRight.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -68,6 +69,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_UP_DOWN:
 			pNewComponent = new UpDown();
+			break;
+		case TYPE_LEFT_RIGHT:
+			pNewComponent = new LeftRight();
 			break;
 		case TYPE_SLIME:
 			pNewComponent = new Slime();

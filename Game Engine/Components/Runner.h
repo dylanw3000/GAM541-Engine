@@ -21,9 +21,9 @@ public:
 	float mMissileTime, mMissileDelay;
 
 	bool mMissileActive;
-	float mMissileLaunchTime, mMissileLaunchDelay;
+	float mMissileLaunchTime, mMissileLaunchDelay, mMissileY, mMissileTracking;
 
-	float mGravity, mAcc;
+	float mGravity, mAcc, mVelMax;
 
 	bool mFail;
 

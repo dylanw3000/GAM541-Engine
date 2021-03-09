@@ -33,6 +33,7 @@ Creation date: October 15, 2020
 #include "Components/AudioClip.h"
 #include "Components/Body.h"
 #include "Components/Runner.h"
+#include "Components/LeftRight.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -118,6 +119,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 		pNewComponent = pNewGO->AddComponent(TYPE_RUNNER);
 		pNewComponent->Serialize(document["runner"].GetArray());
 	}
+	if (document.HasMember("leftright")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_LEFT_RIGHT);
+		pNewComponent->Serialize(document["leftright"].GetArray());
+	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
 
@@ -187,6 +192,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			UpDown* pUpDown = static_cast<UpDown*>(pNewGO->GetComponent(TYPE_UP_DOWN));
 			assert(pUpDown != nullptr);
 			pUpDown->Serialize(d["updown"].GetArray());
+		}
+
+		if (d.HasMember("leftright")) {
+			LeftRight* pLeftRight = static_cast<LeftRight*>(pNewGO->GetComponent(TYPE_LEFT_RIGHT));
+			assert(pLeftRight != nullptr);
+			pLeftRight->Serialize(d["leftright"].GetArray());
 		}
 
 		if (d.HasMember("slime")) {
