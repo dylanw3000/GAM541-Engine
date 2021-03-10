@@ -125,11 +125,6 @@
     },
     {
       "name": "Wall.json",
-      "sprite": [
-        {
-          "imageNameOLD": "Buffman Liff U Up.png"
-        }
-      ],
       "transform": [
         {
           "x": 800,
@@ -166,10 +161,6 @@
     },
     {
       "name": "Wall.json",
-      "sprite": [
-        {
-        }
-      ],
       "transform": [
         {
           "x": 700,
@@ -179,10 +170,6 @@
     },
     {
       "name": "Wall.json",
-      "sprite": [
-        {
-        }
-      ],
       "transform": [
         {
           "x": 620,
