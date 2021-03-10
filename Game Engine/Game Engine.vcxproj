@@ -97,6 +97,7 @@
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\Controller.cpp" />
     <ClCompile Include="Components\LeftRight.cpp" />
+    <ClCompile Include="Components\Objective.cpp" />
     <ClCompile Include="Components\Runner.cpp" />
     <ClCompile Include="Components\Slime.cpp" />
     <ClCompile Include="Components\Sniper.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\Controller.h" />
     <ClInclude Include="Components\LeftRight.h" />
+    <ClInclude Include="Components\Objective.h" />
     <ClInclude Include="Components\Runner.h" />
     <ClInclude Include="Components\Slime.h" />
     <ClInclude Include="Components\Sniper.h" />

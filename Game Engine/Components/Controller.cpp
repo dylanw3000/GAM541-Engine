@@ -29,6 +29,7 @@ extern FrameRateController* gpFRC;
 extern InputManager* gpInputManager;
 extern GameObjectManager* gpGameObjectManager;
 extern EventManager* gpEventManager;
+extern int gGameType;
 
 
 PlayerHitEvent::PlayerHitEvent() : Event(EventType::PLAYER_HIT) {
@@ -53,14 +54,26 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 
 	mDashTimer = mDashCooldown = 2000;
 
-
-	mSwingTime = 800;
-	mSwingDelay = 400;
-	mSwingTimer = mSwingTime + mSwingDelay;
-	mSwingAng = 0.0f;
-	mSwingWidth = 0.9f;
-	mSwingLen = 220.f;
-	mSwinging = mCleaver = false;
+	if (gGameType == 1)
+	{
+		mSwingTime = 800;
+		mSwingDelay = 400;
+		mSwingTimer = mSwingTime + mSwingDelay;
+		mSwingAng = 0.0f;
+		mSwingWidth = 0.9f;
+		mSwingLen = 220.f;
+		mSwinging = mCleaver = false;
+	}
+	else if (gGameType == 3)
+	{
+		mSwingTime = 800;
+		mSwingDelay = 400;
+		mSwingTimer = mSwingTime + mSwingDelay;
+		mSwingAng = 0.0f;
+		mSwingWidth = 0.3f;
+		mSwingLen = 100.0f;
+		mSwinging = mCleaver = false;
+	}
 }
 
 Controller::~Controller() {
@@ -290,7 +303,7 @@ void Controller::Update() {
 
 	/*** Attacks ***/
 	mSwingTimer += gpFRC->GetFrameTime();
-	if ((gpInputManager->IsMousePressed() || (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))) && !mSwinging && mSwingTimer >= mSwingTime+mSwingDelay) {
+	if ((gpInputManager->IsMousePressed() || ((SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))) && gGameType == 1) && !mSwinging && mSwingTimer >= mSwingTime+mSwingDelay) {
 		mSwinging = true;
 		mSwingTimer = 0;
 		mCleaver = SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
@@ -309,10 +322,15 @@ void Controller::Update() {
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
 		if (!mCleaver) {
 			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, mSwingLen, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+
 		}
 		else {
-			pC->AddTelegraphColor(pT->mPositionX - 100*cosf(mSwingAng), pT->mPositionY - 100*sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
-			pC->mHP = pC->mHPMax;
+			if (gGameType == 1)
+			{
+				pC->AddTelegraphColor(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+				pC->mHP = pC->mHPMax;
+			}
+			
 		}
 
 		if (mSwingTimer >= mSwingTime) {
@@ -327,12 +345,21 @@ void Controller::Update() {
 
 				if (!mCleaver) {
 					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, mSwingLen)) {
-						pChar->mHP -= 1.0f;
+						if (gGameType == 1)
+							pChar->mHP -= 1.0f;
+						else if (gGameType == 3)
+						{
+							pChar->mIsStunned = true;
+							pChar->mStunnedDuration = 2000;
+						}
 					}
 				}
 				else {
-					if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700)) {
-						pChar->mHP -= 10.0f;
+					if (gGameType == 1)
+					{
+						if (pChar->CollideCirc(pT->mPositionX - 100 * cosf(mSwingAng), pT->mPositionY - 100 * sinf(mSwingAng), mSwingAng, mSwingWidth * 0.2, 120, 700)) {
+							pChar->mHP -= 10.0f;
+						}
 					}
 					
 				}

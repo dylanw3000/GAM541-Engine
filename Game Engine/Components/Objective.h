@@ -2,8 +2,8 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: UpDown.h
-Purpose: Extremely simple controller to demonstrate NPC behaviour
+File Name: Slime.h
+Purpose: Handles movement patterns for a "slime" object
 Language: C++, gpp
 Platform: gpp
 Project: dylan.washburne CS529_milestone_2
@@ -12,45 +12,25 @@ Creation date: October 15, 2020
 - End Header --------------------------------------------------------*/
 
 #pragma once
+
 #include "Component.h"
 
-class GameObject;
-
-enum ACTION_TYPE {
-	WALK_RIGHT,
-	WAIT_RIGHT,
-	WALK_LEFT,
-	WAIT_LEFT
-};
-
-class LeftRight : public Component {
+class Objective : public Component {
 public:
-	LeftRight();
-	~LeftRight();
+	Objective();
+	~Objective();
 
 	void Update();
-
-	void Serialize(rapidjson::GenericArray<false, rapidjson::Value> input);
 	void Serialize(std::ifstream& InputStream);
+	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);
 
 	void HandleEvent(Event* pEvent);
 
 public:
-	
-	int mTimer, mTimerLimit;
-	int numActions;
-	int mMoveDuration, mWaitDuration;
-	int mSpeed;
-	unsigned int mAction;
-	bool isStunned;
-	float visionWidth;
-	float visionAngle;
-	float visionAngleMod;
-	float visionLength;
-	float mDamage;
+	bool mCompleted;
 
 
 private:
-	void UpdateTimersAndAngles();
+	float mRadius;
 private:
 };

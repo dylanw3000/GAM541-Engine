@@ -34,6 +34,7 @@ Creation date: October 15, 2020
 #include "Components/Body.h"
 #include "Components/Runner.h"
 #include "Components/LeftRight.h"
+#include "Components/Objective.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -122,6 +123,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 	if (document.HasMember("leftright")) {
 		pNewComponent = pNewGO->AddComponent(TYPE_LEFT_RIGHT);
 		pNewComponent->Serialize(document["leftright"].GetArray());
+	}
+	if (document.HasMember("objective")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_OBJECTIVE);
+		pNewComponent->Serialize(document["objective"].GetArray());
 	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
@@ -236,6 +241,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			Runner* pRunner = static_cast<Runner*>(pNewGO->GetComponent(TYPE_RUNNER));
 			if (pRunner == nullptr) { pRunner = static_cast<Runner*>(pNewGO->AddComponent(TYPE_RUNNER)); }
 			pRunner->Serialize(d["runner"].GetArray());
+		}
+
+		if (d.HasMember("objective")) {
+			Objective* pObjective = static_cast<Objective*>(pNewGO->GetComponent(TYPE_OBJECTIVE));
+			if (pObjective == nullptr) { pObjective = static_cast<Objective*>(pNewGO->AddComponent(TYPE_OBJECTIVE)); }
+			pObjective->Serialize(d["objective"].GetArray());
 		}
 		
 	}

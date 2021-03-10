@@ -78,7 +78,7 @@ StealthModerator* gpStealthModerator;
 AudioManager* gpAudioManager;
 
 bool DEBUG;
-int gameType = 1;
+int gGameType = 1;
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -357,7 +357,7 @@ int main(int argc, char* args[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBlendEquation(GL_ADD);
 
-		if (gameType == 1){
+		if (gGameType == 1){
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -374,11 +374,11 @@ int main(int argc, char* args[])
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
 
-		if (gameType == 1 || gameType == 2)
+		if (gGameType == 1 || gGameType == 2)
 			gpModerator->Update();
 		else
 			gpStealthModerator->Update();
-		if ((gameType != 3 && gpModerator->mStage == 0) || (gameType == 3 && gpStealthModerator->mStage == 0)) {
+		if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
 
@@ -404,7 +404,7 @@ int main(int argc, char* args[])
 				// glBindVertexArray(0);
 			//}
 		}
-		else if ((gameType != 3 && gpModerator->mStage == 666) || (gameType == 3 && gpStealthModerator->mStage == 666)) {
+		else if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -420,7 +420,7 @@ int main(int argc, char* args[])
 
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
-		else if ((gameType != 3 && gpModerator->mStage == 99) || (gameType == 3 && gpStealthModerator->mStage == 99)) {
+		else if ((gGameType != 3 && gpModerator->mStage == 99) || (gGameType == 3 && gpStealthModerator->mStage == 99)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -740,7 +740,7 @@ int main(int argc, char* args[])
 				Transform* pT = static_cast<Transform*>(pGameObject->GetComponent(TYPE_TRANSFORM));
 				Character* pC = static_cast<Character*>(pGameObject->GetComponent(TYPE_CHARACTER));
 
-				if (!pC || gameType == 2) { continue; }
+				if (!pC || gGameType == 2) { continue; }
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX, pT->mPositionY - pT->mHeight + pT->mSpriteOffsetY - 10.0f, 1.0f));
@@ -787,7 +787,7 @@ int main(int argc, char* args[])
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN)) {	// restart level
 			gpGameObjectManager->~GameObjectManager();
-			gameType = 1;
+			gGameType = 1;
 
 			gpModerator->mStage = 1;
 			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
@@ -804,14 +804,22 @@ int main(int argc, char* args[])
 			gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(levelNo) + ".json").c_str());
 			*/
 			
-			gpModerator->mStage++;
+			if (gGameType == 1)
+			{
+
+				gpModerator->mStage++;
 			
-			if (gpModerator->mStage == 0) {
-				gpGameObjectManager->~GameObjectManager();
+				if (gpModerator->mStage == 0) {
+					gpGameObjectManager->~GameObjectManager();
+				}
+				else if(gpModerator->mStage <= 4) {
+					// gpGameObjectManager->~GameObjectManager();
+					gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(gpModerator->mStage) + ".json").c_str());
+				}
 			}
-			else if(gpModerator->mStage <= 4) {
-				// gpGameObjectManager->~GameObjectManager();
-				gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(gpModerator->mStage) + ".json").c_str());
+			if (gGameType == 3)
+			{
+				gpStealthModerator->mManualOverride = true;
 			}
 			
 		}
@@ -828,14 +836,14 @@ int main(int argc, char* args[])
 		}
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_2)) {
-			gameType = 2;
+			gGameType = 2;
 			gpGameObjectManager->~GameObjectManager();
 			gpObjectFactory->LoadGameObject("../Resources/Runner.json");
 		}
 
 		//Start Playing Stealth Prototype
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_3)) {
-			gameType = 3;
+			gGameType = 3;
 			gpGameObjectManager->~GameObjectManager();
 			gpObjectFactory->LoadLevel("../Resources/StealthLevel1.json");
 			gpStealthModerator->mStage = 1;

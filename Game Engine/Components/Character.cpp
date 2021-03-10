@@ -17,9 +17,11 @@ Creation date: November 8, 2020
 #include "../EventManager.h"
 #include "../GameObjectManager.h"
 #include "../ObjectFactory.h"
+#include "..\FrameRateController.h"
 
 extern GameObjectManager* gpGameObjectManager;
 extern ObjectFactory* gpObjectFactory;
+extern FrameRateController* gpFRC;
 
 extern bool DEBUG;
 
@@ -28,6 +30,8 @@ Character::Character() : Component(TYPE_CHARACTER) {
 	mShadowOffset = 0;
 	mRadius = 16;
 	mFriendly = false;
+	mIsStunned = false;
+	mStunnedDuration = 100;
 }
 
 Character::~Character() {
@@ -49,6 +53,15 @@ void Character::Update() {
 			float ang = atan2f(pT->mVelVert, pT->mVelHoriz);
 			float len = sqrtf(powf(pT->mVelHoriz, 2) + powf(pT->mVelVert, 2));
 			AddRectColor(pT->mPositionX + cosf(ang)*len/2, pT->mPositionY + sin(ang)*len/2, ang, len, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1);
+		}
+	}
+
+	if (mIsStunned)
+	{
+		mStunnedDuration -= gpFRC->GetFrameTime();
+
+		if (mStunnedDuration <= 0) {
+			mIsStunned = false;
 		}
 	}
 

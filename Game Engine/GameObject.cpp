@@ -28,6 +28,7 @@ Creation date: October 15, 2020
 #include "Components/AudioClip.h"
 #include "Components/Runner.h"
 #include "Components/LeftRight.h"
+#include "Components/Objective.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -87,6 +88,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_RUNNER:
 			pNewComponent = new Runner();
+			break;
+		case TYPE_OBJECTIVE:
+			pNewComponent = new Objective();
 			break;
 		default:
 			pNewComponent = nullptr;

@@ -40,6 +40,8 @@ public:
 	int mRadius, mShadowOffset;
 	float mHP, mHPMax;
 	bool mFriendly;
+	bool mIsStunned;
+	int mStunnedDuration;
 
 	class Telegraph {
 	public:

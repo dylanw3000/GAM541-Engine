@@ -13,7 +13,7 @@ extern ResourceManager* gpResourceManager;
 extern GameObjectManager* gpGameObjectManager;
 extern ObjectFactory* gpObjectFactory;
 
-extern int gameType;
+extern int gGameType;
 
 Moderator::Moderator() {
 	mStage = 0;
@@ -26,7 +26,7 @@ Moderator::~Moderator() {
 }
 
 void Moderator::Update() {
-	if (gameType != 1 || mStage == 0 || mStage == 99 || mStage == 666) {
+	if (gGameType != 1 || mStage == 0 || mStage == 99 || mStage == 666) {
 		return;
 	}
 

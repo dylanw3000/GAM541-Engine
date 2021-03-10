@@ -10,4 +10,7 @@ public:
 	int mStage;
 	float mTimer;
 	bool mTransition;
+	bool mManualOverride;
+
+	int mTransitionTimer, mTransitionTimerLimit;
 };

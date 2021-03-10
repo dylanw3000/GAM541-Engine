@@ -39,43 +39,54 @@ LeftRight::~LeftRight() {
 }
 
 void LeftRight::Update() {
-	mTimer -= gpFRC->GetFrameTime();
-
-	if (mTimer <= 0) {
-		mAction++;
-		mAction %= 4;
-		UpdateTimersAndAngles();
-		
-	}
-
-	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
-	if (!isStunned && mAction == WALK_LEFT)
-		pT->mVelHoriz = -1 * mSpeed;
-	else if (!isStunned && mAction == WALK_RIGHT)
-		pT->mVelHoriz = 1 * mSpeed;
-	else
-		pT->mVelHoriz = 0;
 
 
 	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
-	//pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, 0, 10, 0, 150, 0.f, .2, .8, .2, .5, .2, .8, .2, .5);
-																										 
-	pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 20, visionLength, 0, .8, .2, .2, .5, .8, .3, .3, .5);
+	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
+	if (!pC->mIsStunned)
+	{
+		mTimer -= gpFRC->GetFrameTime();
 
+		if (mTimer <= 0) {
+			mAction++;
+			mAction %= 4;
+			UpdateTimersAndAngles();
+		
+		}
 
 	
-	for (auto pObject : gpGameObjectManager->mGameObjects) {
-		Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
-		if (pChar == nullptr || pChar->mFriendly == false)
-			continue;
+		if (mAction == WALK_LEFT)
+			pT->mVelHoriz = -1 * mSpeed;
+		else if (mAction == WALK_RIGHT)
+			pT->mVelHoriz = 1 * mSpeed;
+		else
+			pT->mVelHoriz = 0;
 
-		if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 0, visionLength)) {
-			pChar->mHP -= .1f;
+
+		//pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, 0, 10, 0, 150, 0.f, .2, .8, .2, .5, .2, .8, .2, .5);
+
+		pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 20, visionLength, 0, .8, .2, .2, .5, .8, .3, .3, .5);
+
+
+
+		for (auto pObject : gpGameObjectManager->mGameObjects) {
+			Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
+			if (pChar == nullptr || pChar->mFriendly == false)
+				continue;
+
+			if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 0, visionLength)) {
+				pChar->mHP -= mDamage;
+			}
+
+
+
+
 		}
-		
 
-			
-
+	}
+	else
+	{
+		pT->mVelHoriz = 0;
 	}
 	
 	
@@ -90,7 +101,7 @@ void LeftRight::UpdateTimersAndAngles()
 	else if (mAction == WAIT_RIGHT || mAction == WAIT_LEFT)
 		mTimer = mTimerLimit = mWaitDuration;
 	if (mAction == WALK_LEFT || mAction == WAIT_LEFT)
-		visionAngle = M_PI + visionAngleMod;
+		visionAngle = M_PI - visionAngleMod;
 	else
 		visionAngle = visionAngleMod;
 
@@ -140,12 +151,16 @@ void LeftRight::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 		visionWidth = input[0]["visionWidth"].GetFloat();
 	}
 
-	if (input[0].HasMember("visionAngle")) {
-		visionAngle = input[0]["visionAngle"].GetFloat();
+	if (input[0].HasMember("visionAngleMod")) {
+		visionAngleMod = input[0]["visionAngleMod"].GetFloat();
 	}
 
 	if (input[0].HasMember("visionLength")) {
 		visionLength = input[0]["visionLength"].GetFloat();
+	}
+
+	if (input[0].HasMember("damage")) {
+		mDamage = input[0]["damage"].GetFloat();
 	}
 
 	UpdateTimersAndAngles();

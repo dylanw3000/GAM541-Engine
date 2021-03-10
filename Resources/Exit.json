@@ -1,0 +1,32 @@
+{
+  "transform": [
+    {
+      "x": 1160,
+      "y": 785,
+      "width": 68,
+      "height": 48
+    }
+  ],
+  "sprite": [ 
+    {
+      "animated": true,
+      "idlingImageName": "door_idling.png",
+      "idlingColumns": 1,
+      "idlingRows": 1,
+      "runningImageName": "door_opening.png",
+      "runningColumns": 3,
+      "runningRows": 4
+    }  
+  ],
+  "character": [
+    {
+      "hp": 100,
+      "radius": 32
+    }
+  ],
+  "objective": [
+    {
+      "radius": 32
+    }
+  ]
+}
