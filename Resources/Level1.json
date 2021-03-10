@@ -127,7 +127,7 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "imageName": "Buffman Liff U Up.png"
+          "imageNameOLD": "Buffman Liff U Up.png"
         }
       ],
       "transform": [
@@ -139,14 +139,6 @@
     },
     {
       "name": "Wall.json",
-      "sprite": [
-        {
-          "animated": true,
-          "idlingImageName": "Demon Wall.png",
-          "idlingColumns": 4,
-          "idlingRows": 1
-        }
-      ],
       "transform": [
         {
           "x": 850,
@@ -176,10 +168,6 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "animated": true,
-          "idlingImageName": "Makeup Lady.png",
-          "idlingColumns": 4,
-          "idlingRows": 1
         }
       ],
       "transform": [
@@ -193,7 +181,6 @@
       "name": "Wall.json",
       "sprite": [
         {
-          "imageName": "Buffman Liff U Up.png"
         }
       ],
       "transform": [
