@@ -9,7 +9,10 @@
   ],
   "sprite": [
     {
-      "imageName": "Pasteli.png"
+      "animated": true,
+      "idlingImageName": "Trampoline_Idle.png",
+      "idlingColumns": 5,
+      "idlingRows": 1
     }
   ],
   "body": [

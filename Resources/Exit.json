@@ -1,7 +1,7 @@
 {
   "transform": [
     {
-      "x": 1160,
+      "x": 1168,
       "y": 785,
       "width": 68,
       "height": 48
@@ -21,12 +21,12 @@
   "character": [
     {
       "hp": 100,
-      "radius": 32
+      "radius": 40
     }
   ],
   "objective": [
     {
-      "radius": 32
+      "radius": 40
     }
   ]
 }

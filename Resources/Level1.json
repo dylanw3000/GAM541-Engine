@@ -213,24 +213,42 @@
       ]
     },
     {
-      "sprite": [
-        {
-          "imageName": "semisolid.png"
-        }
-      ],
-      "body": [
-        {
-          "width": 256,
-          "height": 64,
-          "wall": true,
-          "semi": true
-        }
-      ],
+      "name": "SemiSolidWall.json",
       "transform": [
         {
           "x": 200,
           "y": 300,
-          "width": 256
+          "width": 64
+        }
+      ]
+    },
+    {
+      "name": "SemiSolidWall.json",
+      "transform": [
+        {
+          "x": 264,
+          "y": 300,
+          "width": 64
+        }
+      ]
+    },
+    {
+      "name": "SemiSolidWall.json",
+      "transform": [
+        {
+          "x": 328,
+          "y": 300,
+          "width": 64
+        }
+      ]
+    },
+    {
+      "name": "SemiSolidWall.json",
+      "transform": [
+        {
+          "x": 392,
+          "y": 300,
+          "width": 64
         }
       ]
     },
