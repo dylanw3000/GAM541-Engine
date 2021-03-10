@@ -169,6 +169,12 @@ void Runner::Update() {
 			Transform* pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
 			pTrans->mPositionY = rand() % 414 + 320;
 
+			if (mTimer > mObstacleDelay * 12.f) {
+				pWall = gpObjectFactory->LoadGameObject("../Resources/RunnerObstacle.json");
+				pTrans = static_cast<Transform*>(pWall->GetComponent(TYPE_TRANSFORM));
+				pTrans->mPositionY = rand() % 414 + 320;
+			}
+
 			{
 				float h = rand() % 640 + 112;
 
