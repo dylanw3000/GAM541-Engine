@@ -48,11 +48,16 @@
 
   "audioClip": [
 {
-"EventCount": 1
+"EventCount": 2
 },
     {
       "name": "Jump",
-      "volume": 1}
+      "volume": 0.1
+},
+{
+"name": "Grounded",
+"volume": 1
+}
   ],
 
   "controller": [

@@ -29,6 +29,7 @@ extern FrameRateController* gpFRC;
 extern InputManager* gpInputManager;
 extern GameObjectManager* gpGameObjectManager;
 extern EventManager* gpEventManager;
+//extern AudioManager* gpAudioManager;
 extern int gGameType;
 
 
@@ -199,6 +200,19 @@ void Controller::Update() {
 		}
 		else
 			mIsGrounded = false;
+
+
+		if (!mIsPrevGrounded)
+		{
+			if (mIsGrounded)
+			{
+				AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+				pAC->PlayOneShot("Grounded");
+			}
+		}
+
+
+		mIsPrevGrounded = mIsGrounded;
 
 	}
 

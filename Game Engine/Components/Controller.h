@@ -60,5 +60,6 @@ private:
 	float mSwingWidth, mSwingLen;
 	bool mSwinging, mCleaver;
 	bool mIsGrounded;
+	bool mIsPrevGrounded;
 	int mJumpsLeft, mJumps;
 };
