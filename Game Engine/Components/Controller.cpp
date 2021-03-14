@@ -415,7 +415,7 @@ void Controller::Update() {
 void Controller::Jump(Transform* pT)
 {
 	AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
-	pAC->PlayOneShot();
+	pAC->PlayOneShot("Jump");
 	pT->mVelVert = -600; // jumping
 }
 

@@ -2,6 +2,22 @@
 
 #include "Component.h"
 #include "../AudioManager.h"
+#include <vector>
+
+class AudioEvent
+{
+public:
+	AudioEvent();
+	~AudioEvent();
+
+	void SetData(rapidjson::Value& input);
+
+	std::string mEventName;
+	float mEventVolume;
+	
+	FMOD::Studio::EventDescription* mEventDescription = NULL;
+	FMOD::Studio::EventInstance* mEventInstance = NULL;
+};
 
 class AudioClip : public Component {
 public:
@@ -12,14 +28,14 @@ public:
 	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);
 	void Update();
 
-	void PlayOneShot();
+	void PlayOneShot(std::string eventName);
 
 public:
 	
 	float mVolume = 1.0f;
+	int mEventCount;
 
-	FMOD::Studio::EventDescription* mEventDescription = NULL;
-	FMOD::Studio::EventInstance* mEventInstance = NULL;
+	std::vector<AudioEvent*> mEventList;
 
 private:
 private:

@@ -47,9 +47,12 @@
   ],
 
   "audioClip": [
+{
+"EventCount": 1
+},
     {
       "name": "Jump",
-      "volume": 0.1    }
+      "volume": 1}
   ],
 
   "controller": [
