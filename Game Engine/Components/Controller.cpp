@@ -157,7 +157,6 @@ void Controller::Update() {
 			if (!pBody || pBody->mpOwner == mpOwner || !pBody->mWall) { continue; }
 
 			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
-
 			if (
 				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
 				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
@@ -171,8 +170,6 @@ void Controller::Update() {
 				if (!collision) {
 					collision = true;
 
-					mIsGrounded = true;
-					mJumpsLeft = mJumps;
 					pos = pTrans->mPositionY + (pT->mVelVert >= 0 ? -pBody->mHeight - .001 : pB->mHeight + .001);
 				}
 				else {
@@ -186,7 +183,37 @@ void Controller::Update() {
 					bounce = true;
 				}
 			}
+
+			float wallJumpTolerance = 1.0f;
+			if (
+				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
+				&& pT->mPositionY < pTrans->mPositionY
+				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + ((pBody->mWidth / 2) + wallJumpTolerance)
+				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - ((pBody->mWidth / 2) + wallJumpTolerance)
+				)
+			{
+
+				mIsGrounded = true;
+				mJumpsLeft = mJumps;
+			}
+			
+					
 		}
+
+
+
+		if (!mIsPrevGrounded)
+		{
+			if (mIsGrounded)
+			{
+				AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+				pAC->PlayOneShot("Grounded");
+			}
+		}
+
+
+		mIsPrevGrounded = mIsGrounded;
 
 		if (collision) {
 			pT->mPositionY = pos;
@@ -201,18 +228,8 @@ void Controller::Update() {
 		else
 			mIsGrounded = false;
 
+		
 
-		if (!mIsPrevGrounded)
-		{
-			if (mIsGrounded)
-			{
-				AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
-				pAC->PlayOneShot("Grounded");
-			}
-		}
-
-
-		mIsPrevGrounded = mIsGrounded;
 
 	}
 

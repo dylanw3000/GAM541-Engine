@@ -9,10 +9,8 @@
   ],
   "sprite": [
     {
-      "animated": true,
-      "idlingImageName": "SemisolidBricks_Idle.png",
-      "idlingColumns": 5,
-      "idlingRows": 1
+      "animated": false,
+      "imageName": "Log_Bridge.png"
     }
   ],
   "body": [
