@@ -124,7 +124,7 @@
 
     
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 344,
@@ -136,7 +136,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 408,
@@ -148,7 +148,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 472,
@@ -160,7 +160,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 536,
@@ -186,7 +186,7 @@
 
     
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 664,
@@ -198,7 +198,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 728,
@@ -210,7 +210,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 792,
@@ -222,7 +222,7 @@
     },
 
     {
-      "name": "BrickWall.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 856,
@@ -275,17 +275,7 @@
       "transform": [
         {
           "x": 96,
-          "y": 432,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 432
         }
       ]
     },
@@ -294,17 +284,7 @@
       "transform": [
         {
           "x": 160,
-          "y": 432,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 432
         }
       ]
     },
@@ -313,17 +293,7 @@
       "transform": [
         {
           "x": 224,
-          "y": 432,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 432
         }
       ]
     },
@@ -385,17 +355,7 @@
       "transform": [
         {
           "x": 1104,
-          "y": 350,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 350
         }
       ]
     },
@@ -405,17 +365,7 @@
       "transform": [
         {
           "x": 1040,
-          "y": 350,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 350
         }
       ]
     },
@@ -425,17 +375,7 @@
       "transform": [
         {
           "x": 976,
-          "y": 350,
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 64,
-          "height": 64,
-          "wall": true,
-          "semi": true
+          "y": 350
         }
       ]
     },
