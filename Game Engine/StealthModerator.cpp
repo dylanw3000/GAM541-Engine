@@ -47,6 +47,10 @@ void StealthModerator::Update() {
 			playerAlive = true;
 		}
 
+		
+	}
+
+	for (auto pGO : gpGameObjectManager->mGameObjects) {
 		Objective* pO = static_cast<Objective*>(pGO->GetComponent(TYPE_OBJECTIVE));
 		if (pO == nullptr) continue;
 		if (pO->mCompleted == false)

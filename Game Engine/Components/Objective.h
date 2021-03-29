@@ -32,5 +32,7 @@ public:
 
 private:
 	float mRadius;
+	bool mIsKey;
+	int mDissapearDuration;
 private:
 };

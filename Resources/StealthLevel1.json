@@ -351,6 +351,16 @@
     },
 
     {
+      "name": "Key.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 125
+        }
+      ]
+    },
+
+    {
       "name": "Exit.json"
     }
     

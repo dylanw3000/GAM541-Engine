@@ -17,12 +17,14 @@ Creation date: October 15, 2020
 #include "../EventManager.h"
 #include "../CollisionManager.h"
 #include "../EventManager.h"
+#include "..\FrameRateController.h"
 #include "Component.h"
 #include "Transform.h"
 #include "Character.h"
 
 extern GameObjectManager* gpGameObjectManager;
 extern EventManager* gpEventManager;
+extern FrameRateController* gpFRC;
 
 extern bool DEBUG;
 
@@ -31,6 +33,7 @@ Objective::Objective() : Component(TYPE_OBJECTIVE) {
 	// mHoriz = 0;
 	mRadius = 10.0f;
 	mCompleted = false;
+	mDissapearDuration = 700;
 }
 
 Objective::~Objective() {
@@ -54,13 +57,41 @@ void Objective::Update() {
 
 		Transform* pTrans = static_cast<Transform*>(pGO->GetComponent(TYPE_TRANSFORM));
 		if (pow(pT->mPositionX - pTrans->mPositionX, 2) + pow(pT->mPositionY - pTrans->mPositionY, 2) <= pow(pChar->mRadius + mRadius, 2)) {
-			mCompleted = true;
+
+
+			if (mIsKey)
+			{
+				mCompleted = true;
+			}
+			else
+			{
+				bool bKeysCollected = true;
+				for (auto pGO : gpGameObjectManager->mGameObjects) {
+					Objective* pO = static_cast<Objective*>(pGO->GetComponent(TYPE_OBJECTIVE));
+					if (pO == nullptr) continue;
+					if (pO->mCompleted == false && pO->mIsKey == true)
+					{
+						bKeysCollected = false;
+					}
+				}
+				if (bKeysCollected)
+					mCompleted = true;
+			}
 		}
 	}
 
 	if (mCompleted)
 	{
 		pT->mVelHoriz = .01f;
+	}
+
+	if (mCompleted && mIsKey)
+	{
+		mDissapearDuration -= gpFRC->GetFrameTime();
+
+		if (mDissapearDuration <= 0) {
+			gpGameObjectManager->DeleteObject(mpOwner);
+		}
 	}
 
 	// pT->mPositionX += pT->mVelHoriz * gpFRC->GetDeltaTime();
@@ -81,6 +112,10 @@ void Objective::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 
 	if (input[0].HasMember("radius")) {
 		mRadius = input[0]["radius"].GetInt();
+	}
+
+	if (input[0].HasMember("key")) {
+		mIsKey = input[0]["key"].GetBool();
 	}
 
 	gpEventManager->Subscribe(EventType::PLAYER_HIT, mpOwner);

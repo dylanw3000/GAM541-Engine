@@ -357,7 +357,7 @@ int main(int argc, char* args[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBlendEquation(GL_ADD);
 
-		if (gGameType == 1){
+		if (gGameType == 1 || 3){
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);

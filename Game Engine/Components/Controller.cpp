@@ -53,7 +53,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 	mSlowMod = 0.25;
 	mExcessSlowMod = 2.0f;
 
-	mDashTimer = mDashCooldown = 2000;
+	mDashTimer = mDashCooldown = 5000;
 
 	if (gGameType == 1)
 	{
@@ -430,7 +430,7 @@ void Controller::Jump(Transform* pT)
 {
 	AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
 	pAC->PlayOneShot("Jump");
-	pT->mVelVert = -600; // jumping
+	pT->mVelVert = -490; // jumping
 }
 
 

@@ -552,6 +552,36 @@
     },
 
     {
+      "name": "Key.json",
+      "transform": [
+        {
+          "x": 1100,
+          "y": 200
+        }
+      ]
+    },
+
+    {
+      "name": "Key.json",
+      "transform": [
+        {
+          "x": 950,
+          "y": 575
+        }
+      ]
+    },
+    
+    {
+      "name": "Key.json",
+      "transform": [
+        {
+          "x": 250,
+          "y": 575
+        }
+      ]
+    },
+
+    {
       "name": "Exit.json",
       "transform": [
         {
