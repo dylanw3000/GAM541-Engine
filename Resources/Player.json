@@ -10,23 +10,23 @@
   "sprite": [ 
     {
       "animated": true,
-      "idlingImageName": "Kakashi_Idling.png",
+      "idlingImageName": "Cloak_Dude_Idle.png",
       "idlingColumns": 4,
       "idlingRows": 1,
-      "runningImageName": "Kakashi_Running.png",
-      "runningColumns": 6,
+      "runningImageName": "Cloak_Dude_Running.png",
+      "runningColumns": 8,
       "runningRows": 1,
-      "jumpingImageName": "Kakashi_Jumping.png",
+      "jumpingImageName": "Cloak_Dude_Jumping.png",
       "jumpingColumns": 2,
       "jumpingRows": 1,
-      "fallingImageName": "Kakashi_Falling.png",
+      "fallingImageName": "Cloak_Dude_Falling.png",
       "fallingColumns": 2,
       "fallingRows": 1,
-      "dashingImageName": "Kakashi_Dashing.png",
-      "dashingColumns": 5,
-      "dashingRows": 2,
-      "attackingImageName": "Kakashi_Attacking.png",
-      "attackingColumns": 5,
+      "dashingImageName": "Cloak_Dude_Dashing.png",
+      "dashingColumns": 20,
+      "dashingRows": 1,
+      "attackingImageName": "Cloak_Dude_Attack.png",
+      "attackingColumns": 4,
       "attackingRows": 1
 
     } 
