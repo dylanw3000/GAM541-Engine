@@ -37,17 +37,19 @@ public:
 
 public:
 	
-	int mTimer, mTimerLimit;
+	int mTimer, mTimerLimit, mSwingTimer;
 	int numActions;
-	int mMoveDuration, mWaitDuration;
+	int mMoveDuration, mSwingDuration;
 	int mSpeed;
 	unsigned int mAction;
 	bool isStunned;
-	float visionWidth;
-	float visionAngle;
-	float visionAngleMod;
-	float visionLength;
+	bool mSwinging;
+	float mAttackWidth;
+	float mAttackAngle;
+	float mAttackAngleMod;
+	float mAttackLength;
 	float mDamage;
+	bool MiddleAttack;
 
 
 private:

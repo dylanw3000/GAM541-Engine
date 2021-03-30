@@ -30,7 +30,9 @@ LeftRight::LeftRight() : Component(TYPE_LEFT_RIGHT) {
 	mAction = WALK_RIGHT;
 	numActions = 4;
 	mTimerLimit = 1000;
-	mTimer = mTimerLimit;
+	mTimer = mSwingTimer = mTimerLimit;
+	MiddleAttack = false;
+	
 	
 }
 
@@ -47,12 +49,39 @@ void LeftRight::Update() {
 	{
 		mTimer -= gpFRC->GetFrameTime();
 
-		if (mTimer <= 0) {
-			mAction++;
-			mAction %= 4;
-			UpdateTimersAndAngles();
-		
+		if (!mSwinging && mSwingTimer <= 10 && (MiddleAttack || mAction == WAIT_RIGHT || mAction == WAIT_LEFT))
+		{
+			mSwingTimer = 100000000000;
+			mSwinging = true;
 		}
+
+		if (!MiddleAttack && mAction == WALK_RIGHT || mAction == WALK_LEFT)
+		{
+
+			if (mTimer <= (mTimerLimit / 2) + (mSwingDuration / 2) && mTimer >= (mTimerLimit / 2) - (mSwingDuration / 2))
+			{
+				if (!MiddleAttack)
+				{
+					mSwingTimer = mSwingDuration;
+					MiddleAttack = true;
+				}
+			}
+			else
+			{
+				Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
+				if (pS->mIsAnimated)
+				{
+					if (!pS->mpSpriteAnimator->mIsRunning)
+						pS->mpSpriteAnimator->StartRunning();
+				}
+
+			}
+		}
+
+		
+
+		
+		
 
 	
 		if (mAction == WALK_LEFT)
@@ -64,25 +93,46 @@ void LeftRight::Update() {
 
 
 		//pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, 0, 10, 0, 150, 0.f, .2, .8, .2, .5, .2, .8, .2, .5);
+		if (mAction == WAIT_LEFT || mAction == WAIT_RIGHT || MiddleAttack)
+		{
+			
+		mSwingTimer -= gpFRC->GetFrameTime();
+			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mAttackAngle, mAttackWidth, 20, mAttackLength, (float)(mSwingDuration - mSwingTimer)/mSwingDuration, .8, .2, .2, .5, .8, .3, .3, .5);
 
-		pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 20, visionLength, 0, .8, .2, .2, .5, .8, .3, .3, .5);
+			Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
+			if (pS->mIsAnimated)
+			{
+				if (!pS->mpSpriteAnimator->mIsAttacking)
+					pS->mpSpriteAnimator->StartAttacking();
+				
 
-
-
-		for (auto pObject : gpGameObjectManager->mGameObjects) {
-			Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
-			if (pChar == nullptr || pChar->mFriendly == false)
-				continue;
-
-			if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, visionAngle, visionWidth, 0, visionLength)) {
-				pChar->mHP -= mDamage;
 			}
 
+			if (mSwinging)
+			{
+				for (auto pObject : gpGameObjectManager->mGameObjects) {
+					Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
+					if (pChar == nullptr || pChar->mFriendly == false)
+						continue;
 
+					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mAttackAngle, mAttackWidth, 0, mAttackLength)) {
+						pChar->mHP -= mDamage * 100;
+					}
 
-
+				}
+				MiddleAttack = false;
+				mSwinging = false;
+				mSwingTimer = 100000000000;
+			}
+			
 		}
 
+		if (mTimer <= 0) {
+			mAction++;
+			mAction %= 4;
+			UpdateTimersAndAngles();
+		}
+		
 	}
 	else
 	{
@@ -99,11 +149,11 @@ void LeftRight::UpdateTimersAndAngles()
 	if (mAction == WALK_LEFT || mAction == WALK_RIGHT)
 		mTimer = mTimerLimit = mMoveDuration;
 	else if (mAction == WAIT_RIGHT || mAction == WAIT_LEFT)
-		mTimer = mTimerLimit = mWaitDuration;
+		mTimer = mTimerLimit = mSwingTimer = mSwingDuration;
 	if (mAction == WALK_LEFT || mAction == WAIT_LEFT)
-		visionAngle = M_PI - visionAngleMod;
+		mAttackAngle = M_PI - mAttackAngleMod;
 	else
-		visionAngle = visionAngleMod;
+		mAttackAngle = mAttackAngleMod;
 
 	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
 	Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
@@ -140,7 +190,7 @@ void LeftRight::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 	}
 
 	if (input[0].HasMember("waitDuration")) {
-		mWaitDuration = input[0]["waitDuration"].GetInt();
+		mSwingDuration = input[0]["waitDuration"].GetInt();
 	}
 
 	if (input[0].HasMember("speed")) {
@@ -148,15 +198,15 @@ void LeftRight::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 	}
 
 	if (input[0].HasMember("visionWidth")) {
-		visionWidth = input[0]["visionWidth"].GetFloat();
+		mAttackWidth = input[0]["visionWidth"].GetFloat();
 	}
 
 	if (input[0].HasMember("visionAngleMod")) {
-		visionAngleMod = input[0]["visionAngleMod"].GetFloat();
+		mAttackAngleMod = input[0]["visionAngleMod"].GetFloat();
 	}
 
 	if (input[0].HasMember("visionLength")) {
-		visionLength = input[0]["visionLength"].GetFloat();
+		mAttackLength = input[0]["visionLength"].GetFloat();
 	}
 
 	if (input[0].HasMember("damage")) {

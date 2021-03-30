@@ -16,7 +16,10 @@
       "idlingRows": 1,
       "runningImageName": "Guard_Running.png",
       "runningColumns": 4,
-      "runningRows": 1
+      "runningRows": 1,
+      "attackingImageName": "Guard_Attacking.png",
+      "attackingColumns": 6,
+      "attackingRows": 1
     }  
   ],
   "character": [
@@ -30,7 +33,7 @@
     {
       "startAction": 0,
       "moveDuration": 4000, 
-      "waitDuration": 2000,
+      "waitDuration": 1000,
       "speed": 50,
       "visionWidth": 0.5,
       "visionAngleMod": 0.0,

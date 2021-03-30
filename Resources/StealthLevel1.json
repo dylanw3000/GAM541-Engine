@@ -23,14 +23,14 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 80,
+          "x": 120,
           "y": 274
         }
       ],
       "leftright":[
         {
           "startAction": 3,
-          "speed": 65,
+          "speed": 55,
           "visionWidth": 0.3
         }
       ]

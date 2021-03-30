@@ -46,6 +46,7 @@ Creation date: October 5, 2020
 #include "Components/Sprite.h"
 #include "Components/Character.h"
 #include "Components/Body.h"
+#include "Components/LeftRight.h"
 
 #include <gdiplus.h>
 #include "../glm/glm/glm.hpp"
@@ -657,6 +658,7 @@ int main(int argc, char* args[])
 				Sprite* pS = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
 				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
 				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
+				LeftRight* pLR = static_cast<LeftRight*>(pGameObject->GetComponent(TYPE_LEFT_RIGHT));
 
 				if (pB != nullptr && pB->mWall) { continue; }
 				//glBindVertexArray(vaoID);
@@ -664,9 +666,16 @@ int main(int argc, char* args[])
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
 				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
-				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking)
+				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pC != nullptr)
 				{
 					if (pC->mSwingAng < -PI/2 || pC->mSwingAng > PI/2)
+						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+					else
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				}
+				else if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pLR != nullptr)
+				{
+					if (pLR->mAttackAngle < -PI / 2 || pLR->mAttackAngle > PI / 2)
 						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
