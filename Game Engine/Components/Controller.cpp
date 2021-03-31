@@ -18,6 +18,7 @@ Creation date: October 15, 2020
 #include "..\GameObject.h"
 #include "Character.h"
 #include "Body.h"
+#include "BossAttack.h"
 #include "math.h"
 #include "..\FrameRateController.h"
 #include "../GameObjectManager.h"
@@ -371,17 +372,20 @@ void Controller::Update() {
 
 			for (auto pObject : gpGameObjectManager->mGameObjects) {
 				Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
+				BossAttack* pBA = static_cast<BossAttack*>(pObject->GetComponent(TYPE_BOSS_ATTACK));
 				if (pChar == nullptr || pChar->mFriendly == true)
 					continue;
 
 				if (!mCleaver) {
 					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, mSwingLen)) {
-						if (gGameType == 1)
+						if (gGameType == 1 || (gGameType == 3 && pBA != nullptr))
 							pChar->mHP -= 1.0f;
 						else if (gGameType == 3)
 						{
 							pChar->mIsStunned = true;
 							pChar->mStunnedDuration = 2000;
+							pS->mpSpriteAnimator->StartIdling();
+							
 						}
 					}
 				}

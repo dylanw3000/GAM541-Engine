@@ -27,7 +27,7 @@
   "objective": [
     {
       "radius": 40,
-      "key": false
+      "objectiveType": 1
     }
   ]
 }

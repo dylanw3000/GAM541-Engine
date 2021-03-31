@@ -47,6 +47,7 @@ Creation date: October 5, 2020
 #include "Components/Character.h"
 #include "Components/Body.h"
 #include "Components/LeftRight.h"
+#include "Components/BossAttack.h"
 
 #include <gdiplus.h>
 #include "../glm/glm/glm.hpp"
@@ -659,6 +660,7 @@ int main(int argc, char* args[])
 				Controller* pC = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
 				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
 				LeftRight* pLR = static_cast<LeftRight*>(pGameObject->GetComponent(TYPE_LEFT_RIGHT));
+				BossAttack* pBA = static_cast<BossAttack*>(pGameObject->GetComponent(TYPE_BOSS_ATTACK));
 
 				if (pB != nullptr && pB->mWall) { continue; }
 				//glBindVertexArray(vaoID);
@@ -676,6 +678,13 @@ int main(int argc, char* args[])
 				else if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pLR != nullptr)
 				{
 					if (pLR->mAttackAngle < -PI / 2 || pLR->mAttackAngle > PI / 2)
+						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+					else
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
+				}
+				else if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pBA != nullptr)
+				{
+					if (pBA->mAttackAngle < -PI / 2 || pBA->mAttackAngle > PI / 2)
 						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));

@@ -60,6 +60,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\Objective.cpp" />
+    <ClCompile Include="Components\BossAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="Components\Objective.h" />
+    <ClInclude Include="Components\BossAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

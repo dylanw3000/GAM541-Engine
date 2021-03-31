@@ -65,8 +65,7 @@
         {
           "startAction": 0,
           "speed": 150,
-          "moveDuration": 4000, 
-          "waitDuration": 1000
+          "moveDuration": 4000
         }
       ]
     },
@@ -84,29 +83,21 @@
         {
           "startAction": 2,
           "speed": 150,
-          "moveDuration": 4000, 
-          "waitDuration": 1000
+          "moveDuration": 4000
         }
       ]
     },
 
+
+    
     {
-      "name": "Guard.json",
+      "name": "Big_Guard.json",
       "transform": [
         {
-          "x": 80,
+          "x": 600,
           "y": 784
         }
-      ],
-      "leftright":[
-        {
-          "startAction": 3,
-          "speed": 103,
-          "moveDuration": 10000, 
-          "visionLength": 225.0,
-          "waitDuration": 3000
-        }
-      ]
+      ]    
     },
 
 

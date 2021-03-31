@@ -29,6 +29,7 @@ Creation date: October 15, 2020
 #include "Components/Runner.h"
 #include "Components/LeftRight.h"
 #include "Components/Objective.h"
+#include "Components/BossAttack.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -91,6 +92,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_OBJECTIVE:
 			pNewComponent = new Objective();
+			break;
+		case TYPE_BOSS_ATTACK:
+			pNewComponent = new BossAttack();
 			break;
 		default:
 			pNewComponent = nullptr;

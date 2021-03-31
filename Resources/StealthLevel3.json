@@ -18,6 +18,17 @@
       ]
 
     },
+
+     
+    {
+      "name": "Big_Guard.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 784
+        }
+      ]    
+    },
     {
       "name": "Guard.json",
       "transform": [

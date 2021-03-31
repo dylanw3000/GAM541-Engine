@@ -35,6 +35,7 @@ Creation date: October 15, 2020
 #include "Components/Runner.h"
 #include "Components/LeftRight.h"
 #include "Components/Objective.h"
+#include "Components/BossAttack.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -127,6 +128,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 	if (document.HasMember("objective")) {
 		pNewComponent = pNewGO->AddComponent(TYPE_OBJECTIVE);
 		pNewComponent->Serialize(document["objective"].GetArray());
+	}
+	if (document.HasMember("bossAttack")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_BOSS_ATTACK);
+		pNewComponent->Serialize(document["bossAttack"].GetArray());
 	}
 
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
@@ -247,6 +252,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			Objective* pObjective = static_cast<Objective*>(pNewGO->GetComponent(TYPE_OBJECTIVE));
 			if (pObjective == nullptr) { pObjective = static_cast<Objective*>(pNewGO->AddComponent(TYPE_OBJECTIVE)); }
 			pObjective->Serialize(d["objective"].GetArray());
+		}
+
+		if (d.HasMember("bossAttack")) {
+			BossAttack* pBossAttack = static_cast<BossAttack*>(pNewGO->GetComponent(TYPE_BOSS_ATTACK));
+			if (pBossAttack == nullptr) { pBossAttack = static_cast<BossAttack*>(pNewGO->AddComponent(TYPE_BOSS_ATTACK)); }
+			pBossAttack->Serialize(d["bossAttack"].GetArray());
 		}
 		
 	}

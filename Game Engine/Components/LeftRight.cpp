@@ -21,6 +21,7 @@ Creation date: October 15, 2020
 #include "../CollisionManager.h"
 #include "../GameObjectManager.h"
 
+
 extern GameObjectManager* gpGameObjectManager;
 extern CollisionManager* gpCollisionManager;
 extern FrameRateController* gpFRC;
@@ -95,8 +96,7 @@ void LeftRight::Update() {
 		//pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, 0, 10, 0, 150, 0.f, .2, .8, .2, .5, .2, .8, .2, .5);
 		if (mAction == WAIT_LEFT || mAction == WAIT_RIGHT || MiddleAttack)
 		{
-			
-		mSwingTimer -= gpFRC->GetFrameTime();
+			mSwingTimer -= gpFRC->GetFrameTime();
 			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mAttackAngle, mAttackWidth, 20, mAttackLength, (float)(mSwingDuration - mSwingTimer)/mSwingDuration, .8, .2, .2, .5, .8, .3, .3, .5);
 
 			Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));

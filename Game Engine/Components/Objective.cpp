@@ -59,22 +59,23 @@ void Objective::Update() {
 		if (pow(pT->mPositionX - pTrans->mPositionX, 2) + pow(pT->mPositionY - pTrans->mPositionY, 2) <= pow(pChar->mRadius + mRadius, 2)) {
 
 
-			if (mIsKey)
+			if (mObjectiveType == KEY)
 			{
 				mCompleted = true;
 			}
-			else
+			else if(mObjectiveType == EXIT)
 			{
-				bool bKeysCollected = true;
+				// Check for all other objectives completed
+				bool bObjectivesCompleted = true;
 				for (auto pGO : gpGameObjectManager->mGameObjects) {
 					Objective* pO = static_cast<Objective*>(pGO->GetComponent(TYPE_OBJECTIVE));
 					if (pO == nullptr) continue;
-					if (pO->mCompleted == false && pO->mIsKey == true)
+					if (pO->mCompleted == false && pO->mObjectiveType != EXIT)
 					{
-						bKeysCollected = false;
+						bObjectivesCompleted = false;
 					}
 				}
-				if (bKeysCollected)
+				if (bObjectivesCompleted)
 					mCompleted = true;
 			}
 		}
@@ -85,7 +86,7 @@ void Objective::Update() {
 		pT->mVelHoriz = .01f;
 	}
 
-	if (mCompleted && mIsKey)
+	if (mCompleted && mObjectiveType == KEY)
 	{
 		mDissapearDuration -= gpFRC->GetFrameTime();
 
@@ -114,8 +115,8 @@ void Objective::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 		mRadius = input[0]["radius"].GetInt();
 	}
 
-	if (input[0].HasMember("key")) {
-		mIsKey = input[0]["key"].GetBool();
+	if (input[0].HasMember("objectiveType")) {
+		mObjectiveType = input[0]["objectiveType"].GetInt();
 	}
 
 	gpEventManager->Subscribe(EventType::PLAYER_HIT, mpOwner);

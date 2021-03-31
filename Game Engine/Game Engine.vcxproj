@@ -93,6 +93,7 @@
     <ClCompile Include="Components\AudioClip.cpp" />
     <ClCompile Include="Components\Augmentor.cpp" />
     <ClCompile Include="Components\Body.cpp" />
+    <ClCompile Include="Components\BossAttack.cpp" />
     <ClCompile Include="Components\Character.cpp" />
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\Controller.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Components\AudioClip.h" />
     <ClInclude Include="Components\Augmentor.h" />
     <ClInclude Include="Components\Body.h" />
+    <ClInclude Include="Components\BossAttack.h" />
     <ClInclude Include="Components\Character.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\Controller.h" />
