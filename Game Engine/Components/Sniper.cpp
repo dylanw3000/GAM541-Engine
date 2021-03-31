@@ -67,8 +67,8 @@ void Sniper::Update() {
 				pChar->mHP -= 1.0f;
 
 				Transform* pTrans = static_cast<Transform*>(pGO->GetComponent(TYPE_TRANSFORM));
-				pTrans->mVelHoriz += 800 * cosf(mShotAng);
-				pTrans->mVelVert += 800 * sinf(mShotAng);
+				pTrans->mKnockbackHoriz += 800 * cosf(mShotAng);
+				pTrans->mKnockbackVert += 800 * sinf(mShotAng);
 			}
 
 			/*

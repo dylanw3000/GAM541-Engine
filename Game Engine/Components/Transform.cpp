@@ -22,6 +22,7 @@ extern FrameRateController* gpFRC;
 Transform::Transform() : Component(TYPE_TRANSFORM) {
 	mPositionX = mPositionY = 0.0f;
 	mVelHoriz = mVelVert = 0.0f;
+	mKnockbackHoriz = mKnockbackVert = 0.0f;
 	mSpriteOffsetX = mSpriteOffsetY = 0.0f;
 	mAngle = 0.0f;
 	mWidth = mHeight = 64.0f;
@@ -35,6 +36,10 @@ Transform::~Transform() {
 void Transform::Update() {
 	mPositionX += mVelHoriz * gpFRC->GetDeltaTime();
 	mPositionY += mVelVert * gpFRC->GetDeltaTime();
+
+	mVelHoriz += mKnockbackHoriz;
+	mVelVert += mKnockbackVert;
+	mKnockbackHoriz = mKnockbackVert = 0.0f;
 	
 	Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
 	Controller* pC = static_cast<Controller*>(mpOwner->GetComponent(TYPE_PLAYER_CONTROLLER));
