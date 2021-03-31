@@ -156,10 +156,12 @@ void Controller::Update() {
 			Body* pBody = static_cast<Body*>(pObject->GetComponent(TYPE_BODY));
 			if (!pBody || pBody->mpOwner == mpOwner || !pBody->mWall) { continue; }
 
+			bool velDown = pT->mVelVert > 0 ? 1 : 0;
+
 			Transform* pTrans = static_cast<Transform*>(pObject->GetComponent(TYPE_TRANSFORM));
 			if (
-				pT->mPositionY + (pT->mVelVert * dTime) >= pTrans->mPositionY - pBody->mHeight
-				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime) <= pTrans->mPositionY
+				pT->mPositionY + (pT->mVelVert * dTime * velDown) >= pTrans->mPositionY - pBody->mHeight
+				&& pT->mPositionY - pB->mHeight + (pT->mVelVert * dTime * !velDown) <= pTrans->mPositionY
 				&& pT->mPositionX - pB->mWidth / 2 <= pTrans->mPositionX + pBody->mWidth / 2
 				&& pT->mPositionX + pB->mWidth / 2 >= pTrans->mPositionX - pBody->mWidth / 2
 			) {

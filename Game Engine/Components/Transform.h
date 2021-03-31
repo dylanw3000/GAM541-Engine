@@ -31,6 +31,7 @@ public:
 public:
 	float mPositionX, mPositionY;
 	float mVelHoriz, mVelVert;
+	float mKnockbackHoriz, mKnockbackVert;
 	float mSpriteOffsetX, mSpriteOffsetY;
 	float mAngle;
 
