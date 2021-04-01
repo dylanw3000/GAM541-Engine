@@ -5,10 +5,10 @@
 #include <vector>
 #include "AudioEvent.h"
 
-class AudioClip : public Component {
+class AudioBGM : public Component {
 public:
-	AudioClip();
-	~AudioClip();
+	AudioBGM();
+	~AudioBGM();
 
 	void Serialize(std::ifstream& InputStream) { }
 	void Serialize(rapidjson::GenericArray<false, rapidjson::Value>);

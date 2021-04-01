@@ -61,6 +61,8 @@
     </ClCompile>
     <ClCompile Include="Components\Objective.cpp" />
     <ClCompile Include="Components\BossAttack.cpp" />
+    <ClCompile Include="Components\AudioBGM.cpp" />
+    <ClCompile Include="Components\AudioEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -132,6 +134,8 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="Components\Objective.h" />
     <ClInclude Include="Components\BossAttack.h" />
+    <ClInclude Include="Components\AudioBGM.h" />
+    <ClInclude Include="Components\AudioEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />

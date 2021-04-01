@@ -1,19 +1,21 @@
-#include "AudioClip.h"
+#include "AudioBGM.h"
 
 extern AudioManager* gpAudioManager;
 
-
-AudioClip::AudioClip() : Component(TYPE_AUDIOCLIP)
+/// <summary>
+/// AudioClip
+/// </summary>
+AudioBGM::AudioBGM() : Component(TYPE_AUDIOCLIP)
 {
 	
 }
 
-AudioClip::~AudioClip()
+AudioBGM::~AudioBGM()
 {}
 
 
 
-void AudioClip::Serialize(rapidjson::GenericArray<false, rapidjson::Value>input)
+void AudioBGM::Serialize(rapidjson::GenericArray<false, rapidjson::Value>input)
 {
 	if (input[0].HasMember("EventCount"))
 	{
@@ -28,9 +30,9 @@ void AudioClip::Serialize(rapidjson::GenericArray<false, rapidjson::Value>input)
 	}
 }
 
-void AudioClip::Update() {}
+void AudioBGM::Update() {}
 
-void AudioClip::PlayOneShot(std::string eventName) 
+void AudioBGM::PlayOneShot(std::string eventName)
 {
 	for (auto audioEvent : mEventList)
 	{
