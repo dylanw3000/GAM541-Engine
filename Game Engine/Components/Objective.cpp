@@ -21,6 +21,7 @@ Creation date: October 15, 2020
 #include "Component.h"
 #include "Transform.h"
 #include "Character.h"
+#include "AudioClip.h"
 
 extern GameObjectManager* gpGameObjectManager;
 extern EventManager* gpEventManager;
@@ -33,6 +34,7 @@ Objective::Objective() : Component(TYPE_OBJECTIVE) {
 	// mHoriz = 0;
 	mRadius = 10.0f;
 	mCompleted = false;
+	mIsAudioPlayed = false;
 	mDissapearDuration = 700;
 }
 
@@ -43,6 +45,7 @@ Objective::~Objective() {
 void Objective::Update() {
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
 	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
+	AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
 
 	/*
 	pT->mVelHoriz = 0;
@@ -62,8 +65,13 @@ void Objective::Update() {
 			if (mObjectiveType == KEY)
 			{
 				mCompleted = true;
+				if (!mIsAudioPlayed)
+				{
+					pAC->PlayOneShot("Key");
+					mIsAudioPlayed = true;
+				}
 			}
-			else if(mObjectiveType == EXIT)
+			else if (mObjectiveType == EXIT)
 			{
 				// Check for all other objectives completed
 				bool bObjectivesCompleted = true;
@@ -76,7 +84,14 @@ void Objective::Update() {
 					}
 				}
 				if (bObjectivesCompleted)
+				{
 					mCompleted = true;
+					if (!mIsAudioPlayed)
+					{
+						pAC->PlayOneShot("DoorOpen");
+						mIsAudioPlayed = true;
+					}
+				}
 			}
 		}
 	}

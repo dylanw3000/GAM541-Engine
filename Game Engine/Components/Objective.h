@@ -34,11 +34,13 @@ public:
 
 public:
 	bool mCompleted;
+	bool mIsAudioPlayed;
 	unsigned int mObjectiveType;
 
 
 private:
 	float mRadius;
 	int mDissapearDuration;
+	
 private:
 };

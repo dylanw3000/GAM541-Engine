@@ -29,5 +29,15 @@
       "radius": 32,
       "objectiveType": 0
     }
-  ]
+  ],
+  "audioClip": [
+{
+"EventCount": 1
+},
+    {
+      "name": "Key",
+      "volume": 1
+}
+]
+
 }

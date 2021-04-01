@@ -29,5 +29,15 @@
       "radius": 40,
       "objectiveType": 1
     }
-  ]
+  ],
+
+  "audioClip": [
+{
+"EventCount": 1
+},
+    {
+      "name": "DoorOpen",
+      "volume": 1
+}
+]
 }
