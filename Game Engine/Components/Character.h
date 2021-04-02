@@ -42,6 +42,7 @@ public:
 	bool mFriendly;
 	bool mIsStunned;
 	int mStunnedDuration;
+	bool mHasHealthBar;
 
 	class Telegraph {
 	public:

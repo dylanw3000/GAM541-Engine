@@ -36,7 +36,8 @@
       "hp": 5,
       "radius": 16,
       "shadow": 8,
-      "friendly": true
+      "friendly": true,
+      "hasHealthBar": true
     }
   ],
   "body": [

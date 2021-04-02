@@ -32,6 +32,7 @@ Character::Character() : Component(TYPE_CHARACTER) {
 	mFriendly = false;
 	mIsStunned = false;
 	mStunnedDuration = 100;
+	mHasHealthBar = false;
 }
 
 Character::~Character() {
@@ -81,6 +82,10 @@ void Character::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input
 
 	if (input[0].HasMember("hp")) {
 		mHP = mHPMax = input[0]["hp"].GetFloat();
+	}
+
+	if (input[0].HasMember("hasHealthBar")) {
+		mHasHealthBar = input[0]["hasHealthBar"].GetBool();
 	}
 	
 	if (input[0].HasMember("hpmax")) {

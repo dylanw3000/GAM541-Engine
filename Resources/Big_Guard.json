@@ -22,7 +22,8 @@
   "character": [
     {
       "hp": 3,
-      "radius": 40
+      "radius": 40,
+      "hasHealthBar": true
     }
   ],
   "bossAttack":
