@@ -98,7 +98,8 @@ void Objective::Update() {
 
 	if (mCompleted)
 	{
-		pT->mVelHoriz = .01f;
+		pT->mVelHoriz = -.01f;
+
 	}
 
 	if (mCompleted && mObjectiveType == KEY)
