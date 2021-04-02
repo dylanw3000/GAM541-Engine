@@ -7,10 +7,10 @@ public:
 
 public:
 	void Update();
-	int mStage;
+	int mStage,mLastStage;
 	float mTimer;
 	bool mTransition;
-	bool mManualOverride;
+	bool mManualOverride, mManualBack, mManualRestart;
 
 	int mTransitionTimer, mTransitionTimerLimit;
 };

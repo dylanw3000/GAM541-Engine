@@ -26,6 +26,9 @@ StealthModerator::StealthModerator() {
 	mTransition = true;
 	mTransitionTimer = mTransitionTimerLimit = 900;
 	mManualOverride = false;
+	mManualBack = false;
+	mManualRestart = false;
+	mLastStage = 0;
 }
 
 StealthModerator::~StealthModerator() {
@@ -33,9 +36,30 @@ StealthModerator::~StealthModerator() {
 }
 
 void StealthModerator::Update() {
-	if (gGameType == 2 || mStage == 0 || mStage == 99 || mStage == 666) {
+
+	
+	if (mManualRestart && mStage == 666)
+	{
+		gpGameObjectManager->~GameObjectManager();
+		mStage = mLastStage;
+		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
+		mTransitionTimer = mTransitionTimerLimit;
+		mManualRestart = false;
+	}
+
+	if (mManualRestart && mStage == 99)
+	{
+		gpGameObjectManager->~GameObjectManager();
+		mStage = 1;
+		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
+		mTransitionTimer = mTransitionTimerLimit;
+		mManualRestart = false;
+	}
+	
+	if (mStage == 0 || mStage == 99 || mStage == 666) {
 		return;
 	}
+	mLastStage = mStage;
 
 	bool clearLevel = true;
 	bool playerAlive = false;
@@ -64,7 +88,7 @@ void StealthModerator::Update() {
 		return;
 	}
 
-	if (clearLevel || mManualOverride) {
+	if (clearLevel || mManualOverride || mManualBack) {
 
 		mTransitionTimer -= gpFRC->GetFrameTime();
 
@@ -80,15 +104,22 @@ void StealthModerator::Update() {
 		}
 
 		if (mTransitionTimer <= 0) {
+			if (mManualBack)
+				mStage--;
+			else
+				mStage++;
 
-			mStage++;
-			if (mStage <= 5) {
+			if (mStage == 0)
+				mStage++;
+
+			if (mStage <= 5 && mStage >= 1) {
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 				mTransitionTimer = mTransitionTimerLimit;
 				mManualOverride = false;
+				mManualBack = false;
 			}
-			else {
+			else{
 				mStage = 99;
 			}
 		}

@@ -80,7 +80,7 @@ StealthModerator* gpStealthModerator;
 AudioManager* gpAudioManager;
 
 bool DEBUG;
-int gGameType = 1;
+int gGameType = 3;
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -302,11 +302,12 @@ int main(int argc, char* args[])
 
 	gpModerator->mStage = 1;
 	gpStealthModerator->mStage = 1;
-	gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
+	gpObjectFactory->LoadLevel("..\\Resources\\StealthLevel1.json");
 
 	// Game loop
 	while(true == appIsRunning)
 	{
+		
 		gpAudioManager->system->update();
 
 		// Get the time at the start of the frame
@@ -804,11 +805,18 @@ int main(int argc, char* args[])
 		}
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN)) {	// restart level
+
+			if(gGameType == 3)
+				gpStealthModerator->mManualRestart = true;
+
+			/*
 			gpGameObjectManager->~GameObjectManager();
 			gGameType = 1;
 
 			gpModerator->mStage = 1;
 			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
+			*/
+
 		}
 
 		
@@ -821,7 +829,7 @@ int main(int argc, char* args[])
 			(levelNo == 4 ? levelNo = 0 : levelNo++);
 			gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(levelNo) + ".json").c_str());
 			*/
-			
+			/*
 			if (gGameType == 1)
 			{
 
@@ -835,6 +843,7 @@ int main(int argc, char* args[])
 					gpObjectFactory->LoadLevel(("..\\Resources\\Level" + std::to_string(gpModerator->mStage) + ".json").c_str());
 				}
 			}
+			*/
 			if (gGameType == 3)
 			{
 				gpStealthModerator->mManualOverride = true;
@@ -844,15 +853,19 @@ int main(int argc, char* args[])
 		
 		
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT)) {	// prev level
-			gpGameObjectManager->~GameObjectManager();
-			gpModerator->mStage = 1;
-			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
+			if (gGameType == 3)
+			{
+				gpStealthModerator->mManualBack = true;
+			}
+			//gpGameObjectManager->~GameObjectManager();
+			//gpModerator->mStage = 1;
+			//gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
 		}
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F)) {
 			DEBUG = !DEBUG;
 		}
-
+		/*
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_2)) {
 			gGameType = 2;
 			gpGameObjectManager->~GameObjectManager();
@@ -866,6 +879,7 @@ int main(int argc, char* args[])
 			gpObjectFactory->LoadLevel("../Resources/StealthLevel1.json");
 			gpStealthModerator->mStage = 1;
 		}
+		*/
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {
 			Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
