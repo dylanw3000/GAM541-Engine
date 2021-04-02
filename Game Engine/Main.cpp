@@ -576,7 +576,7 @@ int main(int argc, char* args[])
 					// for (auto pRect : pC->mTelegraphs) {
 					Character::Telegraph* pTelegraph = pC->mTelegraphs.at(0);
 					glm::mat4 model(1.0f);
-					model = glm::translate(model, glm::vec3(pTelegraph->mX, pTelegraph->mY, -0.9f));
+					model = glm::translate(model, glm::vec3(pTelegraph->mX, pTelegraph->mY, -.9));
 					model = glm::rotate(model, pTelegraph->mAng, glm::vec3(0, 0, 1));
 					model = glm::scale(model, glm::vec3(pTelegraph->mOut * 2.f, pTelegraph->mOut * 2.f, 0.0f));
 
@@ -612,7 +612,7 @@ int main(int argc, char* args[])
 					// for (auto pRect : pC->mTelegraphs) {
 					Character::TeleRect* pRect = pC->mRectangles.at(0);
 					glm::mat4 model(1.0f);
-					model = glm::translate(model, glm::vec3(pRect->mX, pRect->mY, -0.9f));
+					model = glm::translate(model, glm::vec3(pRect->mX, pRect->mY, -.9));
 					model = glm::rotate(model, pRect->mAng, glm::vec3(0, 0, 1));
 					model = glm::scale(model, glm::vec3(pRect->mLength, pRect->mWidth, 0.0f));
 

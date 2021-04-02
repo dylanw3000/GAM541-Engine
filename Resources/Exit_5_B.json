@@ -1,21 +1,21 @@
 {
   "transform": [
     {
-      "x": 1168,
+      "x": 1152,
       "y": 785,
-      "width": 68,
-      "height": 48
+      "width": 96,
+      "height": 96
     }
   ],
   "sprite": [ 
     {
       "animated": true,
-      "idlingImageName": "door_idling.png",
+      "idlingImageName": "doors/door_5_B_idling.png",
       "idlingColumns": 1,
       "idlingRows": 1,
-      "runningImageName": "door_opening.png",
+      "runningImageName": "doors/door_5_B_opening.png",
       "runningColumns": 3,
-      "runningRows": 4
+      "runningRows": 3
     }  
   ],
   "character": [
@@ -26,7 +26,7 @@
   ],
   "objective": [
     {
-      "radius": 40,
+      "radius": 60,
       "objectiveType": 1
     }
   ],

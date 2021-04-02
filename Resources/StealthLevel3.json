@@ -19,16 +19,6 @@
 
     },
 
-     
-    {
-      "name": "Big_Guard.json",
-      "transform": [
-        {
-          "x": 600,
-          "y": 784
-        }
-      ]    
-    },
     {
       "name": "Guard.json",
       "transform": [
@@ -547,7 +537,7 @@
       ],
       "transform": [
         {
-          "x": 600,
+          "x": 576,
           "y": 464,
           "width": 64,
           "height": 64
@@ -560,6 +550,43 @@
           "wall": true
         }
       ]
+    },
+
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "Bricks.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 624,
+          "y": 464,
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 64,
+          "wall": true
+        }
+      ]
+    },
+
+    
+     
+    {
+      "name": "Big_Guard.json",
+      "transform": [
+        {
+          "x": 600,
+          "y": 784
+        }
+      ]    
     },
 
     {
@@ -593,7 +620,7 @@
     },
 
     {
-      "name": "Exit.json",
+      "name": "Exit_3_B.json",
       "transform": [
         {
           "x": 600,

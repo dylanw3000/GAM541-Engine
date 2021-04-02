@@ -70,14 +70,14 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 1120,
+          "x": 1040,
           "y": 210
         }
       ],
       "leftright":[
         {
           "startAction": 1,
-          "speed": 65,
+          "speed": 40,
           "visionWidth": 0.3
         }
       ]
@@ -312,7 +312,7 @@
       ],
       "transform": [
         {
-          "x": 976,
+          "x": 992,
           "y": 272,
           "width": 320,
           "height": 64
@@ -389,7 +389,7 @@
       ],
       "transform": [
         {
-          "x": 1168,
+          "x": 1184,
           "y": 656,
           "width": 64,
           "height": 640
@@ -414,7 +414,58 @@
       ],
       "transform": [
         {
-          "x": 1168,
+          "x": 1184,
+          "y": 784,
+          "width": 64,
+          "height": 640
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 640,
+          "wall": true
+        }
+      ]
+    },
+
+    
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "10BricksVert.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 1120,
+          "y": 656,
+          "width": 64,
+          "height": 640
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 640,
+          "wall": true
+        }
+      ]
+    },
+
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "10BricksVert.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 1120,
           "y": 784,
           "width": 64,
           "height": 640
@@ -445,14 +496,20 @@
       "name": "Key.json",
       "transform": [
         {
-          "x": 1100,
+          "x": 1000,
           "y": 200
         }
       ]
     },
 
     {
-      "name": "Exit.json"
+      "name": "Exit_2.json",
+      "transform": [
+        {
+          "x": 1144,
+          "y": 785
+        }
+      ]
     }
     
     

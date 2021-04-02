@@ -41,14 +41,14 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 80,
+          "x": 128,
           "y": 210
         }
       ],
       "leftright":[
         {
           "startAction": 3,
-          "speed": 65,
+          "speed": 60,
           "visionWidth": 0.3
         }
       ]
@@ -93,7 +93,7 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 68,
+          "x": 116,
           "y": 512
         }
       ],
@@ -213,7 +213,7 @@
       "name": "SemisolidWall.json",
       "transform": [
         {
-          "x": 96,
+          "x": 144,
           "y": 448,
           "width": 64,
           "height": 64
@@ -233,7 +233,7 @@
       "name": "SemisolidWall.json",
       "transform": [
         {
-          "x": 96,
+          "x": 144,
           "y": 576,
           "width": 64,
           "height": 64
@@ -454,7 +454,7 @@
       "name": "SemisolidWall.json",
       "transform": [
         {
-          "x": 96,
+          "x": 144,
           "y": 704,
           "width": 64,
           "height": 64
@@ -745,7 +745,32 @@
       ],
       "transform": [
         {
-          "x": 32,
+          "x": 16,
+          "y": 784,
+          "width": 64,
+          "height": 640
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 640,
+          "wall": true
+        }
+      ]
+    },
+
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "10BricksVert.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 80,
           "y": 784,
           "width": 64,
           "height": 640
@@ -861,10 +886,10 @@
     },
 
     {
-      "name": "Exit.json",
+      "name": "Exit_5.json",
       "transform": [
         {
-          "x": 32,
+          "x": 56,
           "y": 384
         }
       ]

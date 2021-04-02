@@ -24,7 +24,7 @@ StealthModerator::StealthModerator() {
 	mStage = 0;
 	mTimer = 0.0f;
 	mTransition = true;
-	mTransitionTimer = mTransitionTimerLimit = 1200;
+	mTransitionTimer = mTransitionTimerLimit = 900;
 	mManualOverride = false;
 }
 
