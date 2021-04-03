@@ -4,7 +4,7 @@
       "x": 200,
       "y": 200,
       "width": 32,
-      "height": 48,
+      "height": 64,
       "xoffset": 2
     }
   ],
@@ -12,8 +12,8 @@
     {
       "animated": true,
       "idlingImageName": "Guard_Idling.png",
-      "idlingColumns": 1,
-      "idlingRows": 1,
+      "idlingColumns": 5,
+      "idlingRows": 2,
       "runningImageName": "Guard_Running.png",
       "runningColumns": 4,
       "runningRows": 1,

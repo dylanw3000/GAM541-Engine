@@ -289,7 +289,7 @@ int main(int argc, char* args[])
 	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
-	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/background.jpg");
+	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
 
 	/****************/
 	// float transformationMatrix[16];

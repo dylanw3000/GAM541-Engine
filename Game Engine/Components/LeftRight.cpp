@@ -136,7 +136,11 @@ void LeftRight::Update() {
 	}
 	else
 	{
+
+		Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
 		pT->mVelHoriz = 0;
+		if(!pS->mpSpriteAnimator->mIsIdling)
+			pS->mpSpriteAnimator->StartIdling();
 	}
 	
 	
