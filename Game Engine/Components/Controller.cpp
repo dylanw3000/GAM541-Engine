@@ -355,7 +355,7 @@ void Controller::Update() {
 		// mSwingAng > 0.0 && mSwingAng < 1.0 ? pT->mSpriteOffsetY = -30 : pT->mSpriteOffsetY = 0;
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
 		if (!mCleaver) {
-			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 20, mSwingLen, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
+			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY-24.f, mSwingAng, mSwingWidth, 20, mSwingLen, (float)mSwingTimer / mSwingTime, .2, .2, .8, .5, .3, .3, .8, .5);
 
 		}
 		else {
@@ -379,7 +379,7 @@ void Controller::Update() {
 					continue;
 
 				if (!mCleaver) {
-					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mSwingAng, mSwingWidth, 0, mSwingLen)) {
+					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY-24.f, mSwingAng, mSwingWidth, 0, mSwingLen)) {
 						if (gGameType == 1 || (gGameType == 3 && pBA != nullptr))
 							pChar->mHP -= 1.0f;
 						else if (gGameType == 3)
