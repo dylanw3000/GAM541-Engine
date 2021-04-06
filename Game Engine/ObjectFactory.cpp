@@ -36,6 +36,7 @@ Creation date: October 15, 2020
 #include "Components/LeftRight.h"
 #include "Components/Objective.h"
 #include "Components/BossAttack.h"
+#include "Components/Invincibility.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -133,7 +134,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 		pNewComponent = pNewGO->AddComponent(TYPE_BOSS_ATTACK);
 		pNewComponent->Serialize(document["bossAttack"].GetArray());
 	}
-
+	if (document.HasMember("Invincibility")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_INVINCIBILITY);
+		pNewComponent->Serialize(document["Invincibility"].GetArray());
+	}
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
 
 	return pNewGO;
@@ -165,11 +169,11 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			continue;
 		}
 
-		
+
 
 		if (d.HasMember("transform")) {		// TODO "components": { "transform": [ 1, 2 ], "sprite": "Angry.bmp" }
 			Transform* pTransform = static_cast<Transform*>(pNewGO->GetComponent(TYPE_TRANSFORM));
-			if(pTransform == nullptr){ pTransform = static_cast<Transform*>(pNewGO->AddComponent(TYPE_TRANSFORM)); }
+			if (pTransform == nullptr) { pTransform = static_cast<Transform*>(pNewGO->AddComponent(TYPE_TRANSFORM)); }
 			assert(pTransform != nullptr);
 			pTransform->Serialize(d["transform"].GetArray());
 		}
@@ -180,7 +184,7 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			assert(pSprite != nullptr);
 			pSprite->Serialize(d["sprite"].GetArray());
 		}
-		
+
 		if (d.HasMember("character")) {
 			Character* pCharacter = static_cast<Character*>(pNewGO->GetComponent(TYPE_CHARACTER));
 			if (pCharacter != nullptr) {
@@ -215,13 +219,13 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			assert(pSlime != nullptr);
 			pSlime->Serialize(d["slime"].GetArray());
 		}
-		
+
 		if (d.HasMember("augmentor")) {
 			Augmentor* pAugmentor = static_cast<Augmentor*>(pNewGO->GetComponent(TYPE_AUGMENTOR));
 			assert(pAugmentor != nullptr);
 			pAugmentor->Serialize(d["augmentor"].GetArray());
 		}
-		
+
 		if (d.HasMember("sniper")) {
 			Sniper* pSniper = static_cast<Sniper*>(pNewGO->GetComponent(TYPE_SNIPER));
 			assert(pSniper != nullptr);
@@ -234,7 +238,7 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			pAudioClip->Serialize(d["audioClip"].GetArray());
 		}
 
-		
+
 		if (d.HasMember("body")) {
 			Body* pBody = static_cast<Body*>(pNewGO->GetComponent(TYPE_BODY));
 			if (pBody == nullptr) { pBody = static_cast<Body*>(pNewGO->AddComponent(TYPE_BODY)); }
@@ -259,7 +263,12 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			if (pBossAttack == nullptr) { pBossAttack = static_cast<BossAttack*>(pNewGO->AddComponent(TYPE_BOSS_ATTACK)); }
 			pBossAttack->Serialize(d["bossAttack"].GetArray());
 		}
-		
+		if (d.HasMember("Invincibility")) {
+			Invincibility* pInvincibility = static_cast<Invincibility*>(pNewGO->GetComponent(TYPE_INVINCIBILITY));
+			if (pInvincibility == nullptr) { pInvincibility = static_cast<Invincibility*>(pNewGO->AddComponent(TYPE_INVINCIBILITY)); }
+			pInvincibility->Serialize(d["Invincibility"].GetArray());
+		}
+
 	}
 
 	/*

@@ -63,6 +63,7 @@
     <ClCompile Include="Components\BossAttack.cpp" />
     <ClCompile Include="Components\AudioBGM.cpp" />
     <ClCompile Include="Components\AudioEvent.cpp" />
+    <ClCompile Include="Components\Invincibility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Components\BossAttack.h" />
     <ClInclude Include="Components\AudioBGM.h" />
     <ClInclude Include="Components\AudioEvent.h" />
+    <ClInclude Include="Components\Invincibility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
