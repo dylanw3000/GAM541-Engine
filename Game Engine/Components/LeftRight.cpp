@@ -97,7 +97,7 @@ void LeftRight::Update() {
 		if (mAction == WAIT_LEFT || mAction == WAIT_RIGHT || MiddleAttack)
 		{
 			mSwingTimer -= gpFRC->GetFrameTime();
-			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY, mAttackAngle, mAttackWidth, 20, mAttackLength, (float)(mSwingDuration - mSwingTimer)/mSwingDuration, .8, .2, .2, .5, .8, .3, .3, .5);
+			pC->AddTelegraphColor(pT->mPositionX, pT->mPositionY-16.f, mAttackAngle, mAttackWidth, 20, mAttackLength, (float)(mSwingDuration - mSwingTimer)/mSwingDuration, .8, .2, .2, .5, .8, .3, .3, .5);
 
 			Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
 			if (pS->mIsAnimated)
@@ -115,7 +115,7 @@ void LeftRight::Update() {
 					if (pChar == nullptr || pChar->mFriendly == false)
 						continue;
 
-					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY, mAttackAngle, mAttackWidth, 0, mAttackLength)) {
+					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY-16.f, mAttackAngle, mAttackWidth, 0, mAttackLength)) {
 						pChar->mHP -= mDamage * 100;
 					}
 
