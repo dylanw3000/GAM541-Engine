@@ -20,7 +20,7 @@ public:
 	~FrameRateController();
 
 	void FrameStart();
-	void FrameEnd();
+	void FrameEnd(bool isPaused);
 	unsigned int GetFrameTime();
 	float GetDeltaTime();
 public:

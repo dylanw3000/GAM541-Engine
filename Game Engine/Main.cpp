@@ -134,6 +134,8 @@ int main(int argc, char* args[])
 	SDL_Window *pWindow;
 	int error = 0;
 	bool appIsRunning = true;
+	bool appIsPaused = false;
+	bool appIsFullscreen = false;
 
 	SDL_Surface* pWindowSurface = NULL;
 	SDL_Surface* pImageSurface = NULL;
@@ -195,11 +197,6 @@ int main(int argc, char* args[])
 	
 	LoadShaders();
 
-	// Get the window surface
-	pWindowSurface = SDL_GetWindowSurface(pWindow);
-
-	SDL_Rect destinationRect;
-	SDL_Renderer* pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 
 	int levelNo = 0;
 
@@ -290,6 +287,9 @@ int main(int argc, char* args[])
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
 	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
+
+	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/pause_menu.png");
+	GLuint pauseButton = gpResourceManager->LoadTexture("../Resources/button_continue.png");
 
 	/****************/
 	// float transformationMatrix[16];
@@ -784,6 +784,53 @@ int main(int argc, char* args[])
 			}
 		}
 
+
+
+		////// Pause Screen
+		if (appIsPaused) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(600.f, 400.f, 0.f));
+				model = glm::scale(model, glm::vec3(1000.f, -600.f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, pauseScreen);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(250.f, 200.f, 1.f));	// continue buton
+				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, pauseButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 175 && gpInputManager->mMouseY < 225 && gpInputManager->mMouseX > 150 && gpInputManager->mMouseX < 350) {	// continue button
+					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+		}
+
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 
@@ -800,7 +847,12 @@ int main(int argc, char* args[])
 		SDL_GL_SwapWindow(pWindow);
 		
 		
-		if (gpInputManager->IsKeyPressed(SDL_SCANCODE_ESCAPE)) {	// end game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE)) {	// pause game
+			// appIsRunning = false;
+			appIsPaused = !appIsPaused;
+		}
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_Q)) {	// end game
 			appIsRunning = false;
 		}
 
@@ -809,6 +861,7 @@ int main(int argc, char* args[])
 			if(gGameType == 3)
 				gpStealthModerator->mManualRestart = true;
 
+			appIsPaused = false;
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gGameType = 1;
@@ -817,6 +870,88 @@ int main(int argc, char* args[])
 			gpObjectFactory->LoadLevel("..\\Resources\\Level1.json");
 			*/
 
+		}
+
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5)) {	// pause game
+			appIsFullscreen = !appIsFullscreen;
+			if (appIsFullscreen) {
+				screenSize[0] = 1920;
+				screenSize[1] = 1080;
+			}
+			else {
+				screenSize[0] = 1200;
+				screenSize[1] = 800;
+			}
+
+			// Uncomment if you want the scaled-up window to use actual-size graphics, but for our purposes I believe that stretching is allowable and preferable to redoing teh camera to handle variable-size windows
+			// projectionMatrix = glm::ortho(0.f, (float)screenSize[0], (float)screenSize[1], 0.f);
+
+			SDL_DestroyWindow(pWindow);
+
+			pWindow = SDL_CreateWindow("SDL2 window",		// window title
+				SDL_WINDOWPOS_UNDEFINED,					// initial x position
+				SDL_WINDOWPOS_UNDEFINED,					// initial y position
+				screenSize[0],										// width, in pixels
+				screenSize[1],										// height, in pixels
+				SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+
+			openGL_Context = SDL_GL_CreateContext(pWindow);
+
+			glGenVertexArrays(1, &vaoID);
+			glBindVertexArray(vaoID);
+
+			GLfloat* pPositions = new GLfloat[vertexNum * coordsPerPosition];
+			GLfloat* pColors = new GLfloat[vertexNum * coordsPerColor];
+			GLfloat* pTex = new GLfloat[vertexNum * coordsPerTex];
+
+			// Vertex 1
+			pPositions[0] = -0.5f;	pPositions[1] = -0.5f;	pPositions[2] = 0.0f;
+			pColors[0] = 1.0f;		pColors[1] = .0f;		pColors[2] = .0f;		pColors[3] = 1.0f;
+			pTex[0] = 0.0f;			pTex[1] = 1.0f;
+
+			// Vertex 2
+			pPositions[3] = 0.5f;	pPositions[4] = -0.5f;	pPositions[5] = 0.0f;
+			pColors[4] = .0f;		pColors[5] = 1.0f;		pColors[6] = .0f;		pColors[7] = 1.0f;
+			pTex[2] = 1.0f;			pTex[3] = 1.0f;
+
+			// Vertex 3
+			pPositions[6] = 0.5f;	pPositions[7] = 0.5f;	pPositions[8] = 0.0f;
+			pColors[8] = .0f;		pColors[9] = .0f;		pColors[10] = 1.0f;		pColors[11] = 1.0f;
+			pTex[4] = 1.0f;			pTex[5] = 0.0f;
+
+
+			// Vertex 4
+			pPositions[9] = -0.5f;	pPositions[10] = 0.5f;	pPositions[11] = 0.0f;
+			pColors[12] = 1.0f;		pColors[13] = 1.0f;		pColors[14] = 1.0f;		pColors[15] = 1.0f;
+			pTex[6] = 0.0f;			pTex[7] = 0.0f;
+
+
+			// Copy from RAM to VRAM
+			//Positions
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[0]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* positionStride, pPositions, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, coordsPerPosition, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// Colors
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[1]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* colorStride, pColors, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, coordsPerColor, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// Textures
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* texStride, pTex, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			
+			glBindVertexArray(0);
+
+			delete[] pPositions;
+			delete[] pColors;
+			delete[] pTex;
 		}
 
 		
@@ -892,7 +1027,7 @@ int main(int argc, char* args[])
 
 
 		// Lock the frame rate
-		gpFRC->FrameEnd();
+		gpFRC->FrameEnd(appIsPaused);
 
 		
 	}

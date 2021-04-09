@@ -35,13 +35,21 @@ void FrameRateController::FrameStart() {
 	mTickStart = SDL_GetTicks();
 }
 
-void FrameRateController::FrameEnd() {
+void FrameRateController::FrameEnd(bool isPaused) {
 	mTickEnd = SDL_GetTicks();
+
 	while (mTickEnd - mTickStart < mTicksPerFrame)
 		mTickEnd = SDL_GetTicks();
 
-	mFrameTime = mTickEnd - mTickStart;
-	mDeltaTime = (float) mFrameTime / 1000;
+	if (isPaused) {
+		mFrameTime = 0;
+		mDeltaTime = 0.f;
+	}
+	else{
+		mFrameTime = mTickEnd - mTickStart;
+		mDeltaTime = (float)mFrameTime / 1000;
+	}
+
 }
 
 unsigned int FrameRateController::GetFrameTime() {
