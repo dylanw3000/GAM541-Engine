@@ -136,6 +136,8 @@ int main(int argc, char* args[])
 	bool appIsRunning = true;
 	bool appIsPaused = false;
 	bool appIsFullscreen = false;
+	int mTimer = 0;
+	int backgroundFrame = 0;
 
 	SDL_Surface* pWindowSurface = NULL;
 	SDL_Surface* pImageSurface = NULL;
@@ -286,7 +288,9 @@ int main(int argc, char* args[])
 	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
-	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
+	//GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
+	GLuint backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
+	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
 
 	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/pause_menu.png");
 	GLuint pauseButton = gpResourceManager->LoadTexture("../Resources/button_continue.png");
@@ -371,7 +375,22 @@ int main(int argc, char* args[])
 			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, backgroundImg);
+
+
+			mTimer -= ((float)gpFRC->GetFrameTime() / 1000);
+			if (mTimer <= 0) {
+				backgroundFrame++;
+				backgroundFrame %= 2;
+				mTimer = 25; 
+			}
+
+			
+
+			if(backgroundFrame == 0)
+				glBindTexture(GL_TEXTURE_2D, backgroundImg0);
+			else
+				glBindTexture(GL_TEXTURE_2D, backgroundImg1);
+
 
 
 			glDrawArrays(GL_QUADS, 0, vertexNum);

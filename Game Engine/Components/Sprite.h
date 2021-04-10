@@ -123,6 +123,7 @@ public:
 	SDL_Surface* mpSurface;
 	unsigned int mTexture;
 	bool mIsAnimated;
+	bool mIsBackground;
 	
 
 	unsigned int mRows;
