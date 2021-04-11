@@ -297,6 +297,7 @@ int main(int argc, char* args[])
 	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
 	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
 	GLuint creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
+	GLuint mainMenuButton = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button.png");
 	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
@@ -881,15 +882,80 @@ int main(int argc, char* args[])
 			if (gpInputManager->IsMousePressed()) {
 				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					appIsPaused = false;
 				}
 			}
 			// End Options Button
 
 
-			// Quit Button
+
+			// Credits Button
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, creditsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 100;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+					appIsPaused = false;
+				}
+			}
+			// End Credits Button
+
+			// Main Menu Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 600.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, mainMenuButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 0;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+					appIsPaused = false;
+				}
+			}
+			// Main Menu Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 750.f, 1.f));
 				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
@@ -903,8 +969,8 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 				}
 			}
@@ -989,7 +1055,7 @@ int main(int argc, char* args[])
 			// End Options Button
 
 
-			// Quit Button
+			// Credits Button
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
@@ -1017,13 +1083,13 @@ int main(int argc, char* args[])
 					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
 				}
 			}
-			// End Quit Button
+			// End Credits Button
 
 
 			// Quit Button
 			{
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(150, 600.f, 1.f));	
+				model = glm::translate(model, glm::vec3(150, 750.f, 1.f));
 				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
@@ -1037,8 +1103,8 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 				}
 			}
@@ -1091,7 +1157,7 @@ int main(int argc, char* args[])
 			appIsRunning = false;
 		}
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN)) {	// restart level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) && !appIsPaused) {	// restart level
 
 			if(gGameType == 3)
 				gpStealthModerator->mManualRestart = true;
@@ -1190,7 +1256,7 @@ int main(int argc, char* args[])
 		}
 
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT)) {	// next level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) && !appIsPaused) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
@@ -1222,7 +1288,7 @@ int main(int argc, char* args[])
 		}
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT)) {	// prev level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT) && !appIsPaused) {	// prev level
 			if (gGameType == 3)
 			{
 				gpStealthModerator->mManualBack = true;
