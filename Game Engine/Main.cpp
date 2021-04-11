@@ -292,9 +292,9 @@ int main(int argc, char* args[])
 	GLuint backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
 	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
 
-	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/pause_menu.png");
-	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/button_continue.png");
-	GLuint controlsButton = gpResourceManager->LoadTexture("../Resources/Controls_Button.png");
+	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
+	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
+	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
 	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
@@ -817,8 +817,8 @@ int main(int argc, char* args[])
 
 			{
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(600.f, 400.f, 0.f));
-				model = glm::scale(model, glm::vec3(1000.f, -600.f, 0.0f));
+				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
+				model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -831,10 +831,11 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
+			// Continue Button
 			{
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(250.f, 200.f, 1.f));	// continue buton
-				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -848,10 +849,81 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 175 && gpInputManager->mMouseY < 225 && gpInputManager->mMouseX > 150 && gpInputManager->mMouseX < 350) {	// continue button
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	// continue button
 					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 				}
 			}
+
+
+
+			// Options Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 400.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, optionsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Options Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, quitButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Quit Button
+
+
+
+			// Controls Menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(1018, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(256, -256.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, controlsText);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			// End Controls Menu
 		}
 
 		//// Main Menu
@@ -864,8 +936,8 @@ int main(int argc, char* args[])
 			// Start Game Button
 			{
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));	
-				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -891,7 +963,7 @@ int main(int argc, char* args[])
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(150, 400.f, 1.f));
-				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -916,7 +988,7 @@ int main(int argc, char* args[])
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));	
-				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
 
@@ -936,6 +1008,25 @@ int main(int argc, char* args[])
 			}
 			// End Quit Button
 
+
+
+			// Controls Menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(1018, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(256, -256.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, controlsText);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			// End Controls Menu
 
 		}
 
