@@ -222,7 +222,7 @@ void Controller::Update() {
 			pT->mPositionY = pos;
 
 			if (bounce) {
-				pT->mVelVert = 900.0f * (pT->mVelVert > 0.f ? -1.f : 0.f);
+				pT->mVelVert = 700 * (pT->mVelVert > 0.f ? -1.f : 0.f);
 			}
 			else {
 				pT->mVelVert = 0.f;

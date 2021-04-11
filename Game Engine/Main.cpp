@@ -285,7 +285,7 @@ int main(int argc, char* args[])
 	delete[] pColors;
 	delete[] pTex;
 
-	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
+	//GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
 	//GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
@@ -293,7 +293,11 @@ int main(int argc, char* args[])
 	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
 
 	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/pause_menu.png");
-	GLuint pauseButton = gpResourceManager->LoadTexture("../Resources/button_continue.png");
+	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/button_continue.png");
+	GLuint controlsButton = gpResourceManager->LoadTexture("../Resources/Controls_Button.png");
+	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
+	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
+	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
 
 	/****************/
 	// float transformationMatrix[16];
@@ -304,9 +308,9 @@ int main(int argc, char* args[])
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	gpModerator->mStage = 1;
-	gpStealthModerator->mStage = 1;
-	gpObjectFactory->LoadLevel("..\\Resources\\StealthLevel1.json");
+	gpModerator->mStage = 0;
+	gpStealthModerator->mStage = 0;
+	gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
 
 	// Game loop
 	while(true == appIsRunning)
@@ -400,7 +404,7 @@ int main(int argc, char* args[])
 			gpModerator->Update();
 		else
 			gpStealthModerator->Update();
-		if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
+		/*if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
 
@@ -418,15 +422,15 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, menuScreen);
+				//glBindTexture(GL_TEXTURE_2D, menuScreen);
 
 
-				glDrawArrays(GL_QUADS, 0, vertexNum);
+				//glDrawArrays(GL_QUADS, 0, vertexNum);
 
 				// glBindVertexArray(0);
 			//}
-		}
-		else if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
+		}*/
+		if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -480,7 +484,7 @@ int main(int argc, char* args[])
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				}
-				else if (pT->mVelHoriz > 0)
+				else if (pT->mVelHoriz >= 0)
 					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				else
 					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
@@ -709,7 +713,7 @@ int main(int argc, char* args[])
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				}
-				else if(pT->mVelHoriz > 0)
+				else if(pT->mVelHoriz >= 0)
 					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				else
 					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
@@ -838,7 +842,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, pauseButton);
+				glBindTexture(GL_TEXTURE_2D, continueButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -848,6 +852,91 @@ int main(int argc, char* args[])
 					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 				}
 			}
+		}
+
+		//// Main Menu
+		if (gpStealthModerator->mStage == 0)
+		{
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			// Start Game Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));	
+				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, startGameButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+
+			// End Start Game Button
+
+
+			// Options Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 400.f, 1.f));
+				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, optionsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Options Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));	
+				model = glm::scale(model, glm::vec3(200.f, -50.f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, quitButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Quit Button
+
+
 		}
 
 		glDisable(GL_TEXTURE_2D);
