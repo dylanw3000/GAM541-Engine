@@ -291,10 +291,12 @@ int main(int argc, char* args[])
 	//GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
 	GLuint backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
 	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
+	GLuint backgroundCredits = gpResourceManager->LoadTexture("../Resources/Credits_Background.png");
 
 	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
 	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
 	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
+	GLuint creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
 	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
@@ -309,8 +311,9 @@ int main(int argc, char* args[])
 	glDepthFunc(GL_LEQUAL);
 
 	gpModerator->mStage = 0;
-	gpStealthModerator->mStage = 0;
-	gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+	gpStealthModerator->mStage = -2;
+	gpStealthModerator->mTransitionTimer = 3000;
+	gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
 
 	// Game loop
 	while(true == appIsRunning)
@@ -388,9 +391,11 @@ int main(int argc, char* args[])
 				mTimer = 25; 
 			}
 
-			
-
-			if(backgroundFrame == 0)
+			if (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99)
+			{
+				glBindTexture(GL_TEXTURE_2D, backgroundCredits);
+			}
+			else if(backgroundFrame == 0)
 				glBindTexture(GL_TEXTURE_2D, backgroundImg0);
 			else
 				glBindTexture(GL_TEXTURE_2D, backgroundImg1);
@@ -709,7 +714,7 @@ int main(int argc, char* args[])
 				else if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pBA != nullptr)
 				{
 					if (pBA->mAttackAngle < -PI / 2 || pBA->mAttackAngle > PI / 2)
-						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				}
@@ -987,7 +992,38 @@ int main(int argc, char* args[])
 			// Quit Button
 			{
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));	
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, creditsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 100;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+				}
+			}
+			// End Quit Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 600.f, 1.f));	
 				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
 
 				model = projectionMatrix * model;
@@ -1002,7 +1038,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 				}
 			}
