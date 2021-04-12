@@ -30,6 +30,7 @@ Creation date: October 15, 2020
 #include "Components/LeftRight.h"
 #include "Components/Objective.h"
 #include "Components/BossAttack.h"
+#include "Components/Invincibility.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -95,6 +96,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_BOSS_ATTACK:
 			pNewComponent = new BossAttack();
+			break;
+		case TYPE_INVINCIBILITY:
+			pNewComponent = new Invincibility();
 			break;
 		default:
 			pNewComponent = nullptr;

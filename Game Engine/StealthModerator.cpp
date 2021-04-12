@@ -45,6 +45,8 @@ void StealthModerator::Update() {
 		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 		mTransitionTimer = mTransitionTimerLimit;
 		mManualRestart = false;
+		mManualOverride = false;
+		mManualBack = false;
 	}
 
 	if (mManualRestart && mStage == 99)
@@ -54,43 +56,71 @@ void StealthModerator::Update() {
 		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 		mTransitionTimer = mTransitionTimerLimit;
 		mManualRestart = false;
+		mManualOverride = false;
+		mManualBack = false;
+	}
+
+	if (mManualBack && (mStage == 99 || mStage == 666))
+	{
+		mStage = 0;
+		gpGameObjectManager->~GameObjectManager();
+		gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+		mTransitionTimer = mTransitionTimerLimit;
+		mManualRestart = false;
+		mManualOverride = false;
+		mManualBack = false;
 	}
 	
-	if (mStage == 0 || mStage == 99 || mStage == 666) {
+	
+	if (mStage == 99 || mStage == 666) {
 		return;
 	}
 	mLastStage = mStage;
 
-	bool clearLevel = true;
+	bool clearLevel = false;
 	bool playerAlive = false;
-	for (auto pGO : gpGameObjectManager->mGameObjects) {
-		Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
-		if (pC == nullptr) continue; 
-		if (pC->mFriendly == true) 
-		{
-			playerAlive = true;
+	if (mStage > 0 && mStage < 99)
+	{
+		clearLevel = true;
+		for (auto pGO : gpGameObjectManager->mGameObjects) {
+			Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
+			if (pC == nullptr) continue;
+			if (pC->mFriendly == true)
+			{
+				playerAlive = true;
+			}
+
+
 		}
 
-		
-	}
+		for (auto pGO : gpGameObjectManager->mGameObjects) {
+			Objective* pO = static_cast<Objective*>(pGO->GetComponent(TYPE_OBJECTIVE));
+			if (pO == nullptr) continue;
+			if (pO->mCompleted == false)
+			{
+				clearLevel = false;
+			}
+		}
 
-	for (auto pGO : gpGameObjectManager->mGameObjects) {
-		Objective* pO = static_cast<Objective*>(pGO->GetComponent(TYPE_OBJECTIVE));
-		if (pO == nullptr) continue;
-		if (pO->mCompleted == false)
-		{
-			clearLevel = false;
+		if (!playerAlive) {
+			mStage = 666;
+			return;
 		}
 	}
 
-	if (!playerAlive) {
-		mStage = 666;
-		return;
+	if (mStage < 0 || mStage > 99)
+	{
+		clearLevel = true;
 	}
+	
 
 	if (clearLevel || mManualOverride || mManualBack) {
 
 		mTransitionTimer -= gpFRC->GetFrameTime();
+		if (mStage == 0 || mStage == 99 || mStage == 666)
+			mTransitionTimer = 0;
+		if (mStage < 0 && mManualOverride)
+			mTransitionTimer = 0;
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {
 			Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
@@ -103,19 +133,53 @@ void StealthModerator::Update() {
 			}
 		}
 
-		if (mTransitionTimer <= 0) {
+		if (mTransitionTimer <= 0 || mManualOverride || mManualBack) {
 			if (mManualBack)
 				mStage--;
 			else
 				mStage++;
 
-			if (mStage == 0)
+			if (mStage < -2)
 				mStage++;
 
 			if (mStage <= 5 && mStage >= 1) {
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 				mTransitionTimer = mTransitionTimerLimit;
+				mManualOverride = false;
+				mManualBack = false;
+			}
+			else if (mStage == 0)
+			{
+				gpGameObjectManager->~GameObjectManager();
+				gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+				mTransitionTimer = mTransitionTimerLimit;
+				mManualOverride = false;
+				mManualBack = false;
+			}
+			else if (mStage < 0)
+			{
+				gpGameObjectManager->~GameObjectManager();
+				gpObjectFactory->LoadLevel(("..\\Resources\\Opening" + std::to_string(mStage + 2) + ".json").c_str());
+				mTransitionTimer = 3000;
+				mManualOverride = false;
+				mManualBack = false;
+			}
+			else if (mStage > 100 && mStage < 102)
+			{
+				gpGameObjectManager->~GameObjectManager();
+				gpObjectFactory->LoadLevel(("..\\Resources\\Credits" + std::to_string(mStage - 100) + ".json").c_str());
+				mTransitionTimer = 2000;
+				mManualOverride = false;
+				mManualBack = false;
+			}
+			else if (mStage == 102)
+			{
+				mStage = 0;
+				gpGameObjectManager->~GameObjectManager();
+				gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+				mTransitionTimer = mTransitionTimerLimit;
+				mManualRestart = false;
 				mManualOverride = false;
 				mManualBack = false;
 			}

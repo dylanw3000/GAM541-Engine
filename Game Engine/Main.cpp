@@ -134,6 +134,10 @@ int main(int argc, char* args[])
 	SDL_Window *pWindow;
 	int error = 0;
 	bool appIsRunning = true;
+	bool appIsPaused = false;
+	bool appIsFullscreen = false;
+	int mTimer = 0;
+	int backgroundFrame = 0;
 
 	SDL_Surface* pWindowSurface = NULL;
 	SDL_Surface* pImageSurface = NULL;
@@ -195,11 +199,6 @@ int main(int argc, char* args[])
 	
 	LoadShaders();
 
-	// Get the window surface
-	pWindowSurface = SDL_GetWindowSurface(pWindow);
-
-	SDL_Rect destinationRect;
-	SDL_Renderer* pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 
 	int levelNo = 0;
 
@@ -286,10 +285,22 @@ int main(int argc, char* args[])
 	delete[] pColors;
 	delete[] pTex;
 
-	GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
+	//GLuint menuScreen = gpResourceManager->LoadTexture("../Resources/529_title.png");
 	GLuint endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
 	GLuint deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
-	GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
+	//GLuint backgroundImg = gpResourceManager->LoadTexture("../Resources/Bricks_Background.png");
+	GLuint backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
+	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
+	GLuint backgroundCredits = gpResourceManager->LoadTexture("../Resources/Credits_Background.png");
+
+	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
+	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
+	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
+	GLuint creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
+	GLuint mainMenuButton = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button.png");
+	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
+	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
+	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
 
 	/****************/
 	// float transformationMatrix[16];
@@ -300,9 +311,10 @@ int main(int argc, char* args[])
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	gpModerator->mStage = 1;
-	gpStealthModerator->mStage = 1;
-	gpObjectFactory->LoadLevel("..\\Resources\\StealthLevel1.json");
+	gpModerator->mStage = 0;
+	gpStealthModerator->mStage = -2;
+	gpStealthModerator->mTransitionTimer = 3000;
+	gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
 
 	// Game loop
 	while(true == appIsRunning)
@@ -371,7 +383,24 @@ int main(int argc, char* args[])
 			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, backgroundImg);
+
+
+			mTimer -= ((float)gpFRC->GetFrameTime() / 1000);
+			if (mTimer <= 0) {
+				backgroundFrame++;
+				backgroundFrame %= 2;
+				mTimer = 25; 
+			}
+
+			if (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99)
+			{
+				glBindTexture(GL_TEXTURE_2D, backgroundCredits);
+			}
+			else if(backgroundFrame == 0)
+				glBindTexture(GL_TEXTURE_2D, backgroundImg0);
+			else
+				glBindTexture(GL_TEXTURE_2D, backgroundImg1);
+
 
 
 			glDrawArrays(GL_QUADS, 0, vertexNum);
@@ -381,7 +410,7 @@ int main(int argc, char* args[])
 			gpModerator->Update();
 		else
 			gpStealthModerator->Update();
-		if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
+		/*if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
 
@@ -399,15 +428,15 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, menuScreen);
+				//glBindTexture(GL_TEXTURE_2D, menuScreen);
 
 
-				glDrawArrays(GL_QUADS, 0, vertexNum);
+				//glDrawArrays(GL_QUADS, 0, vertexNum);
 
 				// glBindVertexArray(0);
 			//}
-		}
-		else if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
+		}*/
+		if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
@@ -461,7 +490,7 @@ int main(int argc, char* args[])
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				}
-				else if (pT->mVelHoriz > 0)
+				else if (pT->mVelHoriz >= 0)
 					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				else
 					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
@@ -686,11 +715,11 @@ int main(int argc, char* args[])
 				else if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pBA != nullptr)
 				{
 					if (pBA->mAttackAngle < -PI / 2 || pBA->mAttackAngle > PI / 2)
-						model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
+						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 					else
 						model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				}
-				else if(pT->mVelHoriz > 0)
+				else if(pT->mVelHoriz >= 0)
 					model = glm::scale(model, glm::vec3(pT->mWidth, -pT->mHeight, 0.0f));
 				else
 					model = glm::scale(model, glm::vec3(-pT->mWidth, -pT->mHeight, 0.0f));
@@ -784,6 +813,325 @@ int main(int argc, char* args[])
 			}
 		}
 
+
+
+		////// Pause Screen
+		if (appIsPaused) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
+				model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, pauseScreen);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			// Continue Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, continueButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	// continue button
+					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+
+
+
+			// Options Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 400.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, optionsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					appIsPaused = false;
+				}
+			}
+			// End Options Button
+
+
+
+			// Credits Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, creditsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 100;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+					appIsPaused = false;
+				}
+			}
+			// End Credits Button
+
+			// Main Menu Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 600.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, mainMenuButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 0;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+					appIsPaused = false;
+				}
+			}
+			// Main Menu Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 750.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, quitButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Quit Button
+
+
+
+			// Controls Menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(1018, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(256, -256.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, controlsText);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			// End Controls Menu
+		}
+
+		//// Main Menu
+		if (gpStealthModerator->mStage == 0)
+		{
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			// Start Game Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150.0, 300, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, startGameButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+
+			// End Start Game Button
+
+
+			// Options Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 400.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, optionsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Options Button
+
+
+			// Credits Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, creditsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					gpStealthModerator->mStage = 100;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+				}
+			}
+			// End Credits Button
+
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 750.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, quitButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+				}
+			}
+			// End Quit Button
+
+
+
+			// Controls Menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(1018, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(256, -256.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, controlsText);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			// End Controls Menu
+
+		}
+
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 
@@ -800,15 +1148,21 @@ int main(int argc, char* args[])
 		SDL_GL_SwapWindow(pWindow);
 		
 		
-		if (gpInputManager->IsKeyPressed(SDL_SCANCODE_ESCAPE)) {	// end game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE)) {	// pause game
+			// appIsRunning = false;
+			appIsPaused = !appIsPaused;
+		}
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_Q)) {	// end game
 			appIsRunning = false;
 		}
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN)) {	// restart level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) && !appIsPaused) {	// restart level
 
 			if(gGameType == 3)
 				gpStealthModerator->mManualRestart = true;
 
+			appIsPaused = false;
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gGameType = 1;
@@ -819,8 +1173,90 @@ int main(int argc, char* args[])
 
 		}
 
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5)) {	// pause game
+			appIsFullscreen = !appIsFullscreen;
+			if (appIsFullscreen) {
+				screenSize[0] = 1920;
+				screenSize[1] = 1080;
+			}
+			else {
+				screenSize[0] = 1200;
+				screenSize[1] = 800;
+			}
+
+			// Uncomment if you want the scaled-up window to use actual-size graphics, but for our purposes I believe that stretching is allowable and preferable to redoing teh camera to handle variable-size windows
+			// projectionMatrix = glm::ortho(0.f, (float)screenSize[0], (float)screenSize[1], 0.f);
+
+			SDL_DestroyWindow(pWindow);
+
+			pWindow = SDL_CreateWindow("SDL2 window",		// window title
+				SDL_WINDOWPOS_UNDEFINED,					// initial x position
+				SDL_WINDOWPOS_UNDEFINED,					// initial y position
+				screenSize[0],										// width, in pixels
+				screenSize[1],										// height, in pixels
+				SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+
+			openGL_Context = SDL_GL_CreateContext(pWindow);
+
+			glGenVertexArrays(1, &vaoID);
+			glBindVertexArray(vaoID);
+
+			GLfloat* pPositions = new GLfloat[vertexNum * coordsPerPosition];
+			GLfloat* pColors = new GLfloat[vertexNum * coordsPerColor];
+			GLfloat* pTex = new GLfloat[vertexNum * coordsPerTex];
+
+			// Vertex 1
+			pPositions[0] = -0.5f;	pPositions[1] = -0.5f;	pPositions[2] = 0.0f;
+			pColors[0] = 1.0f;		pColors[1] = .0f;		pColors[2] = .0f;		pColors[3] = 1.0f;
+			pTex[0] = 0.0f;			pTex[1] = 1.0f;
+
+			// Vertex 2
+			pPositions[3] = 0.5f;	pPositions[4] = -0.5f;	pPositions[5] = 0.0f;
+			pColors[4] = .0f;		pColors[5] = 1.0f;		pColors[6] = .0f;		pColors[7] = 1.0f;
+			pTex[2] = 1.0f;			pTex[3] = 1.0f;
+
+			// Vertex 3
+			pPositions[6] = 0.5f;	pPositions[7] = 0.5f;	pPositions[8] = 0.0f;
+			pColors[8] = .0f;		pColors[9] = .0f;		pColors[10] = 1.0f;		pColors[11] = 1.0f;
+			pTex[4] = 1.0f;			pTex[5] = 0.0f;
+
+
+			// Vertex 4
+			pPositions[9] = -0.5f;	pPositions[10] = 0.5f;	pPositions[11] = 0.0f;
+			pColors[12] = 1.0f;		pColors[13] = 1.0f;		pColors[14] = 1.0f;		pColors[15] = 1.0f;
+			pTex[6] = 0.0f;			pTex[7] = 0.0f;
+
+
+			// Copy from RAM to VRAM
+			//Positions
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[0]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* positionStride, pPositions, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, coordsPerPosition, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// Colors
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[1]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* colorStride, pColors, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, coordsPerColor, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// Textures
+			glBindBuffer(GL_ARRAY_BUFFER, bufferIDs[2]);
+			glBufferData(GL_ARRAY_BUFFER, vertexNum* texStride, pTex, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, coordsPerTex, GL_FLOAT, false, 0, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			
+			glBindVertexArray(0);
+
+			delete[] pPositions;
+			delete[] pColors;
+			delete[] pTex;
+		}
+
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT)) {	// next level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) && !appIsPaused) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
@@ -852,7 +1288,7 @@ int main(int argc, char* args[])
 		}
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT)) {	// prev level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT) && !appIsPaused) {	// prev level
 			if (gGameType == 3)
 			{
 				gpStealthModerator->mManualBack = true;
@@ -892,7 +1328,7 @@ int main(int argc, char* args[])
 
 
 		// Lock the frame rate
-		gpFRC->FrameEnd();
+		gpFRC->FrameEnd(appIsPaused);
 
 		
 	}

@@ -10,7 +10,7 @@ public:
 	int mStage,mLastStage;
 	float mTimer;
 	bool mTransition;
-	bool mManualOverride, mManualBack, mManualRestart;
+	bool mManualOverride, mManualBack, mManualRestart, mGoToMainMenu;
 
 	int mTransitionTimer, mTransitionTimerLimit;
 };

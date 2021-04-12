@@ -1,0 +1,28 @@
+{
+  "background": null,
+  "objects": [
+    {
+      "transform": [
+        {
+          "x": 600,
+          "y": 500,
+          "width": 1000,
+          "height": 240
+        }
+      ],
+      "sprite": [ 
+        {
+          "animated": true,
+          "idlingImageName": "DigiPen_Black.jpg",
+          "idlingColumns": 1,
+          "idlingRows": 1
+    
+        } 
+      ]
+
+    }
+  ],
+  
+  
+  "timescale": 1.0
+}
