@@ -185,7 +185,7 @@ int main(int argc, char* args[])
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	
 
-	pWindow = SDL_CreateWindow("SDL2 window",		// window title
+	pWindow = SDL_CreateWindow("ConCaveity",		// window title
 		SDL_WINDOWPOS_UNDEFINED,					// initial x position
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
 		screenSize[0],										// width, in pixels
