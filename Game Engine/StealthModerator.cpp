@@ -165,7 +165,7 @@ void StealthModerator::Update() {
 				mManualOverride = false;
 				mManualBack = false;
 			}
-			else if (mStage > 100 && mStage < 104)
+			else if (mStage > 100 && mStage < 105)
 			{
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\Credits" + std::to_string(mStage - 100) + ".json").c_str());
@@ -173,7 +173,7 @@ void StealthModerator::Update() {
 				mManualOverride = false;
 				mManualBack = false;
 			}
-			else if (mStage == 104)
+			else if (mStage == 105)
 			{
 				mStage = 0;
 				gpGameObjectManager->~GameObjectManager();

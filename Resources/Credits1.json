@@ -13,7 +13,7 @@
       "sprite": [ 
         {
           "animated": true,
-          "idlingImageName": "Credits1.png",
+          "idlingImageName": "Credits0.png",
           "idlingColumns": 1,
           "idlingRows": 1
     
