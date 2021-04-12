@@ -5,9 +5,9 @@
       "transform": [
         {
           "x": 600,
-          "y": 500,
-          "width": 1000,
-          "height": 339
+          "y": 800,
+          "width": 1200,
+          "height": 800
         }
       ],
       "sprite": [ 

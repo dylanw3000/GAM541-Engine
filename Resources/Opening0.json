@@ -5,15 +5,15 @@
       "transform": [
         {
           "x": 600,
-          "y": 500,
-          "width": 1000,
-          "height": 240
+          "y": 800,
+          "width": 1293,
+          "height": 727
         }
       ],
       "sprite": [ 
         {
           "animated": true,
-          "idlingImageName": "DigiPen_Black.jpg",
+          "idlingImageName": "Digipen_Logo.png",
           "idlingColumns": 1,
           "idlingRows": 1
     

@@ -5,15 +5,15 @@
       "transform": [
         {
           "x": 600,
-          "y": 500,
-          "width": 1000,
-          "height": 339
+          "y": 800,
+          "width": 1280,
+          "height": 720
         }
       ],
       "sprite": [ 
         {
           "animated": true,
-          "idlingImageName": "fmod.png",
+          "idlingImageName": "Credits1.png",
           "idlingColumns": 1,
           "idlingRows": 1
     

@@ -139,7 +139,7 @@ void StealthModerator::Update() {
 			else
 				mStage++;
 
-			if (mStage < -2)
+			if (mStage < -3)
 				mStage++;
 
 			if (mStage <= 5 && mStage >= 1) {
@@ -160,12 +160,12 @@ void StealthModerator::Update() {
 			else if (mStage < 0)
 			{
 				gpGameObjectManager->~GameObjectManager();
-				gpObjectFactory->LoadLevel(("..\\Resources\\Opening" + std::to_string(mStage + 2) + ".json").c_str());
+				gpObjectFactory->LoadLevel(("..\\Resources\\Opening" + std::to_string(mStage + 3) + ".json").c_str());
 				mTransitionTimer = 3000;
 				mManualOverride = false;
 				mManualBack = false;
 			}
-			else if (mStage > 100 && mStage < 102)
+			else if (mStage > 100 && mStage < 104)
 			{
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\Credits" + std::to_string(mStage - 100) + ".json").c_str());
@@ -173,7 +173,7 @@ void StealthModerator::Update() {
 				mManualOverride = false;
 				mManualBack = false;
 			}
-			else if (mStage == 102)
+			else if (mStage == 104)
 			{
 				mStage = 0;
 				gpGameObjectManager->~GameObjectManager();

@@ -312,7 +312,7 @@ int main(int argc, char* args[])
 	glDepthFunc(GL_LEQUAL);
 
 	gpModerator->mStage = 0;
-	gpStealthModerator->mStage = -2;
+	gpStealthModerator->mStage = -3;
 	gpStealthModerator->mTransitionTimer = 3000;
 	gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
 
@@ -1148,9 +1148,13 @@ int main(int argc, char* args[])
 		SDL_GL_SwapWindow(pWindow);
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE)) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage > 0 && gpStealthModerator->mStage < 99) {	// pause game
 			// appIsRunning = false;
 			appIsPaused = !appIsPaused;
+		}
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage == 99)
+		{
+			appIsRunning = false;
 		}
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_Q)) {	// end game
@@ -1256,7 +1260,7 @@ int main(int argc, char* args[])
 		}
 
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) && !appIsPaused) {	// next level
+		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) || (gpInputManager->IsMouseTriggered() && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
