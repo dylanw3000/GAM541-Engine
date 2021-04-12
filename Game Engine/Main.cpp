@@ -834,7 +834,7 @@ int main(int argc, char* args[])
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glUseProgram(gRenderID);
-
+			gpAudioManager->SetMasterBusVolume(0.4f);
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
@@ -1009,6 +1009,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 			// End Controls Menu
+		}
+		if (!appIsPaused)
+		{
+			gpAudioManager->SetMasterBusVolume(1.0f);
 		}
 
 		//// Main Menu

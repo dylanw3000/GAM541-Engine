@@ -25,6 +25,11 @@ AudioManager::AudioManager()
     FMOD::Studio::EventInstance* eventInstance = NULL;
     ERRCHECK(eventDescription->createInstance(&eventInstance));
 
+    FMOD::Studio::Bus* masterBus = NULL;
+    ERRCHECK(system->getBus("bus:/", &masterBus));
+
+    masterBus->setVolume(1.0f);
+
     eventInstance->start();
     eventInstance->setVolume(0.1f);
 }
@@ -34,4 +39,11 @@ AudioManager::~AudioManager()
 void AudioManager::Update()
 {
     system->update();
+}
+
+void AudioManager::SetMasterBusVolume(float vol) 
+{
+    FMOD::Studio::Bus* masterBus = NULL;
+    ERRCHECK(system->getBus("bus:/", &masterBus));
+    masterBus->setVolume(vol);
 }

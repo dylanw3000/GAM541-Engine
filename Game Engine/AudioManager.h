@@ -13,6 +13,7 @@ public :
 	~AudioManager();
 
 	void Update();
+	void SetMasterBusVolume(float vol);
 
 public : 
 	FMOD_RESULT result;

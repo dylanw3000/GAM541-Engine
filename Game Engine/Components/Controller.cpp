@@ -30,7 +30,7 @@ extern FrameRateController* gpFRC;
 extern InputManager* gpInputManager;
 extern GameObjectManager* gpGameObjectManager;
 extern EventManager* gpEventManager;
-//extern AudioManager* gpAudioManager;
+extern AudioManager* gpAudioManager;
 extern int gGameType;
 
 
@@ -368,6 +368,8 @@ void Controller::Update() {
 		}
 
 		if (mSwingTimer >= mSwingTime) {
+			AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+			pAC->PlayOneShot("Slash");
 			pS->mpSpriteAnimator->mIsAttacking = false;
 			mSwinging = false;			
 			// pC->mHP -= 1;
