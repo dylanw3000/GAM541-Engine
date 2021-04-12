@@ -1282,6 +1282,8 @@ int main(int argc, char* args[])
 			delete[] pTex;
 
 			LoadShaders();
+			gpResourceManager->ReInit();
+			gpStealthModerator->mManualRestart = true;
 
 			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
 				Sprite* pSprite = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
@@ -1289,9 +1291,7 @@ int main(int argc, char* args[])
 					continue;
 				}
 				
-				gpResourceManager->ReInit();
 				pSprite->mTexture = gpResourceManager->LoadTexture(pSprite->mSpritePath.c_str());
-				gpStealthModerator->mManualOverride = true;
 			}
 
 			endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");

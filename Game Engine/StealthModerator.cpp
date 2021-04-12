@@ -60,6 +60,12 @@ void StealthModerator::Update() {
 		mManualBack = false;
 	}
 
+	if (mManualRestart) {
+		mManualRestart = false;
+		gpGameObjectManager->~GameObjectManager();
+		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
+	}
+
 	if (mManualBack && (mStage == 99 || mStage == 666))
 	{
 		mStage = 0;
@@ -104,6 +110,7 @@ void StealthModerator::Update() {
 
 		if (!playerAlive) {
 			mStage = 666;
+			
 			return;
 		}
 	}
