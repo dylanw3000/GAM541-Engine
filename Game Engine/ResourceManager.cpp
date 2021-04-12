@@ -30,6 +30,8 @@ ResourceManager::~ResourceManager() {
 		SDL_FreeSurface(pSurface.second);
 
 	mSurfaces.clear();
+
+	// mTextures.clear();
 }
 
 SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath) {

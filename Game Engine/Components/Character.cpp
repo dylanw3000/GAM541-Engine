@@ -53,7 +53,7 @@ void Character::Update() {
 		if (pT != nullptr) {
 			float ang = atan2f(pT->mVelVert, pT->mVelHoriz);
 			float len = sqrtf(powf(pT->mVelHoriz, 2) + powf(pT->mVelVert, 2));
-			AddRectColor(pT->mPositionX + cosf(ang)*len/2, pT->mPositionY + sin(ang)*len/2, ang, len, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1);
+			AddRectColor(pT->mPositionX + cosf(ang)*len/2, pT->mPositionY + sin(ang)*len/2, ang, len, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1);
 		}
 	}
 

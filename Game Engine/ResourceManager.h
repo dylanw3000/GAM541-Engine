@@ -27,6 +27,8 @@ public:
 	
 	SDL_Surface* LoadSurface(const char* pFilePath);
 	unsigned int LoadTexture(const char* pFilePath);
+
+	void ReInit() { mTextures.clear(); }
 public:
 
 

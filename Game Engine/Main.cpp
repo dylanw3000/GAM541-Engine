@@ -335,7 +335,7 @@ int main(int argc, char* args[])
 			}
 		} // done with handling events
 
-		gpInputManager->Update();
+		gpInputManager->Update(appIsFullscreen);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// SDL_FillRect(pWindowSurface, NULL, 0xBBBBBB);
@@ -578,7 +578,7 @@ int main(int argc, char* args[])
 					model = projectionMatrix * model;
 
 					val = glGetUniformLocation(gCircID, "uColor1");
-					glUniform4f(val, 0.0, 0.0, 0.0, 0.5);
+					glUniform4f(val, 0.2, 0.5, 0.2, 0.5);
 
 					val = glGetUniformLocation(gCircID, "uColor2");
 					glUniform4f(val, 0.0, 0.0, 0.8, 1.0);
@@ -1257,6 +1257,34 @@ int main(int argc, char* args[])
 			delete[] pPositions;
 			delete[] pColors;
 			delete[] pTex;
+
+			LoadShaders();
+
+			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
+				Sprite* pSprite = static_cast<Sprite*>(pGameObject->GetComponent(TYPE_SPRITE));
+				if (pSprite == nullptr) {
+					continue;
+				}
+				
+				gpResourceManager->ReInit();
+				pSprite->mTexture = gpResourceManager->LoadTexture(pSprite->mSpritePath.c_str());
+				gpStealthModerator->mManualOverride = true;
+			}
+
+			endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
+			deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
+			backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
+			backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
+			backgroundCredits = gpResourceManager->LoadTexture("../Resources/Credits_Background.png");
+
+			pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
+			continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
+			controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
+			creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
+			mainMenuButton = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button.png");
+			optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
+			quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
+			startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
 		}
 
 		

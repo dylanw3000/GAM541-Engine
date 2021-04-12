@@ -351,7 +351,7 @@ void Controller::Update() {
 			if (!pS->mpSpriteAnimator->mIsAttacking)
 				pS->mpSpriteAnimator->StartAttacking();
 		}
-		mSwingAng = atan2(gpInputManager->mMouseY - pT->mPositionY, gpInputManager->mMouseX - pT->mPositionX);
+		mSwingAng = atan2(gpInputManager->mMouseY - (pT->mPositionY-24.f), gpInputManager->mMouseX - pT->mPositionX);
 		// mSwingAng > 0.0 && mSwingAng < 1.0 ? pT->mSpriteOffsetY = -30 : pT->mSpriteOffsetY = 0;
 		// mSwingAng + mSwingWidth > 0 ? pT->mSpriteOffsetX = -30 : pT->mSpriteOffsetX = 0;
 		if (!mCleaver) {

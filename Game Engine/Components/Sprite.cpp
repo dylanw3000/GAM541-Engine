@@ -213,6 +213,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 
 		std::string imageName = input[0]["imageName"].GetString();
 		mTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+		mSpritePath = imageName;
 	}
 
 	
