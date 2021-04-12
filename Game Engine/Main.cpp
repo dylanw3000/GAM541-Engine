@@ -143,7 +143,8 @@ int main(int argc, char* args[])
 		SetConsoleTitle(L"SDL 2.0 Test");
 	}
 	*/
-
+	//int w, h;
+	//GetDesktopResolution(w, h);
 	int screenSize[] = { 1200, 800 };
 
 	SDL_Window *pWindow;
@@ -1217,7 +1218,7 @@ int main(int argc, char* args[])
 
 			SDL_DestroyWindow(pWindow);
 
-			pWindow = SDL_CreateWindow("SDL2 window",		// window title
+			pWindow = SDL_CreateWindow("ConCaveity",		// window title
 				SDL_WINDOWPOS_UNDEFINED,					// initial x position
 				SDL_WINDOWPOS_UNDEFINED,					// initial y position
 				screenSize[0],										// width, in pixels
