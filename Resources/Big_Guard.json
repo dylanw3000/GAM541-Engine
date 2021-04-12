@@ -42,5 +42,14 @@
       "radius": 32,
       "objectiveType": 2
     }
-  ]
+  ],
+"audioClip": [
+{
+"EventCount": 1
+},
+    {
+      "name": "Die",
+      "volume": 0.1
+}
+]
 }
