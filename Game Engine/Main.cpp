@@ -113,6 +113,20 @@ void my_audio_callback(void* userdata, Uint8* stream, int len) {
 	audio_len -= len;
 }
 
+void GetDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
+}
+
 
 int main(int argc, char* args[])
 {
@@ -335,7 +349,7 @@ int main(int argc, char* args[])
 			}
 		} // done with handling events
 
-		gpInputManager->Update(appIsFullscreen);
+		gpInputManager->Update(appIsFullscreen, screenSize);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// SDL_FillRect(pWindowSurface, NULL, 0xBBBBBB);
@@ -1177,12 +1191,16 @@ int main(int argc, char* args[])
 
 		}
 
+		
+
 
 		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5)) {	// pause game
 			appIsFullscreen = !appIsFullscreen;
 			if (appIsFullscreen) {
-				screenSize[0] = 1920;
-				screenSize[1] = 1080;
+				int width, height;
+				GetDesktopResolution(width, height);
+				screenSize[0] = width;
+				screenSize[1] = height;
 			}
 			else {
 				screenSize[0] = 1200;
