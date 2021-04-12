@@ -131,6 +131,8 @@ public:
 	int mWidth;
 	int mHeight;
 
+	std::string mSpritePath;
+
 
 	SpriteAnimator* mpSpriteAnimator;
 

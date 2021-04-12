@@ -25,7 +25,7 @@ InputManager::~InputManager() {
 	//
 }
 
-void InputManager::Update() {
+void InputManager::Update(bool appIsFullscreen) {
 	int numberOfFetched = 0;
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(&numberOfFetched);
 
@@ -37,6 +37,11 @@ void InputManager::Update() {
 
 	mPreviousMouse = mCurrentMouse;
 	mCurrentMouse = SDL_GetMouseState(&mMouseX, &mMouseY) & SDL_BUTTON(SDL_BUTTON_LEFT);
+	
+	if (appIsFullscreen) {
+		mMouseX /= 1.6;
+		mMouseY /= 1.35;
+	}
 }
 
 bool InputManager::IsKeyPressed(unsigned int KeyScanCode) {
