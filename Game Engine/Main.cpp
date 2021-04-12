@@ -48,6 +48,7 @@ Creation date: October 5, 2020
 #include "Components/Body.h"
 #include "Components/LeftRight.h"
 #include "Components/BossAttack.h"
+#include "Components/AudioClip.h"
 
 #include <gdiplus.h>
 #include "../glm/glm/glm.hpp"
@@ -1376,6 +1377,8 @@ int main(int argc, char* args[])
 			if (!pC) { continue; }
 			if (pC->mHP <= 0) {
 				// gpObjectFactory->LoadGameObject("../Resources/Slime.json");
+				AudioClip* pAC = static_cast<AudioClip*>(pC->mpOwner->GetComponent(TYPE_AUDIOCLIP));
+				pAC->PlayOneShot("Die");
 				gpGameObjectManager->DeleteObject(pC->mpOwner);
 			}
 		}

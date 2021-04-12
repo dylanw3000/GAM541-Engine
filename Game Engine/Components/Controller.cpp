@@ -124,7 +124,8 @@ void Controller::Update() {
 
 	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyPressed(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
 	{
-
+		AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+		pAC->PlayOneShot("Dash");
 		mDashTimer = 0;
 		//if already triggered within the Limit
 		if (h_mod == 0 && v_mod == 0) {
