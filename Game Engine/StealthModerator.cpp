@@ -60,10 +60,17 @@ void StealthModerator::Update() {
 		mManualBack = false;
 	}
 
-	if (mManualRestart) {
+	if (mManualRestart && mStage > 0 && mStage < 99) {
 		mManualRestart = false;
 		gpGameObjectManager->~GameObjectManager();
 		gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
+	}
+	if (mManualRestart && mStage < 0)
+	{
+		gpGameObjectManager->~GameObjectManager();
+		gpObjectFactory->LoadLevel(("..\\Resources\\Opening" + std::to_string(mStage + 3) + ".json").c_str());
+		mTransitionTimer = 3000;
+		mManualRestart = false;
 	}
 
 	if (mManualBack && (mStage == 99 || mStage == 666))

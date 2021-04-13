@@ -21,7 +21,7 @@ public:
 	InputManager();
 	~InputManager();
 
-	void Update(bool appIsFullscreen, int screenSize[]);
+	void Update( int screenSize[]);
 	bool IsKeyPressed(unsigned int KeyScanCode);
 	bool IsKeyTriggered(unsigned int KeyScanCode);
 	bool IsKeyReleased(unsigned int KeyScanCode);
