@@ -154,6 +154,7 @@ int main(int argc, char* args[])
 	bool appIsFullscreen = false;
 	int mTimer = 0;
 	int backgroundFrame = 0;
+	bool init = true;
 
 	SDL_Surface* pWindowSurface = NULL;
 	SDL_Surface* pImageSurface = NULL;
@@ -191,7 +192,7 @@ int main(int argc, char* args[])
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
 		screenSize[0],										// width, in pixels
 		screenSize[1],										// height, in pixels
-		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+		SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
 
 	// Check that the window was successfully made
 	if (NULL == pWindow)
@@ -203,6 +204,9 @@ int main(int argc, char* args[])
 
 	// Create the context, and make it current
 	openGL_Context = SDL_GL_CreateContext(pWindow);
+
+
+	
 
 	if (glewInit() != GLEW_OK)
 		printf("Couldn't init GLEW library\n");
@@ -292,6 +296,7 @@ int main(int argc, char* args[])
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glBindVertexArray(0);
+
 	
 
 	// Block until all OpenGL executions are complete
@@ -330,7 +335,7 @@ int main(int argc, char* args[])
 	gpModerator->mStage = 0;
 	gpStealthModerator->mStage = -3;
 	gpStealthModerator->mTransitionTimer = 3000;
-	gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
+	//gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
 
 	// Game loop
 	while(true == appIsRunning)
@@ -351,7 +356,7 @@ int main(int argc, char* args[])
 			}
 		} // done with handling events
 
-		gpInputManager->Update(appIsFullscreen, screenSize);
+		gpInputManager->Update(screenSize);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// SDL_FillRect(pWindowSurface, NULL, 0xBBBBBB);
@@ -829,6 +834,9 @@ int main(int argc, char* args[])
 			}
 		}
 
+		if (SDL_GetWindowFlags(pWindow) & SDL_WINDOW_MINIMIZED )
+			appIsPaused = true;
+		
 
 
 		////// Pause Screen
@@ -1200,7 +1208,7 @@ int main(int argc, char* args[])
 		
 
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5)) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5) || init) {	// pause game
 			appIsFullscreen = !appIsFullscreen;
 			if (appIsFullscreen) {
 				int width, height;
@@ -1387,6 +1395,9 @@ int main(int argc, char* args[])
 
 		// Lock the frame rate
 		gpFRC->FrameEnd(appIsPaused);
+
+		if (init)
+			init = false;
 
 		
 	}
