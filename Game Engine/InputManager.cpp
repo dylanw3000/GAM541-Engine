@@ -25,7 +25,7 @@ InputManager::~InputManager() {
 	//
 }
 
-void InputManager::Update(bool appIsFullscreen, int screenSize[]) {
+void InputManager::Update(int screenSize[]) {
 	int numberOfFetched = 0;
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(&numberOfFetched);
 
