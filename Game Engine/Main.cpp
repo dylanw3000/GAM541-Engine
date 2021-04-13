@@ -392,7 +392,7 @@ int main(int argc, char* args[])
 			glUseProgram(gRenderID);
 
 			glm::mat4 model(1.0f);
-			model = glm::translate(model, glm::vec3(0, 0, 1.f));
+			model = glm::translate(model, glm::vec3(0, 0, 0));
 			model = glm::scale(model, glm::vec3(2.f, 2.f, 0.0f));
 
 			int transformationHandle = 4;
@@ -452,6 +452,8 @@ int main(int argc, char* args[])
 				// glBindVertexArray(0);
 			//}
 		}*/
+
+		glClear(GL_DEPTH_BUFFER_BIT);
 		if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
 			glUseProgram(gRenderID);
 
@@ -1216,6 +1218,7 @@ int main(int argc, char* args[])
 			// Uncomment if you want the scaled-up window to use actual-size graphics, but for our purposes I believe that stretching is allowable and preferable to redoing teh camera to handle variable-size windows
 			// projectionMatrix = glm::ortho(0.f, (float)screenSize[0], (float)screenSize[1], 0.f);
 
+			glDisable(GL_DEPTH_TEST);
 			SDL_DestroyWindow(pWindow);
 
 			pWindow = SDL_CreateWindow("ConCaveity",		// window title
@@ -1309,6 +1312,8 @@ int main(int argc, char* args[])
 			optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 			quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 			startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
+
+			glEnable(GL_DEPTH_TEST);
 		}
 
 		
