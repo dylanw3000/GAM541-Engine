@@ -72,6 +72,13 @@ void StealthModerator::Update() {
 		mTransitionTimer = 3000;
 		mManualRestart = false;
 	}
+	if (mManualRestart && mStage == 0)
+	{
+		gpGameObjectManager->~GameObjectManager();
+		gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+		mTransitionTimer = mTransitionTimerLimit;
+		mManualRestart = false;
+	}
 
 	if (mManualBack && (mStage == 99 || mStage == 666))
 	{
