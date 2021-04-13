@@ -834,6 +834,9 @@ int main(int argc, char* args[])
 			}
 		}
 
+		if (SDL_GetWindowFlags(pWindow) & SDL_WINDOW_MINIMIZED )
+			appIsPaused = true;
+		
 
 
 		////// Pause Screen
