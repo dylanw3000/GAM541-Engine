@@ -157,12 +157,18 @@ int main(int argc, char* args[])
 	bool appIsRunning = true;
 	bool appIsPaused = false;
 	bool optionsMenuOpen = false;
+	bool confirmationWindowOpen = false;
+	bool confirmationWindowOutput = false;
 	bool appIsFullscreen = false;
 	int mTimer = 0;
 	int backgroundFrame = 0;
 	bool init = true;
 	bool fullscreenToggle = false;
 	float currentVolume = 1.0f;
+	bool creditsPending = false;
+	bool exitPending = false;
+	bool mainMenuPending = false;
+	bool fullScreenTogglePending = false;
 
 	SDL_Surface* pWindowSurface = NULL;
 	SDL_Surface* pImageSurface = NULL;
@@ -336,6 +342,13 @@ int main(int argc, char* args[])
 	GLuint soundOnButton = gpResourceManager->LoadTexture("../Resources/Sound_On_Button.png");
 	GLuint soundOffButton = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button.png");
 	GLuint backButton = gpResourceManager->LoadTexture("../Resources/Back_Button.png");
+
+	GLuint confirmationScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text.png");
+	GLuint confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
+	GLuint yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
+	GLuint noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
+
+
 
 	/****************/
 	// float transformationMatrix[16];
@@ -944,16 +957,26 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered()) {
+			if (gpInputManager->IsMouseTriggered() || creditsPending == true) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
-					gpStealthModerator->mStage = 100;
-					gpStealthModerator->mTransitionTimer = 2000;
-					gpGameObjectManager->~GameObjectManager();
-					gpStealthModerator->mManualRestart = false;
-					gpStealthModerator->mManualOverride = false;
-					gpStealthModerator->mManualBack = false;
-					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
-					appIsPaused = false;
+					creditsPending = true;
+					confirmationWindowOpen = true;
+				}
+				if(!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						gpStealthModerator->mStage = 100;
+						gpStealthModerator->mTransitionTimer = 2000;
+						gpGameObjectManager->~GameObjectManager();
+						gpStealthModerator->mManualRestart = false;
+						gpStealthModerator->mManualOverride = false;
+						gpStealthModerator->mManualBack = false;
+						gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+						appIsPaused = false;
+						confirmationWindowOutput = false;
+					}
+					creditsPending = false;
 				}
 			}
 			// End Credits Button
@@ -975,16 +998,28 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+
+			if (gpInputManager->IsMouseTriggered() || mainMenuPending == true) {
 				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
-					gpStealthModerator->mStage = 0;
-					gpStealthModerator->mTransitionTimer = 2000;
-					gpGameObjectManager->~GameObjectManager();
-					gpStealthModerator->mManualRestart = false;
-					gpStealthModerator->mManualOverride = false;
-					gpStealthModerator->mManualBack = false;
-					gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
-					appIsPaused = false;
+					mainMenuPending = true;
+					confirmationWindowOpen = true;
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						gpStealthModerator->mStage = 0;
+						gpStealthModerator->mTransitionTimer = 2000;
+						gpGameObjectManager->~GameObjectManager();
+						gpStealthModerator->mManualRestart = false;
+						gpStealthModerator->mManualOverride = false;
+						gpStealthModerator->mManualBack = false;
+						gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+						appIsPaused = false;
+						confirmationWindowOutput = false;
+					}
+					mainMenuPending = false;
+
 				}
 			}
 			// Main Menu Button
@@ -1007,9 +1042,19 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered()) {
+			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
-					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					exitPending = true;
+					confirmationWindowOpen = true;
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+						confirmationWindowOutput = false;
+					}
+					exitPending = false;
 				}
 			}
 			// End Quit Button
@@ -1115,6 +1160,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
+
 			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					gpStealthModerator->mStage = 100;
@@ -1146,9 +1192,20 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered()) {
+
+			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
-					appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					exitPending = true;
+					confirmationWindowOpen = true;
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+						confirmationWindowOutput = false;
+					}
+					exitPending = false;
 				}
 			}
 			// End Quit Button
@@ -1293,11 +1350,34 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125)
-					fullscreenToggle = true;
+			if (appIsPaused)
+			{
+				if (gpInputManager->IsMouseTriggered() || fullScreenTogglePending) {
+					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125) {
+						fullScreenTogglePending = true;
+						confirmationWindowOpen = true;
+					}
+					if (!confirmationWindowOpen)
+					{
+						if (confirmationWindowOutput)
+						{
+							fullscreenToggle = true;
+							confirmationWindowOutput = false;
+						}
+						fullScreenTogglePending = false;
+					}
+				}
 			}
-			// End Sound On Button
+			else
+			{
+				if (gpInputManager->IsMouseTriggered()) {
+					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125)
+						fullscreenToggle = true;
+				}
+			}
+
+			
+			// End Fullscreen Toggle Button
 
 
 			// Options Text
@@ -1317,6 +1397,90 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 			// End Options Text
+
+		}
+
+
+		// Confirmation Window
+		if (confirmationWindowOpen) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			// Update Menu Audio 
+			gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
+
+			//redraw background for pause menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(616, 208, 0.f));
+				model = glm::scale(model, glm::vec3(576.0f, -320.0f, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if(fullScreenTogglePending)
+					glBindTexture(GL_TEXTURE_2D, confirmationRestartScreen);
+				else
+					glBindTexture(GL_TEXTURE_2D, confirmationScreen);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			
+
+			// Yes Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(716, 208, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, yesButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 616 && gpInputManager->mMouseX < 816) {
+					confirmationWindowOpen = false;
+					confirmationWindowOutput = true;
+				}
+			}
+			// End Yes Button
+
+			// No Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(515, 208, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, noButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMousePressed()) {
+				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616) {
+					confirmationWindowOpen = false;
+					confirmationWindowOutput = false;
+				}
+			}
+			// End No Button
+
 
 		}
 
@@ -1484,6 +1648,11 @@ int main(int argc, char* args[])
 			soundOnButton = gpResourceManager->LoadTexture("../Resources/Sound_On_Button.png");
 			soundOffButton = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button.png");
 			backButton = gpResourceManager->LoadTexture("../Resources/Back_Button.png");
+
+			confirmationScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text.png");
+			confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
+			yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
+			noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
 		}
 
 		
