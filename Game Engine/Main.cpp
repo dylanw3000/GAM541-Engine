@@ -192,7 +192,7 @@ int main(int argc, char* args[])
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
 		screenSize[0],										// width, in pixels
 		screenSize[1],										// height, in pixels
-		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+		SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
 
 	// Check that the window was successfully made
 	if (NULL == pWindow)
