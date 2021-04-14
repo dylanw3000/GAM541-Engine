@@ -273,7 +273,11 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			if (pInvincibility == nullptr) { pInvincibility = static_cast<Invincibility*>(pNewGO->AddComponent(TYPE_INVINCIBILITY)); }
 			pInvincibility->Serialize(d["Invincibility"].GetArray());
 		}
-
+		if (d.HasMember("Eye")) {
+			Eye* pEye = static_cast<Eye*>(pNewGO->GetComponent(TYPE_EYE));
+			if (pEye == nullptr) { pEye = static_cast<Eye*>(pNewGO->AddComponent(TYPE_EYE)); }
+			pEye->Serialize(d["Eye"].GetArray());
+		}
 	}
 
 	/*
