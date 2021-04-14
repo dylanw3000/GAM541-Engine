@@ -185,6 +185,7 @@ int main(int argc, char* args[])
 	gpStealthModerator = new StealthModerator();
 
 	gpAudioManager = new AudioManager();
+	gpAudioManager->InitEvents();
 
 	DEBUG = false;
 
@@ -912,6 +913,7 @@ int main(int argc, char* args[])
 			if (gpInputManager->IsMousePressed()) {
 				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	// continue button
 					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 
@@ -938,6 +940,7 @@ int main(int argc, char* args[])
 				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					optionsMenuOpen = true;
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End Options Button
@@ -1050,6 +1053,7 @@ int main(int argc, char* args[])
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					exitPending = true;
 					confirmationWindowOpen = true;
+					gpAudioManager->PlayOneShot("Click");
 				}
 				if (!confirmationWindowOpen)
 				{
