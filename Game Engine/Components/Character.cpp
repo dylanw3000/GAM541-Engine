@@ -159,7 +159,8 @@ bool Character::CollideCirc(float x_, float y_, float ang_, float angwidth_, flo
 		return false;
 
 	float dist = powf(x_ - pTrans->mPositionX, 2) + powf(y_ - pTrans->mPositionY, 2);
-	if (dist <= powf(out_ + mRadius, 2) && dist >= powf(in_ - mRadius, 2)) {
+
+	if (dist <= powf(out_ + mRadius, 2) && dist >= powf((in_ - mRadius >= 0.0 ? in_ - mRadius : 0.0), 2)) {
 		float ang = atan2f(pTrans->mPositionY - y_, pTrans->mPositionX - x_);
 		float angMin = atan2f((pTrans->mPositionY + mRadius * sinf(ang - 3.14159 / 2)) - y_, (pTrans->mPositionX + mRadius * cosf(ang - 3.14159 / 2)) - x_);
 		float angMax = atan2f((pTrans->mPositionY + mRadius * sinf(ang + 3.14159 / 2)) - y_, (pTrans->mPositionX + mRadius * cosf(ang + 3.14159 / 2)) - x_);

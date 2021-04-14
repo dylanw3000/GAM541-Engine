@@ -19,7 +19,7 @@
   "character": [
     {
       "hp": 3,
-      "radius": 180,
+      "radius": 160,
       "hasHealthBar": true
     }
   ],
