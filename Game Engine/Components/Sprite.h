@@ -60,6 +60,8 @@ public:
 	int mIdlingPhase;
 	bool hasPhase2 = false;
 	bool hasPhase3 = false;
+	size_t mCurrentIndex;
+	float mTimer;
 
 	unsigned int mRunningRows;
 	unsigned int mRunningColumns;
@@ -101,8 +103,7 @@ public:
 
 private:
 	std::vector<SpriteAnimatorFrame*> mFrames;
-	size_t mCurrentIndex, mPrevIndex, mAdjIndex;
-	float mTimer;
+	size_t mPrevIndex, mAdjIndex;
 
 
 	std::vector<SpriteAnimatorFrame*> mRunningFrames;

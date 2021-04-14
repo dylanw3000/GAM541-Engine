@@ -83,7 +83,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 			{
 				for (int i = 0; i < cols; i++)
 				{
-					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.4f);
 				}
 			}
 			mpSpriteAnimator->StartIdling();
@@ -100,7 +100,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 			{
 				for (int i = 0; i < cols; i++)
 				{
-					mpSpriteAnimator->AddIdlingFrameP2(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+					mpSpriteAnimator->AddIdlingFrameP2(i * (1.0f / cols), j * (1.0f / rows), 0.3f);
 				}
 			}
 			mpSpriteAnimator->StartIdling();
