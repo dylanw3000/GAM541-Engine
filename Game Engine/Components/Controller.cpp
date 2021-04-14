@@ -339,7 +339,7 @@ void Controller::Update() {
 
 	/*** Attacks ***/
 	mSwingTimer += gpFRC->GetFrameTime();
-	if ((gpInputManager->IsMousePressed() || ((SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))) && gGameType == 1) && !mSwinging && mSwingTimer >= mSwingTime+mSwingDelay) {
+	if ((gpInputManager->IsMouseTriggered() || ((SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))) && gGameType == 1) && !mSwinging && mSwingTimer >= mSwingTime+mSwingDelay) {
 		mSwinging = true;
 		mSwingTimer = 0;
 		mCleaver = SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);

@@ -170,7 +170,7 @@ void StealthModerator::Update() {
 				mManualOverride = false;
 				mManualBack = false;
 			}
-			else if (mStage == 0)
+			else if (mStage == 0 || (mManualOverride && mStage < 0))
 			{
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel("..\\Resources\\Title.json");

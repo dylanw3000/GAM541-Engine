@@ -522,35 +522,263 @@ int main(int argc, char* args[])
 			//}
 		}*/
 
+
+		if (!appIsPaused)
+		{
+			gpAudioManager->SetMasterBusVolume(1.0f * currentVolume);
+		}
+
 		glClear(GL_DEPTH_BUFFER_BIT);
 		if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+
 			glUseProgram(gRenderID);
+			gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
+				model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
 
-			glm::mat4 model(1.0f);
+				model = projectionMatrix * model;
 
-			model = glm::scale(model, glm::vec3(2.f, 2.f, 0.0f));
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
-			int transformationHandle = 4;
-			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, deadScreen);
 
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, deadScreen);
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
 
 
-			glDrawArrays(GL_QUADS, 0, vertexNum);
+
+
+			// Yes Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(716, 250, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 616 && gpInputManager->mMouseX < 816)
+					glBindTexture(GL_TEXTURE_2D, yesButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, yesButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 616 && gpInputManager->mMouseX < 816) {
+					gpStealthModerator->mManualRestart = true;
+					gpAudioManager->PlayOneShot("Click");
+				}
+			}
+			// End Yes Button
+
+			// No Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(515, 250,  1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616)
+					glBindTexture(GL_TEXTURE_2D, noButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, noButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered() || mainMenuPending) {
+				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616) {
+					mainMenuPending = true;
+					confirmationWindowOpen = true;
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						gpStealthModerator->mStage = 0;
+						gpStealthModerator->mTransitionTimer = 2000;
+						gpGameObjectManager->~GameObjectManager();
+						gpStealthModerator->mManualRestart = false;
+						gpStealthModerator->mManualOverride = false;
+						gpStealthModerator->mManualBack = false;
+						gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+						appIsPaused = false;
+						gpAudioManager->PlayOneShot("Click");
+						confirmationWindowOutput = false;
+					}
+					mainMenuPending = false;					
+				}
+			}
+
+
+			if (gpInputManager->IsMouseTriggered() || exitPending) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					exitPending = true;
+					confirmationWindowOpen = true;
+
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+						confirmationWindowOutput = false;
+					}
+					exitPending = false;
+				}
+			}
+			// End No Button
 		}
 		else if ((gGameType != 3 && gpModerator->mStage == 99) || (gGameType == 3 && gpStealthModerator->mStage == 99)) {
+
+			glClear(GL_DEPTH_BUFFER_BIT);
+
 			glUseProgram(gRenderID);
+			gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
+				model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
 
-			glm::mat4 model(1.0f);
+				model = projectionMatrix * model;
 
-			model = glm::scale(model, glm::vec3(2.f, 2.f, 0.0f));
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
-			int transformationHandle = 4;
-			glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, endScreen);
 
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, endScreen);
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			// Main Menu Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 600.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, mainMenuButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, mainMenuButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpStealthModerator->mStage = 0;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
+					appIsPaused = false;
+					gpAudioManager->PlayOneShot("Click");
+				}
+						
+			}
+			// Main Menu Button
+
+			// Credits Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, creditsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, creditsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpStealthModerator->mStage = 100;
+					gpStealthModerator->mTransitionTimer = 2000;
+					gpGameObjectManager->~GameObjectManager();
+					gpStealthModerator->mManualRestart = false;
+					gpStealthModerator->mManualOverride = false;
+					gpStealthModerator->mManualBack = false;
+					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+					gpAudioManager->PlayOneShot("Click");
+				}
+			}
+			// End Credits Button
+
+			// Quit Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 750.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, quitButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, quitButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered() && !exitPending)
+			{
+				gpAudioManager->PlayOneShot("Click");
+			}
+
+			if (gpInputManager->IsMouseTriggered() || exitPending) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					exitPending = true;
+					confirmationWindowOpen = true;
+
+				}
+				if (!confirmationWindowOpen)
+				{
+					if (confirmationWindowOutput)
+					{
+						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+						confirmationWindowOutput = false;
+					}
+					exitPending = false;
+				}
+			}
+			// End Quit Button
 
 
 			glDrawArrays(GL_QUADS, 0, vertexNum);
@@ -940,7 +1168,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, continueButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, continueButton);
@@ -949,7 +1177,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	// continue button
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {	// continue button
 					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					gpAudioManager->PlayOneShot("Click");
 				}
@@ -969,7 +1197,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, optionsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, optionsButton);
@@ -978,7 +1206,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					optionsMenuOpen = true;
 					gpAudioManager->PlayOneShot("Click");
@@ -1000,7 +1228,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, creditsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, creditsButton);
@@ -1014,7 +1242,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered() || creditsPending == true) {
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					creditsPending = true;
 					confirmationWindowOpen = true;
 					
@@ -1050,7 +1278,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, mainMenuButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, mainMenuButton);
@@ -1064,7 +1292,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered() || mainMenuPending == true) {
-				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					mainMenuPending = true;
 					confirmationWindowOpen = true;
 				}
@@ -1101,7 +1329,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, quitButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, quitButton);
@@ -1115,7 +1343,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
-				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					exitPending = true;
 					confirmationWindowOpen = true;
 					
@@ -1152,15 +1380,10 @@ int main(int argc, char* args[])
 			}
 			// End Controls Menu
 		}
-		if (!appIsPaused)
-		{
-			gpAudioManager->SetMasterBusVolume(1.0f * currentVolume);
-		}
 
 		//// Main Menu
 		if (gpStealthModerator->mStage == 0 && !optionsMenuOpen)
 		{
-			gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glUseProgram(gRenderID);
@@ -1177,7 +1400,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, startGameButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, startGameButton);
@@ -1186,7 +1409,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					gpAudioManager->PlayOneShot("Click");
 				}
@@ -1207,7 +1430,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, optionsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, optionsButton);
@@ -1216,7 +1439,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					optionsMenuOpen = true;
 					gpAudioManager->PlayOneShot("Click");
 				}
@@ -1236,7 +1459,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, creditsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, creditsButton);
@@ -1246,7 +1469,7 @@ int main(int argc, char* args[])
 
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					gpStealthModerator->mStage = 100;
 					gpStealthModerator->mTransitionTimer = 2000;
 					gpGameObjectManager->~GameObjectManager();
@@ -1272,7 +1495,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, quitButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, quitButton);
@@ -1282,7 +1505,7 @@ int main(int argc, char* args[])
 
 
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
-				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					exitPending = true;
 					confirmationWindowOpen = true;
 				}
@@ -1363,7 +1586,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, backButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, backButton);
@@ -1372,7 +1595,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					optionsMenuOpen = false;
 				}
 			}
@@ -1390,7 +1613,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100)
+				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, soundOffButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, soundOffButton);
@@ -1399,7 +1622,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100)
+				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
 					currentVolume = 0.0f;
 			}
 			// End Sound Off Button
@@ -1416,7 +1639,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100)
+				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, soundOnButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, soundOnButton);
@@ -1425,7 +1648,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMousePressed()) {
-				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100) 
+				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
 					currentVolume = 1.0f;
 			}
 			// End Sound On Button
@@ -1442,7 +1665,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125) 
+				if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, fullScreenToggleButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, fullScreenToggleButton);
@@ -1453,7 +1676,7 @@ int main(int argc, char* args[])
 			if (appIsPaused)
 			{
 				if (gpInputManager->IsMouseTriggered() || fullScreenTogglePending) {
-					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125) {
+					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125 && !confirmationWindowOpen) {
 						fullScreenTogglePending = true;
 						confirmationWindowOpen = true;
 					}
@@ -1471,7 +1694,7 @@ int main(int argc, char* args[])
 			else
 			{
 				if (gpInputManager->IsMouseTriggered()) {
-					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125)
+					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125 && !confirmationWindowOpen)
 						fullscreenToggle = true;
 				}
 			}
@@ -1640,7 +1863,7 @@ int main(int argc, char* args[])
 		
 
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F5) || init || fullscreenToggle) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F11) || init || fullscreenToggle) {	// pause game
 			fullscreenToggle = false;
 			appIsFullscreen = !appIsFullscreen;
 			if (appIsFullscreen) {
@@ -1737,8 +1960,8 @@ int main(int argc, char* args[])
 				pSprite->mTexture = gpResourceManager->LoadTexture(pSprite->mSpritePath.c_str());
 			}
 
-			endScreen = gpResourceManager->LoadTexture("../Resources/529_end.png");
-			deadScreen = gpResourceManager->LoadTexture("../Resources/529_dead.png");
+			endScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Victory.png");
+			deadScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Retry.png");
 			backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
 			backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
 			backgroundCredits = gpResourceManager->LoadTexture("../Resources/Credits_Background.png");
