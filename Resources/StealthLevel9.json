@@ -163,7 +163,7 @@
       "transform": [
         {
           "x": 224,
-          "y": 272,
+          "y": 208,
           "width": 320,
           "height": 64
         }
@@ -171,6 +171,56 @@
       "body": [
         {
           "width": 320,
+          "height": 64,
+          "wall": true
+        }
+      ]
+    },
+
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "Bricks.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 416,
+          "y": 208,
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 64,
+          "wall": true
+        }
+      ]
+    },
+
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "Bricks.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": 480,
+          "y": 208,
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
           "height": 64,
           "wall": true
         }
@@ -525,8 +575,8 @@
       "name": "Eye_Boss.json",
       "transform": [
         {
-          "x": 550,
-          "y": 500
+          "x": 530,
+          "y": 400
         }
       ]
     },
@@ -536,14 +586,65 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 80,
-          "y": 210
+          "x": 416,
+          "y": 142
+        }
+      ],
+      "leftright": [
+        {
+          "startAction": 1,
+          "speed": 40,
+          "visionWidth": 0.3
+        }
+      ]
+    },
+
+    {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 830,
+          "y": 142
         }
       ],
       "leftright": [
         {
           "startAction": 3,
-          "speed": 65,
+          "speed": 40,
+          "visionWidth": 0.3
+        }
+      ]
+    },
+
+    {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 200,
+          "y": 784
+        }
+      ],
+      "leftright": [
+        {
+          "startAction": 3,
+          "speed": 120,
+          "visionWidth": 0.3
+        }
+      ]
+    },
+
+    {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 900,
+          "y": 784
+        }
+      ],
+      "leftright": [
+        {
+          "startAction": 1,
+          "speed": 120,
           "visionWidth": 0.3
         }
       ]

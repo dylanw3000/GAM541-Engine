@@ -383,7 +383,7 @@ void SpriteAnimator::StartIdling()
 {
 	mCurrentIndex = 0;
 	if(hasPhase2 || hasPhase3)
-		mCurrentIndex = mPrevIndex;
+		mCurrentIndex = (mPrevIndex + 1) % 16;
 
 
 	if (hasPhase2 && mIdlingPhase == 2)
