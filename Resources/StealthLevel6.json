@@ -29,7 +29,7 @@
       ]
     },
 
-    
+
     {
       "name": "SemisolidWall.json",
       "transform": [
@@ -79,7 +79,7 @@
     },
 
 
-    
+
 
     {
       "name": "Trampoline.json",
@@ -91,7 +91,7 @@
       ]
     },
 
-    
+
     {
       "name": "SemisolidWall.json",
       "transform": [
@@ -230,7 +230,7 @@
       ]
     },
 
-    
+
 
     {
       "name": "Wall.json",
@@ -290,7 +290,7 @@
 
 
 
-    
+
     {
       "name": "Wall.json",
       "sprite": [
@@ -315,7 +315,7 @@
         }
       ]
     },
-    
+
     {
       "name": "Wall.json",
       "sprite": [
@@ -365,7 +365,7 @@
         }
       ]
     },
-    
+
     {
       "name": "Wall.json",
       "sprite": [
@@ -391,7 +391,7 @@
       ]
     },
 
-    
+
 
 
     {
@@ -519,8 +519,8 @@
       ]
     },
 
-    
-    
+
+
     {
       "name": "Eye_Boss.json",
       "transform": [
@@ -528,11 +528,26 @@
           "x": 550,
           "y": 500
         }
-      ]    
+      ]
     },
 
 
-
+    {
+      "name": "Guard.json",
+      "transform": [
+        {
+          "x": 80,
+          "y": 210
+        }
+      ],
+      "leftright": [
+        {
+          "startAction": 3,
+          "speed": 65,
+          "visionWidth": 0.3
+        }
+      ]
+    },
 
 
     {
@@ -594,8 +609,8 @@
         }
       ]
     }
-    
-    
+
+
   ],
   
   "timescale": 1.0

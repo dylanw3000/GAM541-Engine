@@ -48,11 +48,8 @@ void Eye::Update() {
 	if (pC->mIsStunned)
 	{
 		pT->mVelHoriz = 0;
-		pC->mHP = 0;
-	}
-
-	if (pC->mHP <= 0) {
-		gpGameObjectManager->DeleteObject(mpOwner);
+		pC->mHP -= 1.0;
+		pC->mIsStunned = false;
 	}
 
 

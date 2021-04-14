@@ -31,6 +31,7 @@ Creation date: October 15, 2020
 #include "Components/Objective.h"
 #include "Components/BossAttack.h"
 #include "Components/Invincibility.h"
+#include "Components/Eye.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -99,6 +100,9 @@ Component* GameObject::AddComponent(unsigned int type) {
 			break;
 		case TYPE_INVINCIBILITY:
 			pNewComponent = new Invincibility();
+			break;
+		case TYPE_EYE:
+			pNewComponent = new Eye();
 			break;
 		default:
 			pNewComponent = nullptr;

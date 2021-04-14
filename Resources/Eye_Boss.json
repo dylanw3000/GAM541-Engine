@@ -13,20 +13,17 @@
       "animated": true,
       "idlingImageName": "Eye - Phase 1 Spritesheet.png",
       "idlingColumns": 4,
-      "idlingRows": 4,
-      "attackingImageName": "Big_Guard_Attacking.png",
-      "attackingColumns": 4,
-      "attackingRows": 4
+      "idlingRows": 4
     }  
   ],
   "character": [
     {
       "hp": 3,
-      "radius": 140,
-      "hasHealthBar": true,
-      "friendly": false
+      "radius": 180,
+      "hasHealthBar": true
     }
   ],
+  "Eye": [ {} ],
   "objective": [
     {
       "radius": 32,

@@ -48,6 +48,7 @@ Creation date: October 5, 2020
 #include "Components/Body.h"
 #include "Components/LeftRight.h"
 #include "Components/BossAttack.h"
+#include "Components/Eye.h"
 #include "Components/AudioClip.h"
 
 #include <gdiplus.h>
@@ -741,12 +742,13 @@ int main(int argc, char* args[])
 				Body* pB = static_cast<Body*>(pGameObject->GetComponent(TYPE_BODY));
 				LeftRight* pLR = static_cast<LeftRight*>(pGameObject->GetComponent(TYPE_LEFT_RIGHT));
 				BossAttack* pBA = static_cast<BossAttack*>(pGameObject->GetComponent(TYPE_BOSS_ATTACK));
+				Eye* pEye = static_cast<Eye*>(pGameObject->GetComponent(TYPE_EYE));
 
 				if (pB != nullptr && pB->mWall) { continue; }
 				//glBindVertexArray(vaoID);
 
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pT->mPositionY - screenSize[1] / 2) / screenSize[1]));
+				model = glm::translate(model, glm::vec3(pT->mPositionX + pT->mSpriteOffsetX, pT->mPositionY + pT->mSpriteOffsetY - pT->mHeight / 2.0f, (pEye != nullptr ? 1.0 : (pT->mPositionY - screenSize[1] / 2) / screenSize[1])));
 				model = glm::rotate(model, pT->mAngle, glm::vec3(0, 0, 1));
 				if (pS->mIsAnimated && pS->mpSpriteAnimator->mIsAttacking && pC != nullptr)
 				{
