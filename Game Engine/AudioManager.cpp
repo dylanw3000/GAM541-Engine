@@ -1,6 +1,7 @@
 #include "AudioManager.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 
 AudioManager::AudioManager() 
 {
@@ -33,6 +34,13 @@ AudioManager::AudioManager()
     eventInstance->start();
     eventInstance->setVolume(0.1f);
 }
+
+void AudioManager::InitEvents() 
+{
+    mEventList.push_back(new AudioEvent("Hover", 1.0f));
+    mEventList.push_back(new AudioEvent("Click", 1.0f));
+}
+
 AudioManager::~AudioManager()
 {}
 
@@ -46,4 +54,15 @@ void AudioManager::SetMasterBusVolume(float vol)
     FMOD::Studio::Bus* masterBus = NULL;
     ERRCHECK(system->getBus("bus:/", &masterBus));
     masterBus->setVolume(vol);
+}
+
+void AudioManager::PlayOneShot(std::string eventName)
+{
+    for (auto audioEvent : mEventList)
+    {
+        if (audioEvent->mEventName == eventName)
+        {
+            audioEvent->mEventInstance->start();
+        }
+    }
 }
