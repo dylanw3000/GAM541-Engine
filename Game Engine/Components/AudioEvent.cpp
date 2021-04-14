@@ -29,6 +29,10 @@ AudioEvent::AudioEvent(std::string eventName, float eventVolume)
 	ERRCHECK(mEventInstance->setVolume(mEventVolume));
 }
 
+void AudioEvent::SetPlayed(bool isPlayed)
+{
+	mIsSFXPlayed = isPlayed;
+}
 
 void AudioEvent::SetData(rapidjson::Value& input)
 {

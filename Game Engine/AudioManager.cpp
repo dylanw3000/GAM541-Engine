@@ -51,6 +51,7 @@ void AudioManager::InitEvents()
 {
     mEventList.push_back(new AudioEvent("Hover", 1.0f));
     mEventList.push_back(new AudioEvent("Click", 1.0f));
+    mEventList.push_back(new AudioEvent("Victory", 1.0f));
 }
 
 AudioManager::~AudioManager()
@@ -75,6 +76,29 @@ void AudioManager::PlayOneShot(std::string eventName)
         if (audioEvent->mEventName == eventName)
         {
             audioEvent->mEventInstance->start();
+        }
+    }
+}
+
+void AudioManager::PlayOneShot(std::string eventName, int test)
+{
+    for (auto audioEvent : mEventList)
+    {
+        if (audioEvent->mEventName == eventName && !audioEvent->mIsSFXPlayed)
+        {
+            audioEvent->mEventInstance->start();
+            audioEvent->SetPlayed(true);
+        }
+    }
+}
+
+void AudioManager::SetPlayed(std::string eventName, bool isPlayed)
+{
+    for (auto audioEvent : mEventList)
+    {
+        if (audioEvent->mEventName == eventName)
+        {
+            audioEvent->SetPlayed(isPlayed);
         }
     }
 }

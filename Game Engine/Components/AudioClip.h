@@ -26,6 +26,8 @@ public:
 	void Update();
 
 	void PlayOneShot(std::string eventName);
+	void PlayOneShot(std::string eventName, int i);
+	void SetPlayed(std::string eventName, bool isPlayed);
 
 public:
 	

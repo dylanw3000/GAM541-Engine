@@ -28,6 +28,17 @@
       "radius": 36
     }
   ],
+  "audioClip": [
+{
+    "EventCount": 1
+},
+    {
+      "name": "Dizzy",
+      "volume": 1
+}
+
+  ],
+
   "leftright":
   [
     {

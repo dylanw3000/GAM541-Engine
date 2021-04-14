@@ -53,3 +53,26 @@ void AudioClip::PlayOneShot(std::string eventName)
 	}
 }
 
+void AudioClip::PlayOneShot(std::string eventName, int test)
+{
+	for (auto audioEvent : mEventList)
+	{
+		if (audioEvent->mEventName == eventName && !audioEvent->mIsSFXPlayed)
+		{
+			audioEvent->mEventInstance->start();
+			audioEvent->SetPlayed(true);
+		}
+	}
+}
+
+void AudioClip::SetPlayed(std::string eventName, bool isPlayed)
+{
+	for (auto audioEvent : mEventList)
+	{
+		if (audioEvent->mEventName == eventName)
+		{
+			audioEvent->SetPlayed(isPlayed);
+		}
+	}
+}
+

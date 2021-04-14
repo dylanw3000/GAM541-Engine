@@ -25,9 +25,11 @@ public:
 	AudioEvent(std::string mEventName, float mEventVolume);
 
 	void SetData(rapidjson::Value& input);
+	void SetPlayed(bool isPlayed);
 
 	std::string mEventName;
 	float mEventVolume;
+	bool mIsSFXPlayed = false;
 	
 	FMOD::Studio::EventDescription* mEventDescription = NULL;
 	FMOD::Studio::EventInstance* mEventInstance = NULL;

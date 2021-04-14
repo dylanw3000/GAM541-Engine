@@ -31,6 +31,8 @@ public :
 	void SetMasterBusVolume(float vol);
 	void InitEvents();
 	void PlayOneShot(std::string eventName);
+	void PlayOneShot(std::string eventName, int i);
+	void SetPlayed(std::string eventName, bool isPlayed);
 
 public : 
 	FMOD_RESULT result;

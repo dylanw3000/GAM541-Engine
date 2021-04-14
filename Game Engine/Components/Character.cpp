@@ -13,6 +13,7 @@ Authors: Dylan Washburne, Adam Rhoades
 
 #include "Character.h"
 #include "Transform.h"
+#include "AudioClip.h"
 #include "../GameObject.h"
 #include "../EventManager.h"
 #include "../GameObjectManager.h"
@@ -60,10 +61,14 @@ void Character::Update() {
 
 	if (mIsStunned)
 	{
+		AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
+		pAC->PlayOneShot("Dizzy", 0);
+
 		mStunnedDuration -= gpFRC->GetFrameTime();
 
 		if (mStunnedDuration <= 0) {
 			mIsStunned = false;
+			pAC->SetPlayed("Dizzy", false);
 		}
 	}
 

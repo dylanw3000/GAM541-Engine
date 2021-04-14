@@ -648,8 +648,10 @@ int main(int argc, char* args[])
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glUseProgram(gRenderID);
+			
 			gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
 			{
+				gpAudioManager->PlayOneShot("Victory", 0);
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
 				model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
@@ -696,6 +698,7 @@ int main(int argc, char* args[])
 					gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
 					appIsPaused = false;
 					gpAudioManager->PlayOneShot("Click");
+					gpAudioManager->SetPlayed("Victory", false);
 				}
 						
 			}
@@ -732,6 +735,7 @@ int main(int argc, char* args[])
 					gpStealthModerator->mManualBack = false;
 					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
 					gpAudioManager->PlayOneShot("Click");
+					gpAudioManager->SetPlayed("Victory", false);
 				}
 			}
 			// End Credits Button
@@ -1596,6 +1600,7 @@ int main(int argc, char* args[])
 			if (gpInputManager->IsMousePressed()) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					optionsMenuOpen = false;
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End Back to Menu Button

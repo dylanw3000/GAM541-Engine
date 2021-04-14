@@ -19,6 +19,7 @@ Authors: Adam Rhoades, Dylan Washburne
 #include "../EventManager.h"
 #include "../CollisionManager.h"
 #include "../GameObjectManager.h"
+#include "AudioClip.h"
 
 
 extern GameObjectManager* gpGameObjectManager;
@@ -135,7 +136,6 @@ void LeftRight::Update() {
 	}
 	else
 	{
-
 		Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
 		pT->mVelHoriz = 0;
 		if(!pS->mpSpriteAnimator->mIsIdling)
