@@ -10,6 +10,8 @@ public:
 	AudioEvent();
 	~AudioEvent();
 
+	AudioEvent(std::string mEventName, float mEventVolume);
+
 	void SetData(rapidjson::Value& input);
 
 	std::string mEventName;
