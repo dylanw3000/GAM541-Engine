@@ -13,7 +13,10 @@
       "animated": true,
       "idlingImageName": "Eye - Phase 1 Spritesheet.png",
       "idlingColumns": 4,
-      "idlingRows": 4
+      "idlingRows": 4,
+      "phase2Name": "Eye - Phase 2 Spritesheet.png",
+      "phase3Name": "Eye - Phase 3 Spritesheet.png",
+      "idlingPhase": 1
     }  
   ],
   "character": [
@@ -30,6 +33,7 @@
       "objectiveType": 2
     }
   ],
+
 "audioClip": [
 {
 "EventCount": 1

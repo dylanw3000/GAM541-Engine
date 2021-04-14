@@ -328,7 +328,7 @@ int main(int argc, char* args[])
 	GLuint backgroundImg0 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_0.png");
 	GLuint backgroundImg1 = gpResourceManager->LoadTexture("../Resources/Bricks_Background_Torches_1.png");
 	GLuint backgroundCredits = gpResourceManager->LoadTexture("../Resources/Credits_Background.png");
-
+	/*
 	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
 	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
 	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
@@ -348,6 +348,41 @@ int main(int argc, char* args[])
 	GLuint confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
 	GLuint yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
 	GLuint noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
+	*/
+
+
+
+	GLuint pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
+	GLuint continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
+	GLuint continueButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Continue_Button_Highlighted.png");
+	GLuint controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
+	GLuint creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
+	GLuint creditsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Credits_Button_Highlighted.png");
+	GLuint mainMenuButton = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button.png");
+	GLuint mainMenuButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button_Highlighted.png");
+	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
+	GLuint optionsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Options_Button_Highlighted.png");
+	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
+	GLuint quitButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Quit_Button_Highlighted.png");
+	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
+	GLuint startGameButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Start_Game_Button_Highlighted.png");
+
+	GLuint optionsText = gpResourceManager->LoadTexture("../Resources/Options_Text.png");
+	GLuint fullScreenToggleButton = gpResourceManager->LoadTexture("../Resources/Full_Screen_Toggle_Button.png");
+	GLuint fullScreenToggleButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Full_Screen_Toggle_Button_Highlighted.png");
+	GLuint soundOnButton = gpResourceManager->LoadTexture("../Resources/Sound_On_Button.png");
+	GLuint soundOnButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Sound_On_Button_Highlighted.png");
+	GLuint soundOffButton = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button.png");
+	GLuint soundOffButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button_Highlighted.png");
+	GLuint backButton = gpResourceManager->LoadTexture("../Resources/Back_Button.png");
+	GLuint backButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Back_Button_Highlighted.png");
+
+	GLuint confirmationScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text.png");
+	GLuint confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
+	GLuint yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
+	GLuint yesButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Yes_Button_Green.png");
+	GLuint noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
+	GLuint noButtonHighlighted = gpResourceManager->LoadTexture("../Resources/No_Button_Red.png");
 
 
 
@@ -904,7 +939,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, continueButton);
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+					glBindTexture(GL_TEXTURE_2D, continueButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, continueButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -929,7 +967,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, optionsButton);
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+					glBindTexture(GL_TEXTURE_2D, optionsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, optionsButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -956,7 +997,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, creditsButton);
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, creditsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, creditsButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -997,7 +1041,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, mainMenuButton);
+				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, mainMenuButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, mainMenuButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1041,7 +1088,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, quitButton);
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, quitButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, quitButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1108,7 +1158,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, startGameButton);
+				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, startGameButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, startGameButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1134,7 +1187,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, optionsButton);
+				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+					glBindTexture(GL_TEXTURE_2D, optionsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, optionsButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1159,7 +1215,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, creditsButton);
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250)
+					glBindTexture(GL_TEXTURE_2D, creditsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, creditsButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1191,7 +1250,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, quitButton);
+				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, quitButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, quitButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1279,7 +1341,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, backButton);
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) 
+					glBindTexture(GL_TEXTURE_2D, backButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, backButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1303,7 +1368,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, soundOffButton);
+				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100)
+					glBindTexture(GL_TEXTURE_2D, soundOffButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, soundOffButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1326,7 +1394,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, soundOnButton);
+				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100)
+					glBindTexture(GL_TEXTURE_2D, soundOnButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, soundOnButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1349,7 +1420,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, fullScreenToggleButton);
+				if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125) 
+					glBindTexture(GL_TEXTURE_2D, fullScreenToggleButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, fullScreenToggleButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1447,7 +1521,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, yesButton);
+				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 616 && gpInputManager->mMouseX < 816)
+					glBindTexture(GL_TEXTURE_2D, yesButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, yesButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1472,7 +1549,10 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, noButton);
+				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616)
+					glBindTexture(GL_TEXTURE_2D, noButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, noButton);
 
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
@@ -1641,23 +1721,36 @@ int main(int argc, char* args[])
 
 			pauseScreen = gpResourceManager->LoadTexture("../Resources/Concaveity_Pause.png");
 			continueButton = gpResourceManager->LoadTexture("../Resources/Continue_Button.png");
+			continueButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Continue_Button_Highlighted.png");
 			controlsText = gpResourceManager->LoadTexture("../Resources/Controls_Text.png");
 			creditsButton = gpResourceManager->LoadTexture("../Resources/Credits_Button.png");
+			creditsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Credits_Button_Highlighted.png");
 			mainMenuButton = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button.png");
+			mainMenuButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button_Highlighted.png");
 			optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
+			optionsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Options_Button_Highlighted.png");
 			quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
-			startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");			
+			quitButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Quit_Button_Highlighted.png");
+			startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
+			startGameButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Start_Game_Button_Highlighted.png");
 
 			optionsText = gpResourceManager->LoadTexture("../Resources/Options_Text.png");
 			fullScreenToggleButton = gpResourceManager->LoadTexture("../Resources/Full_Screen_Toggle_Button.png");
+			fullScreenToggleButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Full_Screen_Toggle_Button_Highlighted.png");
 			soundOnButton = gpResourceManager->LoadTexture("../Resources/Sound_On_Button.png");
+			soundOnButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Sound_On_Button_Highlighted.png");
 			soundOffButton = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button.png");
+			soundOffButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button_Highlighted.png");
 			backButton = gpResourceManager->LoadTexture("../Resources/Back_Button.png");
+			backButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Back_Button_Highlighted.png");
 
 			confirmationScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text.png");
 			confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
 			yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
+			yesButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Yes_Button_Green.png");
 			noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
+			noButtonHighlighted = gpResourceManager->LoadTexture("../Resources/No_Button_Highlighted.png");
+
 
 			glEnable(GL_DEPTH_TEST);
 		}

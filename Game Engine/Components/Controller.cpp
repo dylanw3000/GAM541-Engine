@@ -19,6 +19,7 @@ Creation date: October 15, 2020
 #include "Character.h"
 #include "Body.h"
 #include "BossAttack.h"
+#include "Eye.h"
 #include "math.h"
 #include "..\FrameRateController.h"
 #include "../GameObjectManager.h"
@@ -378,13 +379,23 @@ void Controller::Update() {
 			for (auto pObject : gpGameObjectManager->mGameObjects) {
 				Character* pChar = static_cast<Character*>(pObject->GetComponent(TYPE_CHARACTER));
 				BossAttack* pBA = static_cast<BossAttack*>(pObject->GetComponent(TYPE_BOSS_ATTACK));
+				Eye* pE = static_cast<Eye*>(pObject->GetComponent(TYPE_EYE));
+				Sprite* pS = static_cast<Sprite*>(pObject->GetComponent(TYPE_SPRITE));
 				if (pChar == nullptr || pChar->mFriendly == true)
 					continue;
 
 				if (!mCleaver) {
 					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY-24.f, mSwingAng, mSwingWidth, 0, mSwingLen)) {
-						if (gGameType == 1 || (gGameType == 3 && pBA != nullptr))
+						if (gGameType == 1 || (gGameType == 3 && (pBA != nullptr || pE != nullptr)))
+						{
 							pChar->mHP -= 1.0f;
+							if (pS != nullptr && pE != nullptr)
+							{
+								pS->mpSpriteAnimator->mIdlingPhase++;
+								pS->mpSpriteAnimator->StartIdling();
+							}
+
+						}
 						else if (gGameType == 3)
 						{
 							pChar->mIsStunned = true;

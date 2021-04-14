@@ -53,10 +53,15 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 		mpSpriteAnimator = new SpriteAnimator();
 		mpSpriteAnimator->mParentSprite = this;
 	}
+
 	
 	
-	if (mIsAnimated)
-	{
+	
+	if (mIsAnimated){
+	
+		if (input[0].HasMember("idlingPhase")) {
+			mpSpriteAnimator->mIdlingPhase = input[0]["idlingPhase"].GetInt();
+		}
 
 		if (input[0].HasMember("idlingImageName"))
 		{
@@ -69,6 +74,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 				cols = input[0]["idlingColumns"].GetInt();
 				mpSpriteAnimator->mIdlingColumns = cols;
 			}
+
 			if (input[0].HasMember("idlingRows")) {
 				rows = input[0]["idlingRows"].GetInt();
 				mpSpriteAnimator->mIdlingRows = rows;
@@ -87,24 +93,15 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 		if (input[0].HasMember("phase2Name")) {
 			hasPhase2 = true;
 			std::string imageName = input[0]["phase2Name"].GetString();
-			mpSpriteAnimator->mIdlingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
-			unsigned int cols = 1;
-			unsigned int rows = 1;
-
-			if (input[0].HasMember("phase2Columns")) {
-				cols = input[0]["phase2Columns"].GetInt();
-				mpSpriteAnimator->mIdlingColumns = cols;
-			}
-			if (input[0].HasMember("phase2Rows")) {
-				rows = input[0]["phase2Rows"].GetInt();
-				mpSpriteAnimator->mIdlingRows = rows;
-			}
+			mpSpriteAnimator->mIdlingTextureP2 = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = mpSpriteAnimator->mIdlingColumns;
+			unsigned int rows = mpSpriteAnimator->mIdlingRows;
 
 			for (int j = 0; j < rows; j++)
 			{
 				for (int i = 0; i < cols; i++)
 				{
-					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+					mpSpriteAnimator->AddIdlingFrameP2(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
 				}
 			}
 			mpSpriteAnimator->StartIdling();
@@ -113,24 +110,15 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 		if (input[0].HasMember("phase3Name")) {
 			hasPhase3 = true;
 			std::string imageName = input[0]["phase3Name"].GetString();
-			mpSpriteAnimator->mIdlingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
-			unsigned int cols = 1;
-			unsigned int rows = 1;
-
-			if (input[0].HasMember("phase3Columns")) {
-				cols = input[0]["phase3Columns"].GetInt();
-				mpSpriteAnimator->mIdlingColumns = cols;
-			}
-			if (input[0].HasMember("phase3Rows")) {
-				rows = input[0]["phase3Rows"].GetInt();
-				mpSpriteAnimator->mIdlingRows = rows;
-			}
+			mpSpriteAnimator->mIdlingTextureP3 = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = mpSpriteAnimator->mIdlingColumns;
+			unsigned int rows = mpSpriteAnimator->mIdlingRows;
 
 			for (int j = 0; j < rows; j++)
 			{
 				for (int i = 0; i < cols; i++)
 				{
-					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+					mpSpriteAnimator->AddIdlingFrameP3(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
 				}
 			}
 			mpSpriteAnimator->StartIdling();
@@ -291,6 +279,7 @@ SpriteAnimator::SpriteAnimator()
 	mCurrentIndex = 0;
 	mPrevIndex = 0;
 	mTimer = 0.0f;
+	mIdlingPhase = 1;
 }
 SpriteAnimator::~SpriteAnimator()
 {
@@ -301,6 +290,15 @@ SpriteAnimator::~SpriteAnimator()
 	for (auto pFrame : mIdlingFrames)
 		delete pFrame;
 	mIdlingFrames.clear();
+
+	for (auto pFrame : mIdlingFramesP2)
+		delete pFrame;
+	mIdlingFramesP2.clear();
+
+
+	for (auto pFrame : mIdlingFramesP3)
+		delete pFrame;
+	mIdlingFramesP3.clear();
 
 	for (auto pFrame : mRunningFrames)
 		delete pFrame;
@@ -327,6 +325,16 @@ void SpriteAnimator::AddIdlingFrame(float TextureOffsetX, float TextureOffsetY, 
 {
 	mIdlingFrames.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
 	mCanIdle = true;
+}
+
+void SpriteAnimator::AddIdlingFrameP2(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mIdlingFramesP2.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
+}
+
+void SpriteAnimator::AddIdlingFrameP3(float TextureOffsetX, float TextureOffsetY, float Duration)
+{
+	mIdlingFramesP3.push_back(new SpriteAnimatorFrame(TextureOffsetX, TextureOffsetY, Duration));
 }
 
 void SpriteAnimator::AddRunningFrame(float TextureOffsetX, float TextureOffsetY, float Duration)
@@ -367,22 +375,37 @@ void SpriteAnimator::Update()
 		++mCurrentIndex;
 		mCurrentIndex %= mFrames.size();
 		mTimer = mFrames[mCurrentIndex]->mDuration;
+		
 	}
 }
+
 
 void SpriteAnimator::StartIdling()
 {
 	mCurrentIndex = 0;
-	if (hasPhase2 || hasPhase3) {
+	if(hasPhase2 || hasPhase3)
 		mCurrentIndex = mPrevIndex;
-	}
-	mFrames = mIdlingFrames;
+
+
+	if (hasPhase2 && mIdlingPhase == 2)
+		mFrames = mIdlingFramesP2;
+	else if (hasPhase3 && mIdlingPhase == 3)
+		mFrames = mIdlingFramesP3;
+	else
+		mFrames = mIdlingFrames;
+
 	mIsIdling = true;
 	mIsRunning = mIsJumping = mIsAttacking = mIsDashing = mIsFalling = false;
 	mTimer = mFrames[mCurrentIndex]->mDuration;
 	mParentSprite->mRows = mIdlingRows;
 	mParentSprite->mColumns = mIdlingColumns;
-	mParentSprite->mTexture = mIdlingTexture;
+	
+	if (hasPhase2 && mIdlingPhase == 2)
+		mParentSprite->mTexture = mIdlingTextureP2;
+	else if (hasPhase3 && mIdlingPhase == 3)
+		mParentSprite->mTexture = mIdlingTextureP3;
+	else
+		mParentSprite->mTexture = mIdlingTexture;
 }
 
 void SpriteAnimator::StartRunning()

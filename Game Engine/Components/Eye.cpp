@@ -24,7 +24,7 @@ Creation date: October 15, 2020
 
 extern GameObjectManager* gpGameObjectManager;
 extern CollisionManager* gpCollisionManager;
-extern FrameRateController* gpFRC;
+extern FrameRateController* gpFRC; 
 extern EventManager* gpEventManager;
 
 Eye::Eye() : Component(TYPE_EYE) {
@@ -44,13 +44,14 @@ void Eye::Update() {
 
 	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
-
+	/*
 	if (pC->mIsStunned)
 	{
 		pT->mVelHoriz = 0;
 		pC->mHP -= 1.0;
 		pC->mIsStunned = false;
 	}
+	*/
 
 
 }

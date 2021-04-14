@@ -41,6 +41,8 @@ public:
 	void AddRunningFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
 	void AddJumpingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
 	void AddIdlingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddIdlingFrameP2(float TextureOffsetX, float TextureOffsetY, float Duration);
+	void AddIdlingFrameP3(float TextureOffsetX, float TextureOffsetY, float Duration);
 	void AddDashingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
 	void AddAttackingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
 	void AddFallingFrame(float TextureOffsetX, float TextureOffsetY, float Duration);
@@ -56,6 +58,7 @@ public:
 
 public:
 	Sprite* mParentSprite;
+	int mIdlingPhase;
 
 	unsigned int mRunningRows;
 	unsigned int mRunningColumns;
@@ -72,6 +75,8 @@ public:
 	unsigned int mIdlingRows;
 	unsigned int mIdlingColumns;
 	unsigned int mIdlingTexture;
+	unsigned int mIdlingTextureP2;
+	unsigned int mIdlingTextureP3;
 	bool mIsIdling;
 	bool mCanIdle = false;
 
@@ -95,13 +100,15 @@ public:
 
 private:
 	std::vector<SpriteAnimatorFrame*> mFrames;
-	size_t mCurrentIndex, mPrevIndex;
+	size_t mCurrentIndex, mPrevIndex, mAdjIndex;
 	float mTimer;
 
 
 	std::vector<SpriteAnimatorFrame*> mRunningFrames;
 	std::vector<SpriteAnimatorFrame*> mJumpingFrames;
 	std::vector<SpriteAnimatorFrame*> mIdlingFrames;
+	std::vector<SpriteAnimatorFrame*> mIdlingFramesP2;
+	std::vector<SpriteAnimatorFrame*> mIdlingFramesP3;
 	std::vector<SpriteAnimatorFrame*> mDashingFrames;
 	std::vector<SpriteAnimatorFrame*> mAttackingFrames;
 	std::vector<SpriteAnimatorFrame*> mFallingFrames;
