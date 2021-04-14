@@ -95,7 +95,7 @@ public:
 
 private:
 	std::vector<SpriteAnimatorFrame*> mFrames;
-	size_t mCurrentIndex;
+	size_t mCurrentIndex, mPrevIndex;
 	float mTimer;
 
 
