@@ -2003,7 +2003,7 @@ int main(int argc, char* args[])
 		}
 
 		
-		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) || (gpInputManager->IsMouseTriggered() && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused && !optionsMenuOpen) {	// next level
+		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) || ((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
