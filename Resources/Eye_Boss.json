@@ -5,7 +5,7 @@
       "y": 272,
       "width": 512,
       "height": 256,
-      "xoffset": 0
+      "yoffset": 120
     }
   ],
   "sprite": [ 
@@ -13,14 +13,18 @@
       "animated": true,
       "idlingImageName": "Eye - Phase 1 Spritesheet.png",
       "idlingColumns": 4,
-      "idlingRows": 4
+      "idlingRows": 4,
+      "attackingImageName": "Big_Guard_Attacking.png",
+      "attackingColumns": 4,
+      "attackingRows": 4
     }  
   ],
   "character": [
     {
       "hp": 3,
-      "radius": 40,
-      "hasHealthBar": false
+      "radius": 140,
+      "hasHealthBar": true,
+      "friendly": false
     }
   ],
   "objective": [

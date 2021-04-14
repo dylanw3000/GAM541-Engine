@@ -64,6 +64,7 @@
     <ClCompile Include="Components\AudioBGM.cpp" />
     <ClCompile Include="Components\AudioEvent.cpp" />
     <ClCompile Include="Components\Invincibility.cpp" />
+    <ClCompile Include="Components\Eye.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameRateController.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Components\AudioBGM.h" />
     <ClInclude Include="Components\AudioEvent.h" />
     <ClInclude Include="Components\Invincibility.h" />
+    <ClInclude Include="Components\Eye.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game Engine.rc" />
