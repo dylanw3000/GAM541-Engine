@@ -3,12 +3,11 @@ Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 File Name: Controller.h
-Purpose: Handles player movement
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_2
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 15, 2020
+Purpose: Handles player movement and attacking
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Dylan Washburne, Adam Rhoades
 - End Header --------------------------------------------------------*/
 
 #pragma once
@@ -47,6 +46,7 @@ public:
 public:
 	float mSwingAng;
 	int mMaxSpeed;
+	bool mGodMode;
 
 
 private:

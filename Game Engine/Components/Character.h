@@ -43,6 +43,7 @@ public:
 	bool mIsStunned;
 	int mStunnedDuration;
 	bool mHasHealthBar;
+	bool mGodMode;
 
 	class Telegraph {
 	public:

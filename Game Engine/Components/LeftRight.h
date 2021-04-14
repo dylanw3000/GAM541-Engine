@@ -2,13 +2,12 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: UpDown.h
-Purpose: Extremely simple controller to demonstrate NPC behaviour
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_2
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 15, 2020
+File Name: LeftRight.h
+Purpose: Basic AI for guards to patrol, and attack 3 times during their patrol duration. Fully customizable in json.
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Adam Rhoades, Dylan Washburne
 - End Header --------------------------------------------------------*/
 
 #pragma once

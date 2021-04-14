@@ -1,3 +1,15 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2020 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+File Name: StealthModerator.cpp
+Purpose:  Handles switching levels, Credits, Openings, Transitions, and Player Death/Victory for ConCaveity
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Adam Rhoades, Dylan Washburne
+- End Header --------------------------------------------------------*/
+
 #include "StealthModerator.h"
 #include <string>
 
@@ -163,7 +175,7 @@ void StealthModerator::Update() {
 			if (mStage < -3)
 				mStage++;
 
-			if (mStage <= 8 && mStage >= 1) {
+			if (mStage <= 7 && mStage >= 1) {
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 				mTransitionTimer = mTransitionTimerLimit;

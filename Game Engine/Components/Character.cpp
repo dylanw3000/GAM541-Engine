@@ -4,12 +4,12 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 File Name: Character.cpp
 Purpose: For any unit that can be interacted with in combat, handles collision area and health
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_3
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: November 8, 2020
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Dylan Washburne, Adam Rhoades
 - End Header --------------------------------------------------------*/
+
 
 #include "Character.h"
 #include "Transform.h"
@@ -33,6 +33,7 @@ Character::Character() : Component(TYPE_CHARACTER) {
 	mIsStunned = false;
 	mStunnedDuration = 100;
 	mHasHealthBar = false;
+	mGodMode = false;
 }
 
 Character::~Character() {

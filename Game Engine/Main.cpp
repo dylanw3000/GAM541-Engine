@@ -2,13 +2,12 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: Main.cpp
-Purpose: Initializes and loops over the game contents
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_1
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 5, 2020
+File Name: Sprite.cpp
+Purpose: Initializes and loops over the game contents. Handles Menus.
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Dylan Washburne, Adam Rhoades, Thomas Spalter, Arthur Chang
 - End Header --------------------------------------------------------*/
 
 
@@ -1860,10 +1859,23 @@ int main(int argc, char* args[])
 
 		}
 
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F1) || init || fullscreenToggle) {	// GOD-Mode
+			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
+				Character* pChar = static_cast<Character*>(pGameObject->GetComponent(TYPE_CHARACTER));
+				Controller* pCont = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
+				if (pCont != nullptr && pChar != nullptr)
+				{
+					pChar->mGodMode = !pChar->mGodMode;
+					pCont->mGodMode = !pCont->mGodMode;
+
+				}
+			}
+
+		}
 		
 
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F11) || init || fullscreenToggle) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F11) || init || fullscreenToggle) {	// Full screen toggle
 			fullscreenToggle = false;
 			appIsFullscreen = !appIsFullscreen;
 			if (appIsFullscreen) {
@@ -2066,9 +2078,15 @@ int main(int argc, char* args[])
 
 		for (auto pGO : gpGameObjectManager->mGameObjects) {
 			Character* pC = static_cast<Character*>(pGO->GetComponent(TYPE_CHARACTER));
+			Controller* pCont = static_cast<Controller*>(pGO->GetComponent(TYPE_PLAYER_CONTROLLER));
 			if (!pC) { continue; }
 			if (pC->mHP <= 0) {
 				// gpObjectFactory->LoadGameObject("../Resources/Slime.json");
+				if (pCont != nullptr && pC->mGodMode)
+				{
+					pC->mHP = pC->mHPMax;
+					continue;
+				}
 				AudioClip* pAC = static_cast<AudioClip*>(pC->mpOwner->GetComponent(TYPE_AUDIOCLIP));
 				pAC->PlayOneShot("Die");
 				gpGameObjectManager->DeleteObject(pC->mpOwner);

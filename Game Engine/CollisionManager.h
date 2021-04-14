@@ -4,11 +4,10 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 File Name: CollisionManager.h
 Purpose: Handles the calculation and broadcasting of collisions
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_4
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: November 23, 2020
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Dylan Washburne
 - End Header --------------------------------------------------------*/
 
 #pragma once

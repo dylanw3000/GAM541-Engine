@@ -2,13 +2,12 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: Slime.h
-Purpose: Handles movement patterns for a "slime" object
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_2
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 15, 2020
+File Name: Objective.h
+Purpose: Objective Component. Used for keys and Bosses that need to be defeated before leaving a room.
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Adam Rhoades
 - End Header --------------------------------------------------------*/
 
 #pragma once

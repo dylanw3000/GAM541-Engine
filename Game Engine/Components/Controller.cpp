@@ -3,12 +3,11 @@ Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 File Name: Controller.cpp
-Purpose: Handles player movement
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_2
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 15, 2020
+Purpose: Handles player movement and attacking
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Dylan Washburne, Adam Rhoades
 - End Header --------------------------------------------------------*/
 
 #include "Controller.h"
@@ -51,6 +50,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 
 	mAcceleration = 1600;
 	mMaxSpeed = 160;
+	mGodMode = false;
 
 	mSlowMod = 0.25;
 	mExcessSlowMod = 2.0f;
@@ -388,7 +388,10 @@ void Controller::Update() {
 					if (pChar->CollideCirc(pT->mPositionX, pT->mPositionY-24.f, mSwingAng, mSwingWidth, 0, mSwingLen)) {
 						if (gGameType == 1 || (gGameType == 3 && (pBA != nullptr || pE != nullptr)))
 						{
-							pChar->mHP -= 1.0f;
+							if(mGodMode)
+								pChar->mHP -= 3.0f;
+							else
+								pChar->mHP -= 1.0f;
 							if (pS != nullptr && pE != nullptr)
 							{
 								pS->mpSpriteAnimator->mIdlingPhase++;

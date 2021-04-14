@@ -2,13 +2,12 @@
 Copyright (C) 2020 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
-File Name: UpDown.h
-Purpose: Extremely simple controller to demonstrate NPC behaviour
-Language: C++, gpp
-Platform: gpp
-Project: dylan.washburne CS529_milestone_2
-Author: Dylan Washburne, dylan.washburne, 60001820
-Creation date: October 15, 2020
+File Name: BossAttack.h
+Purpose: Boss Attack Component for a boss with Attacks on an interval and no movement.
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Adam Rhoades
 - End Header --------------------------------------------------------*/
 
 #pragma once

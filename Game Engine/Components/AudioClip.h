@@ -1,3 +1,14 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2020 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+File Name: AudioClip.h
+Purpose: Audio Clip component
+Language: C++
+Platform : Microsoft Visual Studio for Windows 10
+Project: GAM541 Final Project
+Authors: Arthur Chang
+- End Header --------------------------------------------------------*/
 #pragma once
 
 #include "Component.h"
