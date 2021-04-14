@@ -2020,7 +2020,8 @@ int main(int argc, char* args[])
 		}
 
 		
-		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_RIGHT) || ((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
+
+		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_P) || ((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
@@ -2052,7 +2053,7 @@ int main(int argc, char* args[])
 		}
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_LEFT) && !appIsPaused) {	// prev level
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_O) && !appIsPaused) {	// prev level
 			if (gGameType == 3)
 			{
 				gpStealthModerator->mManualBack = true;
