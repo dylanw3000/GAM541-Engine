@@ -19,8 +19,6 @@ Creation date: October 15, 2020
 extern ResourceManager* gpResourceManager;
 extern FrameRateController* gpFRC;
 
-bool hasPhase2 = false;
-bool hasPhase3 = false;
 
 Sprite::Sprite() : Component(TYPE_SPRITE) {
 	mpSurface = nullptr;
@@ -63,6 +61,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 			mpSpriteAnimator->mIdlingPhase = input[0]["idlingPhase"].GetInt();
 		}
 
+
 		if (input[0].HasMember("idlingImageName"))
 		{
 			std::string imageName = input[0]["idlingImageName"].GetString();
@@ -91,7 +90,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 		}
 
 		if (input[0].HasMember("phase2Name")) {
-			hasPhase2 = true;
+			mpSpriteAnimator->hasPhase2 = true;
 			std::string imageName = input[0]["phase2Name"].GetString();
 			mpSpriteAnimator->mIdlingTextureP2 = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
 			unsigned int cols = mpSpriteAnimator->mIdlingColumns;
@@ -108,7 +107,7 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 		}
 
 		if (input[0].HasMember("phase3Name")) {
-			hasPhase3 = true;
+			mpSpriteAnimator->hasPhase3 = true;
 			std::string imageName = input[0]["phase3Name"].GetString();
 			mpSpriteAnimator->mIdlingTextureP3 = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
 			unsigned int cols = mpSpriteAnimator->mIdlingColumns;

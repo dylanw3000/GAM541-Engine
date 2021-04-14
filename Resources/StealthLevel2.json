@@ -18,49 +18,19 @@
       ]
 
     },
-    {
-      "name": "Guard.json",
-      "transform": [
-        {
-          "x": 150,
-          "y": 402
-        }
-      ],
-      "leftright":[
-        {
-          "speed": 75
-        }
-      ]
-    },
 
     {
       "name": "Guard.json",
       "transform": [
         {
-          "x": 1050,
-          "y": 402
-        }
-      ],
-      "leftright":[
-        {
-          "startAction": 2,
-          "speed": 75
-        }
-      ]
-    },
-
-    {
-      "name": "Guard.json",
-      "transform": [
-        {
-          "x": 80,
-          "y": 210
+          "x": 140,
+          "y": 274
         }
       ],
       "leftright":[
         {
           "startAction": 3,
-          "speed": 65,
+          "speed": 45,
           "visionWidth": 0.3
         }
       ]
@@ -70,14 +40,14 @@
       "name": "Guard.json",
       "transform": [
         {
-          "x": 1040,
-          "y": 210
+          "x": 1000,
+          "y": 274
         }
       ],
       "leftright":[
         {
           "startAction": 1,
-          "speed": 40,
+          "speed": 30,
           "visionWidth": 0.3
         }
       ]
@@ -227,55 +197,6 @@
       ]
     },
 
-    {
-      "name": "Wall.json",
-      "sprite": [
-        {
-          "animated": false,
-          "imageName": "5BricksHoriz.png"
-        }
-      ],
-      "transform": [
-        {
-          "x": 300,
-          "y": 464,
-          "width": 320,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 320,
-          "height": 64,
-          "wall": true
-        }
-      ]
-    },
-
-    {
-      "name": "Wall.json",
-      "sprite": [
-        {
-          "animated": false,
-          "imageName": "5BricksHoriz.png"
-        }
-      ],
-      "transform": [
-        {
-          "x": 900,
-          "y": 464,
-          "width": 320,
-          "height": 64
-        }
-      ],
-      "body": [
-        {
-          "width": 320,
-          "height": 64,
-          "wall": true
-        }
-      ]
-    },
 
     {
       "name": "Wall.json",
@@ -288,7 +209,7 @@
       "transform": [
         {
           "x": 224,
-          "y": 272,
+          "y": 336,
           "width": 320,
           "height": 64
         }
@@ -313,7 +234,7 @@
       "transform": [
         {
           "x": 992,
-          "y": 272,
+          "y": 336,
           "width": 320,
           "height": 64
         }
@@ -339,7 +260,7 @@
       "transform": [
         {
           "x": 600,
-          "y": 144,
+          "y": 208,
           "width": 320,
           "height": 64
         }
@@ -429,7 +350,6 @@
       ]
     },
 
-    
     {
       "name": "Wall.json",
       "sprite": [
@@ -480,30 +400,18 @@
       ]
     },
 
-
     {
       "name": "Key_1.json",
       "transform": [
         {
-          "x": 600,
-          "y": 75
-        }
-      ]
-    },
-
-
-    {
-      "name": "Key_2.json",
-      "transform": [
-        {
-          "x": 1000,
-          "y": 200
+          "x": 100,
+          "y": 775
         }
       ]
     },
 
     {
-      "name": "Exit_2.json",
+      "name": "Exit_1.json",
       "transform": [
         {
           "x": 1144,
@@ -514,6 +422,7 @@
     
     
   ],
+  
   
   "timescale": 1.0
 }

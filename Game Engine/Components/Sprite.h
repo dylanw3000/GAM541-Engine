@@ -59,6 +59,8 @@ public:
 public:
 	Sprite* mParentSprite;
 	int mIdlingPhase;
+	bool hasPhase2 = false;
+	bool hasPhase3 = false;
 
 	unsigned int mRunningRows;
 	unsigned int mRunningColumns;

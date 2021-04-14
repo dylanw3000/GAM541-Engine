@@ -163,7 +163,7 @@ void StealthModerator::Update() {
 			if (mStage < -3)
 				mStage++;
 
-			if (mStage <= 6 && mStage >= 1) {
+			if (mStage <= 8 && mStage >= 1) {
 				gpGameObjectManager->~GameObjectManager();
 				gpObjectFactory->LoadLevel(("..\\Resources\\StealthLevel" + std::to_string(mStage) + ".json").c_str());
 				mTransitionTimer = mTransitionTimerLimit;
