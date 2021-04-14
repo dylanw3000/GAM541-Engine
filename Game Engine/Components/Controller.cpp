@@ -90,18 +90,19 @@ void Controller::Update() {
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(TYPE_TRANSFORM));
 
 	float h_mod, v_mod;
-	// h_mod = ((gpInputManager->IsKeyPressed(SDL_SCANCODE_RIGHT) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) - (gpInputManager->IsKeyPressed(SDL_SCANCODE_LEFT) || gpInputManager->IsKeyPressed(SDL_SCANCODE_A)));
-	//8 v_mod = ((gpInputManager->IsKeyPressed(SDL_SCANCODE_DOWN) || gpInputManager->IsKeyPressed(SDL_SCANCODE_S)) - (gpInputManager->IsKeyPressed(SDL_SCANCODE_UP) || gpInputManager->IsKeyPressed(SDL_SCANCODE_W)));
+	h_mod = ((gpInputManager->IsKeyPressed(SDL_SCANCODE_RIGHT) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) - (gpInputManager->IsKeyPressed(SDL_SCANCODE_LEFT) || gpInputManager->IsKeyPressed(SDL_SCANCODE_A)));
+	v_mod = ((gpInputManager->IsKeyPressed(SDL_SCANCODE_DOWN) || gpInputManager->IsKeyPressed(SDL_SCANCODE_S)) - (gpInputManager->IsKeyPressed(SDL_SCANCODE_UP) || gpInputManager->IsKeyPressed(SDL_SCANCODE_W)));
 
-	h_mod = (gpInputManager->IsKeyPressed(SDL_SCANCODE_D) - gpInputManager->IsKeyPressed(SDL_SCANCODE_A));
-	v_mod = (gpInputManager->IsKeyPressed(SDL_SCANCODE_S) - gpInputManager->IsKeyPressed(SDL_SCANCODE_W));
+	// h_mod = (gpInputManager->IsKeyPressed(SDL_SCANCODE_D) - gpInputManager->IsKeyPressed(SDL_SCANCODE_A));
+	// v_mod = (gpInputManager->IsKeyPressed(SDL_SCANCODE_S) - gpInputManager->IsKeyPressed(SDL_SCANCODE_W));
+
 	if (h_mod != 0 && v_mod != 0) {
 		h_mod *= 0.7;
 		v_mod *= 0.7;
 	}
 
 	mDashTimer += gpFRC->GetFrameTime();
-	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) {
+	if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_UP)) {
 		/*
 		mDashTimer = 0;
 
@@ -123,7 +124,7 @@ void Controller::Update() {
 
 	}
 
-	if ((gpInputManager->IsKeyPressed(SDL_SCANCODE_A) || gpInputManager->IsKeyPressed(SDL_SCANCODE_D)) && gpInputManager->IsKeyPressed(SDL_SCANCODE_LCTRL) && mDashTimer >= mDashCooldown)
+	if (h_mod != 0.0 && (gpInputManager->IsKeyPressed(SDL_SCANCODE_LCTRL) || gpInputManager->IsKeyPressed(SDL_SCANCODE_RCTRL)) && mDashTimer >= mDashCooldown)
 	{
 		AudioClip* pAC = static_cast<AudioClip*>(mpOwner->GetComponent(TYPE_AUDIOCLIP));
 		pAC->PlayOneShot("Dash");
@@ -459,7 +460,7 @@ void Controller::Update() {
 
 
 	/*** Milestone 3 ***/
-	pT->mAngle += (gpInputManager->IsKeyPressed(SDL_SCANCODE_E) - gpInputManager->IsKeyPressed(SDL_SCANCODE_Q)) * 2.0f * dTime;
+	// pT->mAngle += (gpInputManager->IsKeyPressed(SDL_SCANCODE_E) - gpInputManager->IsKeyPressed(SDL_SCANCODE_Q)) * 2.0f * dTime;
 
 	if (DEBUG) {
 		pC->AddRectColor(pT->mPositionX, pT->mPositionY-24.f, -3.14159 / 2.0f, 48.f, 16.f, 1.f, .4, .8, .4, 0.5f, .2, .8, .2, 0.2f);
