@@ -910,7 +910,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	// continue button
 					appIsPaused = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					gpAudioManager->PlayOneShot("Click");
@@ -936,7 +936,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					optionsMenuOpen = true;
@@ -964,10 +964,16 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
+			if (gpInputManager->IsMouseTriggered() && creditsPending == false)
+			{
+				gpAudioManager->PlayOneShot("Click");
+			}
+
 			if (gpInputManager->IsMouseTriggered() || creditsPending == true) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					creditsPending = true;
 					confirmationWindowOpen = true;
+					
 				}
 				if(!confirmationWindowOpen)
 				{
@@ -1005,6 +1011,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
+			if (gpInputManager->IsMouseTriggered() && !mainMenuPending)
+			{
+				gpAudioManager->PlayOneShot("Click");
+			}
 
 			if (gpInputManager->IsMouseTriggered() || mainMenuPending == true) {
 				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
@@ -1049,11 +1059,16 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
+			if (gpInputManager->IsMouseTriggered() && !exitPending) 
+			{
+				gpAudioManager->PlayOneShot("Click");
+			}
+
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					exitPending = true;
 					confirmationWindowOpen = true;
-					gpAudioManager->PlayOneShot("Click");
+					
 				}
 				if (!confirmationWindowOpen)
 				{
@@ -1117,9 +1132,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 275 && gpInputManager->mMouseY < 325 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {	
 					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 
@@ -1143,9 +1159,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250) {
 					optionsMenuOpen = true;
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End Options Button
@@ -1178,6 +1195,7 @@ int main(int argc, char* args[])
 					gpStealthModerator->mManualOverride = false;
 					gpStealthModerator->mManualBack = false;
 					gpObjectFactory->LoadLevel("..\\Resources\\Credits0.json");
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End Credits Button
@@ -1456,10 +1474,11 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 616 && gpInputManager->mMouseX < 816) {
 					confirmationWindowOpen = false;
 					confirmationWindowOutput = true;
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End Yes Button
@@ -1481,10 +1500,11 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 183 && gpInputManager->mMouseY < 233 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616) {
 					confirmationWindowOpen = false;
 					confirmationWindowOutput = false;
+					gpAudioManager->PlayOneShot("Click");
 				}
 			}
 			// End No Button
