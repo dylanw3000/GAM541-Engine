@@ -1652,12 +1652,12 @@ int main(int argc, char* args[])
 			soundOffButton = gpResourceManager->LoadTexture("../Resources/Sound_Off_Button.png");
 			backButton = gpResourceManager->LoadTexture("../Resources/Back_Button.png");
 
-			glEnable(GL_DEPTH_TEST);
-
 			confirmationScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text.png");
 			confirmationRestartScreen = gpResourceManager->LoadTexture("../Resources/Confirmation_Text_Restart.png");
 			yesButton = gpResourceManager->LoadTexture("../Resources/Yes_Button.png");
 			noButton = gpResourceManager->LoadTexture("../Resources/No_Button.png");
+
+			glEnable(GL_DEPTH_TEST);
 		}
 
 		
