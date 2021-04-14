@@ -30,12 +30,9 @@ extern FrameRateController* gpFRC;
 extern EventManager* gpEventManager;
 
 Eye::Eye() : Component(TYPE_EYE) {
-	mAction = 1;
-	mTimerLimit = 1000;
-	mTimer = mTimerLimit;
 
-	mAttackWidth = .15;
-	mAttackLength = 400.0f;
+	mAttackWidth = .15f;
+	mAttackLength = 400.f;
 	mDamage = 1.f;
 
 
@@ -73,28 +70,6 @@ void Eye::Update() {
 
 }
 
-void Eye::UpdateTimersAndAngles()
-{
-	if (mAction == 1)
-		mTimer = mTimerLimit = mWaitDuration;
-	else if (mAction == 0)
-		mTimer = mTimerLimit = mAttackDuration;
-
-	mAttackAngle = mAttackAngleMod;
-
-	Character* pC = static_cast<Character*>(mpOwner->GetComponent(TYPE_CHARACTER));
-	Sprite* pS = static_cast<Sprite*>(mpOwner->GetComponent(TYPE_SPRITE));
-	if (pS->mIsAnimated)
-	{
-		if (mAction == 1) {
-			if (!pS->mpSpriteAnimator->mIsIdling)
-				pS->mpSpriteAnimator->StartIdling();
-		}
-
-	}
-
-}
-
 void Eye::Serialize(std::ifstream& InputStream) {
 
 }
@@ -114,8 +89,6 @@ void Eye::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 	if (input[0].HasMember("damage")) {
 		mDamage = input[0]["damage"].GetFloat();
 	}
-
-	UpdateTimersAndAngles();
 
 }
 
