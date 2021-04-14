@@ -19,6 +19,9 @@ Creation date: October 15, 2020
 extern ResourceManager* gpResourceManager;
 extern FrameRateController* gpFRC;
 
+bool hasPhase2 = false;
+bool hasPhase3 = false;
+
 Sprite::Sprite() : Component(TYPE_SPRITE) {
 	mpSurface = nullptr;
 	mIsAnimated = false;
@@ -44,7 +47,6 @@ void Sprite::Serialize(std::ifstream& InputStream) {
 
 void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 	
-	
 	mIsAnimated = false;
 	if (input[0].HasMember("animated")) {
 		mIsAnimated = input[0]["animated"].GetBool();
@@ -69,6 +71,58 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 			}
 			if (input[0].HasMember("idlingRows")) {
 				rows = input[0]["idlingRows"].GetInt();
+				mpSpriteAnimator->mIdlingRows = rows;
+			}
+
+			for (int j = 0; j < rows; j++)
+			{
+				for (int i = 0; i < cols; i++)
+				{
+					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+				}
+			}
+			mpSpriteAnimator->StartIdling();
+		}
+
+		if (input[0].HasMember("phase2Name")) {
+			hasPhase2 = true;
+			std::string imageName = input[0]["phase2Name"].GetString();
+			mpSpriteAnimator->mIdlingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("phase2Columns")) {
+				cols = input[0]["phase2Columns"].GetInt();
+				mpSpriteAnimator->mIdlingColumns = cols;
+			}
+			if (input[0].HasMember("phase2Rows")) {
+				rows = input[0]["phase2Rows"].GetInt();
+				mpSpriteAnimator->mIdlingRows = rows;
+			}
+
+			for (int j = 0; j < rows; j++)
+			{
+				for (int i = 0; i < cols; i++)
+				{
+					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+				}
+			}
+			mpSpriteAnimator->StartIdling();
+		}
+
+		if (input[0].HasMember("phase3Name")) {
+			hasPhase3 = true;
+			std::string imageName = input[0]["phase3Name"].GetString();
+			mpSpriteAnimator->mIdlingTexture = gpResourceManager->LoadTexture(("..\\Resources\\" + imageName).c_str());
+			unsigned int cols = 1;
+			unsigned int rows = 1;
+
+			if (input[0].HasMember("phase3Columns")) {
+				cols = input[0]["phase3Columns"].GetInt();
+				mpSpriteAnimator->mIdlingColumns = cols;
+			}
+			if (input[0].HasMember("phase3Rows")) {
+				rows = input[0]["phase3Rows"].GetInt();
 				mpSpriteAnimator->mIdlingRows = rows;
 			}
 
@@ -235,6 +289,7 @@ SpriteAnimatorFrame::SpriteAnimatorFrame(float TextureOffsetX, float TextureOffs
 SpriteAnimator::SpriteAnimator()
 {
 	mCurrentIndex = 0;
+	mPrevIndex = 0;
 	mTimer = 0.0f;
 }
 SpriteAnimator::~SpriteAnimator()
@@ -308,6 +363,7 @@ void SpriteAnimator::Update()
 {
 	mTimer -= ((float)gpFRC->GetFrameTime() / 1000);
 	if (mTimer <= 0) {
+		mPrevIndex = mCurrentIndex;
 		++mCurrentIndex;
 		mCurrentIndex %= mFrames.size();
 		mTimer = mFrames[mCurrentIndex]->mDuration;
@@ -317,6 +373,9 @@ void SpriteAnimator::Update()
 void SpriteAnimator::StartIdling()
 {
 	mCurrentIndex = 0;
+	if (hasPhase2 || hasPhase3) {
+		mCurrentIndex = mPrevIndex;
+	}
 	mFrames = mIdlingFrames;
 	mIsIdling = true;
 	mIsRunning = mIsJumping = mIsAttacking = mIsDashing = mIsFalling = false;

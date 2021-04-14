@@ -5,7 +5,7 @@
       "y": 272,
       "width": 512,
       "height": 256,
-      "xoffset": 0
+      "yoffset": 120
     }
   ],
   "sprite": [ 
@@ -19,14 +19,24 @@
   "character": [
     {
       "hp": 3,
-      "radius": 40,
-      "hasHealthBar": false
+      "radius": 160,
+      "hasHealthBar": true
     }
   ],
+  "Eye": [ {} ],
   "objective": [
     {
       "radius": 32,
       "objectiveType": 2
     }
-  ]
+  ],
+"audioClip": [
+{
+"EventCount": 1
+},
+    {
+      "name": "Die",
+      "volume": 1
+}
+]
 }

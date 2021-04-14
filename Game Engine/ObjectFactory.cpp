@@ -37,6 +37,7 @@ Creation date: October 15, 2020
 #include "Components/Objective.h"
 #include "Components/BossAttack.h"
 #include "Components/Invincibility.h"
+#include "Components/Eye.h"
 
 extern GameObjectManager* gpGameObjectManager;
 
@@ -137,6 +138,10 @@ GameObject* ObjectFactory::LoadGameObject(const char* pFileName) {
 	if (document.HasMember("Invincibility")) {
 		pNewComponent = pNewGO->AddComponent(TYPE_INVINCIBILITY);
 		pNewComponent->Serialize(document["Invincibility"].GetArray());
+	}
+	if (document.HasMember("Eye")) {
+		pNewComponent = pNewGO->AddComponent(TYPE_EYE);
+		pNewComponent->Serialize(document["Eye"].GetArray());
 	}
 	gpGameObjectManager->mGameObjects.push_back(pNewGO);
 
@@ -268,7 +273,11 @@ void ObjectFactory::LoadLevel(const char* pFileName) {
 			if (pInvincibility == nullptr) { pInvincibility = static_cast<Invincibility*>(pNewGO->AddComponent(TYPE_INVINCIBILITY)); }
 			pInvincibility->Serialize(d["Invincibility"].GetArray());
 		}
-
+		if (d.HasMember("Eye")) {
+			Eye* pEye = static_cast<Eye*>(pNewGO->GetComponent(TYPE_EYE));
+			if (pEye == nullptr) { pEye = static_cast<Eye*>(pNewGO->AddComponent(TYPE_EYE)); }
+			pEye->Serialize(d["Eye"].GetArray());
+		}
 	}
 
 	/*
