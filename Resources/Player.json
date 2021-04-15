@@ -34,7 +34,7 @@
   "character": [
     {
       "hp": 5,
-      "radius": 16,
+      "radius": 8,
       "shadow": 8,
       "friendly": true,
       "hasHealthBar": true

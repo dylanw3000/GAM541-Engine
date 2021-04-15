@@ -887,7 +887,7 @@ int main(int argc, char* args[])
 				// glBindVertexArray(vaoID);
 				int val;
 
-				if(DEBUG && pC->mShadowOffset == 0.f)
+				if(DEBUG)
 				{
 					glm::mat4 model(1.0f);
 					model = glm::translate(model, glm::vec3(pT->mPositionX, pT->mPositionY, -0.9f));

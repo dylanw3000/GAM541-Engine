@@ -70,7 +70,7 @@ Controller::Controller() : Component(TYPE_PLAYER_CONTROLLER) {
 	else if (gGameType == 3)
 	{
 		mSwingTime = 800;
-		mSwingDelay = 400;
+		mSwingDelay = 1;
 		mSwingTimer = mSwingTime + mSwingDelay;
 		mSwingAng = 0.0f;
 		mSwingWidth = 0.3f;
@@ -299,6 +299,10 @@ void Controller::Update() {
 		}
 	}
 	*/
+
+	if (pT->mVelVert > 600.f) {
+		pT->mVelVert = 600.f;
+	}
 	
 
 	// TODO: Strip out code from when game was top-down
