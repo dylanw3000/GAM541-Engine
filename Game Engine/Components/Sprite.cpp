@@ -83,7 +83,11 @@ void Sprite::Serialize(rapidjson::GenericArray<false, rapidjson::Value> input) {
 			{
 				for (int i = 0; i < cols; i++)
 				{
-					mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.4f);
+					if (input[0].HasMember("idlingPhase"))
+						mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.4f);
+					else
+						mpSpriteAnimator->AddIdlingFrame(i * (1.0f / cols), j * (1.0f / rows), 0.2f);
+
 				}
 			}
 			mpSpriteAnimator->StartIdling();

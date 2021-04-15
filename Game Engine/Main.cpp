@@ -1864,7 +1864,7 @@ int main(int argc, char* args[])
 
 		}
 
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F1) || init || fullscreenToggle) {	// GOD-Mode
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F1)) {	// GOD-Mode
 			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
 				Character* pChar = static_cast<Character*>(pGameObject->GetComponent(TYPE_CHARACTER));
 				Controller* pCont = static_cast<Controller*>(pGameObject->GetComponent(TYPE_PLAYER_CONTROLLER));
@@ -1876,6 +1876,17 @@ int main(int argc, char* args[])
 				}
 			}
 
+		}
+
+
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_F2)) {	// Skip to level 9
+
+			gpGameObjectManager->~GameObjectManager();
+			gpObjectFactory->LoadLevel("..\\Resources\\StealthLevel9.json");
+			gpStealthModerator->mTransitionTimer = gpStealthModerator->mTransitionTimerLimit;
+			gpStealthModerator->mManualOverride = false;
+			gpStealthModerator->mManualBack = false;
+			gpStealthModerator->mManualRestart = false;
 		}
 		
 
