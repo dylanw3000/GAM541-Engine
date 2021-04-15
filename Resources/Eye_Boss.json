@@ -23,7 +23,7 @@
     {
       "hp": 3,
       "radius": 160,
-      "hasHealthBar": true
+      "hasHealthBar": false
     }
   ],
   "Eye": [ {} ],
