@@ -75,7 +75,7 @@ GameObjectManager* gpGameObjectManager;
 ObjectFactory* gpObjectFactory;
 CollisionManager* gpCollisionManager;
 EventManager* gpEventManager;
-Moderator* gpModerator;
+//Moderator* gpModerator;
 StealthModerator* gpStealthModerator;
 
 AudioManager* gpAudioManager;
@@ -180,7 +180,7 @@ int main(int argc, char* args[])
 	gpObjectFactory = new ObjectFactory();
 	gpCollisionManager = new CollisionManager();
 	gpEventManager = new EventManager();
-	gpModerator = new Moderator();
+	//gpModerator = new Moderator();
 	gpStealthModerator = new StealthModerator();
 
 	gpAudioManager = new AudioManager();
@@ -395,7 +395,7 @@ int main(int argc, char* args[])
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	gpModerator->mStage = 0;
+	//gpModerator->mStage = 0;
 	gpStealthModerator->mStage = -3;
 	gpStealthModerator->mTransitionTimer = 3000;
 	//gpObjectFactory->LoadLevel("..\\Resources\\Opening0.json");
@@ -434,13 +434,17 @@ int main(int argc, char* args[])
 		}
 		gpCollisionManager->mContacts.clear();
 
-		// update
-		for (auto pGameObject : gpGameObjectManager->mGameObjects)
-			pGameObject->Update();
+		if (!appIsPaused)
+		{
 
-		for (auto pGameObject : gpGameObjectManager->mGameObjects) {
-			if (pGameObject->mDestroy) {
-				gpGameObjectManager->DeleteObject(pGameObject);
+			// update
+			for (auto pGameObject : gpGameObjectManager->mGameObjects)
+				pGameObject->Update();
+
+			for (auto pGameObject : gpGameObjectManager->mGameObjects) {
+				if (pGameObject->mDestroy) {
+					gpGameObjectManager->DeleteObject(pGameObject);
+				}
 			}
 		}
 
@@ -490,10 +494,13 @@ int main(int argc, char* args[])
 			glDrawArrays(GL_QUADS, 0, vertexNum);
 		}
 
-		if (gGameType == 1 || gGameType == 2)
-			gpModerator->Update();
-		else
-			gpStealthModerator->Update();
+
+		// Update Moderator
+		gpStealthModerator->Update();
+
+		//if (gGameType == 1 || gGameType == 2)
+			//gpModerator->Update();
+		//else
 		/*if ((gGameType != 3 && gpModerator->mStage == 0) || (gGameType == 3 && gpStealthModerator->mStage == 0)) {
 			glUseProgram(gRenderID);
 			// glBindVertexArray(vaoID);
@@ -528,7 +535,7 @@ int main(int argc, char* args[])
 		}
 
 		glClear(GL_DEPTH_BUFFER_BIT);
-		if ((gGameType != 3 && gpModerator->mStage == 666) || (gGameType == 3 && gpStealthModerator->mStage == 666)) {
+		if ( gpStealthModerator->mStage == 666) {
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glUseProgram(gRenderID);
@@ -643,7 +650,7 @@ int main(int argc, char* args[])
 			}
 			// End No Button
 		}
-		else if ((gGameType != 3 && gpModerator->mStage == 99) || (gGameType == 3 && gpStealthModerator->mStage == 99)) {
+		else if (gpStealthModerator->mStage == 99) {
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -1887,6 +1894,7 @@ int main(int argc, char* args[])
 			gpStealthModerator->mManualOverride = false;
 			gpStealthModerator->mManualBack = false;
 			gpStealthModerator->mManualRestart = false;
+			gpStealthModerator->mStage = 9;
 		}
 		
 
