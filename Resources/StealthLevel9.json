@@ -18,6 +18,30 @@
       ]
 
     },
+    {
+      "name": "Wall.json",
+      "sprite": [
+        {
+          "animated": false,
+          "imageName": "5BricksVert.png"
+        }
+      ],
+      "transform": [
+        {
+          "x": -32,
+          "y": 200,
+          "width": 64,
+          "height": 640
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 640,
+          "wall": true
+        }
+      ]
+    },
 
     {
       "name": "Trampoline.json",
@@ -82,7 +106,7 @@
 
 
     {
-      "name": "Trampoline.json",
+      "name": "SemisolidWall.json",
       "transform": [
         {
           "x": 600,
@@ -302,6 +326,25 @@
         {
           "width": 64,
           "height": 320,
+          "wall": true
+        }
+      ]
+    },
+
+    {
+      "name": "Trampoline.json",
+      "transform": [
+        {
+          "x": 736,
+          "y": 464,
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "body": [
+        {
+          "width": 64,
+          "height": 64,
           "wall": true
         }
       ]

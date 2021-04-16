@@ -303,6 +303,8 @@ void Controller::Update() {
 	if (pT->mVelVert > 600.f) {
 		pT->mVelVert = 600.f;
 	}
+	if (pT->mVelVert < -700.0f)
+		pT->mVelVert = -700.0f;
 	
 
 	// TODO: Strip out code from when game was top-down
