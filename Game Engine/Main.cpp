@@ -608,7 +608,8 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered() || mainMenuPending) {
-				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616) {
+				if (gpInputManager->mMouseY > 225 && gpInputManager->mMouseY < 275 && gpInputManager->mMouseX > 416 && gpInputManager->mMouseX < 616 && !confirmationWindowOpen) {
+					gpAudioManager->PlayOneShot("Click");
 					mainMenuPending = true;
 					confirmationWindowOpen = true;
 				}
@@ -624,7 +625,6 @@ int main(int argc, char* args[])
 						gpStealthModerator->mManualBack = false;
 						gpObjectFactory->LoadLevel("..\\Resources\\Title.json");
 						appIsPaused = false;
-						gpAudioManager->PlayOneShot("Click");
 						confirmationWindowOutput = false;
 					}
 					mainMenuPending = false;					
@@ -645,7 +645,7 @@ int main(int argc, char* args[])
 						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 						confirmationWindowOutput = false;
 					}
-					exitPending = false;
+					exitPending = false; 
 				}
 			}
 			// End No Button
@@ -1241,13 +1241,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered() && creditsPending == false)
-			{
-				gpAudioManager->PlayOneShot("Click");
-			}
 
 			if (gpInputManager->IsMouseTriggered() || creditsPending == true) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpAudioManager->PlayOneShot("Click");
 					creditsPending = true;
 					confirmationWindowOpen = true;
 					
@@ -1291,13 +1288,9 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered() && !mainMenuPending)
-			{
-				gpAudioManager->PlayOneShot("Click");
-			}
-
 			if (gpInputManager->IsMouseTriggered() || mainMenuPending == true) {
 				if (gpInputManager->mMouseY > 575 && gpInputManager->mMouseY < 625 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpAudioManager->PlayOneShot("Click");
 					mainMenuPending = true;
 					confirmationWindowOpen = true;
 				}
@@ -1342,13 +1335,10 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered() && !exitPending) 
-			{
-				gpAudioManager->PlayOneShot("Click");
-			}
 
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpAudioManager->PlayOneShot("Click");
 					exitPending = true;
 					confirmationWindowOpen = true;
 					
@@ -1511,6 +1501,7 @@ int main(int argc, char* args[])
 
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					gpAudioManager->PlayOneShot("Click");
 					exitPending = true;
 					confirmationWindowOpen = true;
 				}
@@ -1599,7 +1590,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					optionsMenuOpen = false;
 					gpAudioManager->PlayOneShot("Click");
@@ -1627,7 +1618,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 450 && gpInputManager->mMouseY < 500 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
 					currentVolume = 0.0f;
 			}
@@ -1653,9 +1644,12 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMousePressed()) {
+			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 525 && gpInputManager->mMouseY < 575 && gpInputManager->mMouseX > 900 && gpInputManager->mMouseX < 1100 && !confirmationWindowOpen)
-					currentVolume = 1.0f;
+				{
+					currentVolume = 1.0f; 
+					gpAudioManager->PlayOneShot("Click");
+				}
 			}
 			// End Sound On Button
 
@@ -1683,6 +1677,7 @@ int main(int argc, char* args[])
 			{
 				if (gpInputManager->IsMouseTriggered() || fullScreenTogglePending) {
 					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125 && !confirmationWindowOpen) {
+						gpAudioManager->PlayOneShot("Click");
 						fullScreenTogglePending = true;
 						confirmationWindowOpen = true;
 					}
@@ -1701,7 +1696,10 @@ int main(int argc, char* args[])
 			{
 				if (gpInputManager->IsMouseTriggered()) {
 					if (gpInputManager->mMouseY > 600 && gpInputManager->mMouseY < 650 && gpInputManager->mMouseX > 875 && gpInputManager->mMouseX < 1125 && !confirmationWindowOpen)
+					{
 						fullscreenToggle = true;
+						gpAudioManager->PlayOneShot("Click");
+					}
 				}
 			}
 
