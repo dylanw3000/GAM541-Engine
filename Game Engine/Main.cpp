@@ -767,11 +767,6 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 
-			if (gpInputManager->IsMouseTriggered() && !exitPending)
-			{
-				gpAudioManager->PlayOneShot("Click");
-			}
-
 			if (gpInputManager->IsMouseTriggered() || exitPending) {
 				if (gpInputManager->mMouseY > 725 && gpInputManager->mMouseY < 775 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
 					exitPending = true;
@@ -782,6 +777,7 @@ int main(int argc, char* args[])
 				{
 					if (confirmationWindowOutput)
 					{
+						gpAudioManager->PlayOneShot("Click");
 						appIsRunning = false;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 						confirmationWindowOutput = false;
 					}
@@ -1217,7 +1213,6 @@ int main(int argc, char* args[])
 
 			if (gpInputManager->IsMouseTriggered()) {
 				if (gpInputManager->mMouseY > 375 && gpInputManager->mMouseY < 425 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
-					gpStealthModerator->mManualOverride = true;	// remember when setting buttons that translation sets the center and scale expands it in both directions
 					optionsMenuOpen = true;
 					gpAudioManager->PlayOneShot("Click");
 				}
@@ -1842,7 +1837,7 @@ int main(int argc, char* args[])
 		SDL_GL_SwapWindow(pWindow);
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage > 0 && gpStealthModerator->mStage < 99) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage > 0 && gpStealthModerator->mStage < 99 && !optionsMenuOpen && !confirmationWindowOpen) {	// pause game
 			// appIsRunning = false;
 			appIsPaused = !appIsPaused;
 		}
@@ -2040,7 +2035,11 @@ int main(int argc, char* args[])
 
 		
 
-		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_P) || ((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) && (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) && !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
+		if ((gpInputManager->IsKeyTriggered(SDL_SCANCODE_P) || 
+			((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) 
+				|| gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) 
+				&& (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) 
+			&& !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();

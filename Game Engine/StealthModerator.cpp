@@ -234,6 +234,7 @@ void StealthModerator::Update() {
 			}
 			else{
 				mStage = 99;
+				gpGameObjectManager->~GameObjectManager();
 			}
 		}
 
