@@ -1912,12 +1912,22 @@ int main(int argc, char* args[])
 			glDisable(GL_DEPTH_TEST);
 			SDL_DestroyWindow(pWindow);
 
-			pWindow = SDL_CreateWindow("ConCaveity",		// window title
-				SDL_WINDOWPOS_UNDEFINED,					// initial x position
-				SDL_WINDOWPOS_UNDEFINED,					// initial y position
-				screenSize[0],										// width, in pixels
-				screenSize[1],										// height, in pixels
-				SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+			if (appIsFullscreen) {
+				pWindow = SDL_CreateWindow("ConCaveity",		// window title
+					SDL_WINDOWPOS_UNDEFINED,					// initial x position
+					SDL_WINDOWPOS_UNDEFINED,					// initial y position
+					screenSize[0],										// width, in pixels
+					screenSize[1],										// height, in pixels
+					SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+			}
+			else {
+				pWindow = SDL_CreateWindow("ConCaveity",		// window title
+					SDL_WINDOWPOS_UNDEFINED,					// initial x position
+					SDL_WINDOWPOS_UNDEFINED,					// initial y position
+					screenSize[0],										// width, in pixels
+					screenSize[1],										// height, in pixels
+					SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+			}
 
 			openGL_Context = SDL_GL_CreateContext(pWindow);
 
