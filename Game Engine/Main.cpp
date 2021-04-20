@@ -1222,7 +1222,7 @@ int main(int argc, char* args[])
 			}
 			// End Options Button
 
-						// Controls Button
+			// Controls Button
 			{
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, glm::vec3(75, 50.f, 1.f));
@@ -1234,7 +1234,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
+				if (gpInputManager->mMouseY > 25 && gpInputManager->mMouseY < 75 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, controlsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, controlsButton);
@@ -1243,7 +1243,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
+				if (gpInputManager->mMouseY > 25 && gpInputManager->mMouseY < 75 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
 					controlsMenuOpen = true;
 					gpAudioManager->PlayOneShot("Click");
 				}
@@ -1485,7 +1485,7 @@ int main(int argc, char* args[])
 				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
 
 				glActiveTexture(GL_TEXTURE0);
-				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
+				if (gpInputManager->mMouseY > 25 && gpInputManager->mMouseY < 75 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
 					glBindTexture(GL_TEXTURE_2D, controlsButtonHighlighted);
 				else
 					glBindTexture(GL_TEXTURE_2D, controlsButton);
@@ -1494,7 +1494,7 @@ int main(int argc, char* args[])
 			}
 
 			if (gpInputManager->IsMouseTriggered()) {
-				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
+				if (gpInputManager->mMouseY > 25 && gpInputManager->mMouseY < 75 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
 					controlsMenuOpen = true;
 					gpAudioManager->PlayOneShot("Click");
 				}
