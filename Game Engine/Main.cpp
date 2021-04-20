@@ -157,6 +157,7 @@ int main(int argc, char* args[])
 	bool appIsRunning = true;
 	bool appIsPaused = false;
 	bool optionsMenuOpen = false;
+	bool controlsMenuOpen = false;
 	bool confirmationWindowOpen = false;
 	bool confirmationWindowOutput = false;
 	bool appIsFullscreen = false;
@@ -362,6 +363,8 @@ int main(int argc, char* args[])
 	GLuint mainMenuButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button_Highlighted.png");
 	GLuint optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 	GLuint optionsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Options_Button_Highlighted.png");
+	GLuint controlsButton = gpResourceManager->LoadTexture("../Resources/Controls_Button.png");
+	GLuint controlsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Controls_Button_Highlighted.png");
 	GLuint quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 	GLuint quitButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Quit_Button_Highlighted.png");
 	GLuint startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
@@ -1141,7 +1144,7 @@ int main(int argc, char* args[])
 
 
 		////// Pause Screen
-		if (appIsPaused && !optionsMenuOpen) {
+		if (appIsPaused && !optionsMenuOpen && !controlsMenuOpen) {
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glUseProgram(gRenderID);
@@ -1218,6 +1221,34 @@ int main(int argc, char* args[])
 				}
 			}
 			// End Options Button
+
+						// Controls Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(75, 50.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, controlsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, controlsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
+					controlsMenuOpen = true;
+					gpAudioManager->PlayOneShot("Click");
+				}
+			}
+			// End Controls Button
 
 
 
@@ -1356,7 +1387,7 @@ int main(int argc, char* args[])
 			// End Quit Button
 
 
-
+			/*
 			// Controls Menu
 			{
 				glm::mat4 model(1.0f);
@@ -1374,10 +1405,11 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 			// End Controls Menu
+			*/
 		}
 
 		//// Main Menu
-		if (gpStealthModerator->mStage == 0 && !optionsMenuOpen)
+		if (gpStealthModerator->mStage == 0 && !optionsMenuOpen && !controlsMenuOpen)
 		{
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -1440,6 +1472,34 @@ int main(int argc, char* args[])
 				}
 			}
 			// End Options Button
+
+			// Controls Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(75, 50.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, controlsButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, controlsButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 50 && gpInputManager->mMouseY < 125 && gpInputManager->mMouseX > -25 && gpInputManager->mMouseX < 175 && !confirmationWindowOpen) {
+					controlsMenuOpen = true;
+					gpAudioManager->PlayOneShot("Click");
+				}
+			}
+			// End Controls Button
 
 
 			// Credits Button
@@ -1518,7 +1578,7 @@ int main(int argc, char* args[])
 			// End Quit Button
 
 
-
+			/*
 			// Controls Menu
 			{
 				glm::mat4 model(1.0f);
@@ -1536,6 +1596,7 @@ int main(int argc, char* args[])
 				glDrawArrays(GL_QUADS, 0, vertexNum);
 			}
 			// End Controls Menu
+			*/
 
 		}
 
@@ -1728,6 +1789,86 @@ int main(int argc, char* args[])
 		}
 
 
+		if (controlsMenuOpen) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(gRenderID);
+
+			if (appIsPaused)
+			{
+				// Update Menu Audio 
+				gpAudioManager->SetMasterBusVolume(0.4f * currentVolume);
+
+				//redraw background for pause menu
+				{
+					glm::mat4 model(1.0f);
+					model = glm::translate(model, glm::vec3(600.f, 400.0f, 0.f));
+					model = glm::scale(model, glm::vec3(1200.0f, -800.0f, 0.0f));
+
+					model = projectionMatrix * model;
+
+					int transformationHandle = 4;
+					glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, pauseScreen);
+
+					glDrawArrays(GL_QUADS, 0, vertexNum);
+				}
+			}
+
+			// Back to Menu Button
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(150, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(192, -64.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen)
+					glBindTexture(GL_TEXTURE_2D, backButtonHighlighted);
+				else
+					glBindTexture(GL_TEXTURE_2D, backButton);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+
+			if (gpInputManager->IsMouseTriggered()) {
+				if (gpInputManager->mMouseY > 475 && gpInputManager->mMouseY < 525 && gpInputManager->mMouseX > 50 && gpInputManager->mMouseX < 250 && !confirmationWindowOpen) {
+					controlsMenuOpen = false;
+					gpAudioManager->PlayOneShot("Click");
+				}
+			}
+			// End Back to Menu Button
+
+
+
+
+			// Controls Menu
+			{
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, glm::vec3(1018, 500.f, 1.f));
+				model = glm::scale(model, glm::vec3(256, -256.0, 0.0f));
+
+				model = projectionMatrix * model;
+
+				int transformationHandle = 4;
+				glUniformMatrix4fv(transformationHandle, 1, false, &model[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, controlsText);
+
+				glDrawArrays(GL_QUADS, 0, vertexNum);
+			}
+			// End Controls Menu
+
+		}
+
+
 		// Confirmation Window
 		if (confirmationWindowOpen) {
 			glClear(GL_DEPTH_BUFFER_BIT);
@@ -1835,7 +1976,7 @@ int main(int argc, char* args[])
 		SDL_GL_SwapWindow(pWindow);
 		
 		
-		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage > 0 && gpStealthModerator->mStage < 99 && !optionsMenuOpen && !confirmationWindowOpen) {	// pause game
+		if (gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) && gpStealthModerator->mStage > 0 && gpStealthModerator->mStage < 99 && !optionsMenuOpen && !controlsMenuOpen && !confirmationWindowOpen) {	// pause game
 			// appIsRunning = false;
 			appIsPaused = !appIsPaused;
 		}
@@ -1918,7 +2059,7 @@ int main(int argc, char* args[])
 					SDL_WINDOWPOS_UNDEFINED,					// initial y position
 					screenSize[0],										// width, in pixels
 					screenSize[1],										// height, in pixels
-					SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+					SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 			}
 			else {
 				pWindow = SDL_CreateWindow("ConCaveity",		// window title
@@ -2015,6 +2156,8 @@ int main(int argc, char* args[])
 			mainMenuButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Main_Menu_Button_Highlighted.png");
 			optionsButton = gpResourceManager->LoadTexture("../Resources/Options_Button.png");
 			optionsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Options_Button_Highlighted.png");
+			controlsButton = gpResourceManager->LoadTexture("../Resources/Controls_Button.png");
+			controlsButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Controls_Button_Highlighted.png");
 			quitButton = gpResourceManager->LoadTexture("../Resources/Quit_Button.png");
 			quitButtonHighlighted = gpResourceManager->LoadTexture("../Resources/Quit_Button_Highlighted.png");
 			startGameButton = gpResourceManager->LoadTexture("../Resources/Start_Game_Button.png");
@@ -2047,7 +2190,7 @@ int main(int argc, char* args[])
 			((gpInputManager->IsMouseTriggered() || SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_ESCAPE) 
 				|| gpInputManager->IsKeyTriggered(SDL_SCANCODE_RETURN) || gpInputManager->IsKeyTriggered(SDL_SCANCODE_SPACE)) 
 				&& (gpStealthModerator->mStage < 0 || gpStealthModerator->mStage > 99))) 
-			&& !appIsPaused && !optionsMenuOpen && !confirmationWindowOpen) {	// next level
+			&& !appIsPaused && !optionsMenuOpen && !controlsMenuOpen && !confirmationWindowOpen) {	// next level
 			/*
 			gpGameObjectManager->~GameObjectManager();
 			gpEventManager->Reset();
